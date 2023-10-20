@@ -1,26 +1,33 @@
 # сюда нужно импортировать классы бд
 # from loader import connect, db_of_users, db_of_desks
 
+class LoginInterface:
+    def __init__(self):
+        pass
+
+    def is_user_set_password(self):
+        '''Установил ли пользователь пароль'''
+        return False
+
+    def update_user_password(self, old_password, password):
+        '''Меняет пароль пользователю'''
+        return
+
+    def check_password(self, password):
+        '''Проверяет правильность пароля'''
+        return
+
 
 class UserInterface:
     def __init__(self):
         pass
 
-    def is_user_set_password(self):
-        ''''''
-        return
-
-    def update_user_password(self, old_password, password):
-        ''''''
-        return
-
-    def check_password(self, password):
-        ''''''
-        return
-
     def get_decks(self):
         '''Возвращает все доски пользователя.
             Формат: '''
+        decks = {
+            'desk_id': ['desk_name', '']
+        }
         return
 
     def create_desk(self, desk_name):
