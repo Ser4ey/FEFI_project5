@@ -66,6 +66,13 @@ class DesksDB:
         return self.execute(sql, parameters, fetchone=True)
         # пример использования команды select_desk(id=131, name='JoJo')
 
+    def select_desks(self, **kwargs):
+        '''Получаем все доски по условию'''
+        sql = 'SELECT * FROM Desks WHERE '
+        sql, parameters = self.format_args(sql, kwargs)
+        return self.execute(sql, parameters, fetchall=True)
+        # пример использования команды select_desk(id=131, name='JoJo')
+
     def count_desks(self):
         return int(self.execute("SELECT COUNT(*) FROM Desks;", fetchone=True))
 
@@ -103,3 +110,204 @@ class CardsDB:
 	sequence_number integer
 );
     '''
+
+
+class DeskDBAPI:
+    def __init__(self):
+        self.desk_db = DesksDB()
+
+        self.number_of_desks = self.desk_db.count_desks() # текущее количество досок
+
+    def get_desks(self):
+        return [('desk_id1', 'desk_name1', 'sequence_number1'), ('desk_id2', 'desk_name2', 'sequence_number2')]
+
+    def get_desk_by_id(self, desk_id):
+        return ('desk_id', 'desk_name', 'sequence_number')
+
+    def add_desk(self, desk_name):
+        '''Добавляем доску (в конец)
+           Проверка на уникальное имя
+           Важно задать правильный sequence_number '''
+        return True # - успех
+
+    def del_desk(self, desk_id):
+        '''
+        Удаляем доску
+        Проверка на наличие
+        Нужно поменять sequence_number для всех съхавших досок
+        :param desk_id:
+        :return:
+        '''
+        return True # - успех
+
+    def rename_desk(self, desk_id, new_name):
+        '''Меняем имя у доски
+           Проверка на уникальное имя
+           Проверка, что доска существует'''
+        return True  # - успех
+
+    def change_desk_sequence_number(self, desk_id, new_sequence_number):
+        '''
+        Нужно менять номера для всех съехавших досок
+        0
+        1 (ставим на 3)
+        2
+        3
+        4
+        ->
+        0 (0)
+        2 (1) - номер съхал на 1 вниз
+        3 (2) - номер съхал на 1 вниз
+        1 (3)
+        4 (4)
+
+        0
+        1
+        2
+        3 (ставим на 1)
+        4
+        ->
+        0 (0)
+        3 (1) - номер съхал на 1 вверх
+        1 (2) - номер съхал на 1 вверх
+        2 (3)
+        4 (4)
+
+        :param desk_id:
+        :param new_sequence_number:
+        :return:
+        '''
+
+
+class ColumnsDBAPI:
+    def __init__(self):
+        self.column_db = ColumnsDB()
+
+    def get_columns(self):
+        '''Список всех колонок'''
+        return [('column_id', 'desk_id', 'column_name', 'sequence_number'), ()]
+
+    def get_columns_by_desk_id(self, desk_id):
+        '''Список всех колонок принадлежащих desk_id'''
+        return [('column_id', 'desk_id', 'column_name', 'sequence_number'), ()]
+
+    def add_column(self, desk_id, column_name):
+        '''Добавляем колонку (в конец)
+           Важно задать правильный sequence_number '''
+        return True  # - успех
+
+    def del_column(self, column_id):
+        '''
+        Удаляем колонку
+        Проверка на наличие
+        Нужно поменять sequence_number для всех съхавших колонок
+        :param desk_id:
+        :return:
+        '''
+        return True  # - успех
+
+    def rename_column(self, column_id, new_name):
+        '''Меняем имя у колонки
+           Проверка на уникальное имя
+           Проверка, что колонка существует'''
+        return True  # - успех
+
+    def change_column_sequence_number(self, column_id, new_sequence_number):
+        '''
+        Нужно менять номера для всех съехавших колонок
+        0
+        1 (ставим на 3)
+        2
+        3
+        4
+        ->
+        0 (0)
+        2 (1) - номер съхал на 1 вниз
+        3 (2) - номер съхал на 1 вниз
+        1 (3)
+        4 (4)
+
+        0
+        1
+        2
+        3 (ставим на 1)
+        4
+        ->
+        0 (0)
+        3 (1) - номер съхал на 1 вверх
+        1 (2) - номер съхал на 1 вверх
+        2 (3)
+        4 (4)
+
+        :param desk_id:
+        :param new_sequence_number:
+        :return:
+        '''
+
+
+class CardsDBAPI:
+    def __init__(self):
+        self.card_db = CardsDB()
+
+    def get_cards(self):
+        '''Список всех карточек'''
+        return [('card_id', 'column_id', 'card_title', 'card_text', 'card_status', 'sequence_number'), ()]
+
+    def get_cards_by_desk_id(self, desk_id):
+        '''Список всех карточек принадлежащих desk_id'''
+        return [('card_id', 'column_id', 'card_title', 'card_text', 'card_status', 'sequence_number'), ()]
+
+    def get_cards_by_column_id(self, column_id):
+        '''Список всех карточек принадлежащих column_id'''
+        return [('card_id', 'column_id', 'card_title', 'card_text', 'card_status', 'sequence_number'), ()]
+
+    def add_card(self, column_id, card_name):
+        '''Добавляем карточку в колонку (в конец)
+           Важно задать правильный sequence_number '''
+        return True  # - успех
+
+    def del_card(self, card_id):
+        '''
+        Удаляем карточку
+        Проверка на наличие
+        Нужно поменять sequence_number для всех съхавших колонок
+        '''
+        return True  # - успех
+
+    def chage_card_info(self, card_id, name=None, title=None, text=None, status=None):
+        '''
+        Проверить на наличие
+        Меняем всё что не None'''
+        return True  # - успех
+
+    def change_card_sequence_number(self, card_id, new_sequence_number):
+        '''
+        Нужно менять номера для всех съехавших колонок
+        0
+        1 (ставим на 3)
+        2
+        3
+        4
+        ->
+        0 (0)
+        2 (1) - номер съхал на 1 вниз
+        3 (2) - номер съхал на 1 вниз
+        1 (3)
+        4 (4)
+
+        0
+        1
+        2
+        3 (ставим на 1)
+        4
+        ->
+        0 (0)
+        3 (1) - номер съхал на 1 вверх
+        1 (2) - номер съхал на 1 вверх
+        2 (3)
+        4 (4)
+
+        :param desk_id:
+        :param new_sequence_number:
+        :return:
+        '''
