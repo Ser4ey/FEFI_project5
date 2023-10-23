@@ -1,10 +1,9 @@
 import sqlite3
-import data.config
-
+import FEFI_project5.data.config
 
 class DesksDB:
     '''Низкоуровневый класс для работы с бд Desks (росто ф)'''
-    def __init__(self, path_to_db=data.config.path_to_db):
+    def __init__(self, path_to_db=FEFI_project5.data.config.path_to_db):
         self.path_to_db = path_to_db
         self.create_table_of_desks()
 
@@ -37,7 +36,7 @@ class DesksDB:
             CREATE TABLE IF NOT EXISTS Desks (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name varchar,
-                sequence_number integer,
+                sequence_number integer
             );
             """
         self.execute(sql, commit=True)
@@ -67,39 +66,19 @@ class DesksDB:
         # пример использования команды select_desk(id=131, name='JoJo')
 
     def count_desks(self):
-        return int(self.execute("SELECT COUNT(*) FROM Desks;", fetchone=True))
+        return self.execute("SELECT COUNT(*) FROM Desks;", fetchone=True)[0]
 
     def update_any_info_about_desk(self, desk_id, thing_to_change, new_data):
-        result = self.select_desk(desk_id=desk_id)
+        result = self.select_desk(id=desk_id)
         if not result:
             return f'Доски {desk_id} не существует, проверьте правильность id'
 
         sql = f"UPDATE Desks SET {thing_to_change}=? WHERE id=?"
         self.execute(sql, parameters=(new_data, desk_id), commit=True)
         return
-
     # функция удаления (нужно написать удаление по id)
 
 
-class ColumnsDB:
-    '''CREATE TABLE Columns (
-	id integer PRIMARY KEY AUTOINCREMENT,
-	desk_id integer,
-	name text,
-	sequence_number integer
-    );
-    '''
-    pass
-
-
-class CardsDB:
-    '''
-    CREATE TABLE Cards (
-	id integer PRIMARY KEY AUTOINCREMENT,
-	column_id integer,
-	title text,
-	text text,
-	status integer,
-	sequence_number integer
-);
-    '''
+desk_test = DesksDB()
+# print(desk_test.count_desks())
+print(desk_test.update_any_info_about_desk(1, "name", 'poka'))

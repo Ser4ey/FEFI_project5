@@ -1,3 +1,5 @@
+import database.cards, database.columns, database.desks
+
 class App:
     def __init__(self):
         self._decks = []
@@ -37,6 +39,16 @@ class Card:
     def __init__(self):
         pass
 
-a = Deck()
+# a = Deck()
 # print(a.__name)
-print(a.__dict__)
+# print(a.__dict__)
+
+# test_card = database.cards.CardsDB()
+# test_card.add_card("test3", 3)
+
+# test_desk = database.desks.DesksDB()
+# print(test_desk.update_any_info_about_desk(8, "name", 'MISHA!'))
+
+# test_column = database.columns.ColumnsDB()
+#
+# print(test_column.update_any_info_about_column(4, 'name', 'test5'))
