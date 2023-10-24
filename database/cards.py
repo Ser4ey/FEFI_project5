@@ -1,8 +1,8 @@
 import sqlite3
-import data.config
+import FEFI_project5.data.config
 
 class CardsDB:
-    def __init__(self, path_to_db=data.config.path_to_db):
+    def __init__(self, path_to_db=FEFI_project5.data.config.path_to_db):
         self.path_to_db = path_to_db
         self.create_table_of_cards()
 

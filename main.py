@@ -1,4 +1,7 @@
-import database.cards, database.columns, database.desks
+from database.cards import CardsDB
+from database.columns import ColumnsDB
+from database.desks import DesksDB
+from database.desk_api import DeskAPI
 
 class App:
     def __init__(self):
@@ -39,16 +42,5 @@ class Card:
     def __init__(self):
         pass
 
-# a = Deck()
-# print(a.__name)
-# print(a.__dict__)
-
-# test_card = database.cards.CardsDB()
-# test_card.add_card("test3", 3)
-
-# test_desk = database.desks.DesksDB()
-# print(test_desk.update_any_info_about_desk(8, "name", 'MISHA!'))
-
-# test_column = database.columns.ColumnsDB()
-#
-# print(test_column.update_any_info_about_column(4, 'name', 'test5'))
+tdesk = DeskAPI()
+print(tdesk.get_desks())
