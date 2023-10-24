@@ -43,4 +43,3 @@ class Card:
         pass
 
 tdesk = DeskAPI()
-print(tdesk.get_desks())

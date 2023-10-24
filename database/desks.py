@@ -35,7 +35,7 @@ class DesksDB:
         sql = """
             CREATE TABLE IF NOT EXISTS Desks (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name varchar,
+                name varchar unique,
                 sequence_number integer
             );
             """
@@ -79,6 +79,6 @@ class DesksDB:
     # функция удаления (нужно написать удаление по id)
 
 
-desk_test = DesksDB()
+# desk_test = DesksDB()
 # print(desk_test.count_desks())
-print(desk_test.update_any_info_about_desk(1, "name", 'poka'))
+# print(desk_test.update_any_info_about_desk(1, "name", 'poka'))
