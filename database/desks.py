@@ -35,15 +35,14 @@ class DesksDB:
         sql = """
             CREATE TABLE IF NOT EXISTS Desks (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name varchar unique,
-                sequence_number integer
+                name varchar unique
             );
             """
         self.execute(sql, commit=True)
 
-    def add_desk(self, name, sequence_number):
-        sql = "INSERT INTO Desks(name, sequence_number) VALUES(?, ?)"
-        parameters = (name, sequence_number)
+    def add_desk(self, name):
+        sql = "INSERT INTO Desks(name) VALUES(?)"
+        parameters = (name,)
         self.execute(sql, parameters=parameters, commit=True)
         return True
 
