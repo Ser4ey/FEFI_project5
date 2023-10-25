@@ -43,3 +43,5 @@ class Card:
         pass
 
 tdesk = DeskAPI()
+
+print(tdesk.del_desk(5))
