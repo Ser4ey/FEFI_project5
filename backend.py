@@ -100,7 +100,3 @@ class UserInterface:
     def del_card(self, card_id):
         '''Удалить карточку'''
         return
-
-
-
-

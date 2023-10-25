@@ -1,3 +1,8 @@
+from database.cards import CardsDB
+from database.columns import ColumnsDB
+from database.desks import DesksDB
+from database.desk_api import DeskAPI
+
 class App:
     def __init__(self):
         self._decks = []
@@ -37,6 +42,4 @@ class Card:
     def __init__(self):
         pass
 
-a = Deck()
-# print(a.__name)
-print(a.__dict__)
+tdesk = DeskAPI()
