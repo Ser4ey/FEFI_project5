@@ -61,7 +61,7 @@ class DesksDB:
     def select_desk(self, **kwargs):
         sql = 'SELECT * FROM Desks WHERE '
         sql, parameters = self.format_args(sql, kwargs)
-        return self.execute(sql, parameters, fetchone=True)
+        return self.execute(sql, parameters, fetchall=True)
         # пример использования команды select_desk(id=131, name='JoJo')
 
     def count_desks(self):
