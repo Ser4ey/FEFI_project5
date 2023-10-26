@@ -45,9 +45,9 @@ class CardsDB:
         self.execute(sql, commit=True)
 
 
-    def add_card(self, title, sequence_number):
-        sql = "INSERT INTO Cards(title, sequence_number) VALUES(?, ?)"
-        parameters = (title, sequence_number)
+    def add_card(self, title, column_id, sequence_number):
+        sql = "INSERT INTO Cards(title, column_id, sequence_number) VALUES(?, ?, ?)"
+        parameters = (title,column_id, sequence_number)
         self.execute(sql, parameters=parameters, commit=True)
         return True
 
@@ -83,6 +83,3 @@ class CardsDB:
         self.execute(sql, parameters=(new_data, card_id), commit=True)
         return
         # функция удаления (нужно написать удаление по id)
-
-cards_test = CardsDB()
-cards_test.update_any_info_about_card(1, "sequence_number", 1000)

@@ -37,14 +37,15 @@ class ColumnsDB:
                 desk_id integer,
                 name text,
                 sequence_number integer,
-                FOREIGN KEY (desk_id) REFERENCES Desks(id)
+                FOREIGN KEY (desk_id) REFERENCES Desks(id),
+                unique (desk_id, name)
         );
         '''
         self.execute(sql, commit=True)
 
-    def add_column(self, name, sequence_number):
-        sql = "INSERT INTO Columns(name, sequence_number) VALUES(?, ?)"
-        parameters = (name, sequence_number)
+    def add_column(self, desk_id, name, sequence_number):
+        sql = "INSERT INTO Columns(desk_id, name, sequence_number) VALUES(?, ?, ?)"
+        parameters = (desk_id, name, sequence_number)
         self.execute(sql, parameters=parameters, commit=True)
         return True
 
@@ -79,7 +80,7 @@ class ColumnsDB:
         sql = f"UPDATE Columns SET {thing_to_change}=? WHERE id=?"
         self.execute(sql, parameters=(new_data, column_id), commit=True)
         return
-        # функция удаления (нужно написать удаление по id)
+
 
 columns_test = ColumnsDB()
 # columns_test.create_table_of_columns()
