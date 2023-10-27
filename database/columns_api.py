@@ -1,4 +1,4 @@
-from FEFI_project5.database.columns import  ColumnsDB
+from database.columns import  ColumnsDB
 
 class ColumnsAPI:
     def __init__(self):

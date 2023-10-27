@@ -1,4 +1,5 @@
-from FEFI_project5.database.desks import DesksDB
+from database.desks import DesksDB
+
 
 class DeskAPI:
     def __init__(self):

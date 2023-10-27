@@ -1,8 +1,9 @@
 import sqlite3
-import FEFI_project5.data.config
+import data.config
+# import FEFI_project5.data.config
 
 class CardsDB:
-    def __init__(self, path_to_db=FEFI_project5.data.config.path_to_db):
+    def __init__(self, path_to_db=data.config.path_to_db):
         self.path_to_db = path_to_db
         self.create_table_of_cards()
 
@@ -44,7 +45,6 @@ class CardsDB:
         '''
         self.execute(sql, commit=True)
 
-
     def add_card(self, title, column_id, sequence_number):
         sql = "INSERT INTO Cards(title, column_id, sequence_number) VALUES(?, ?, ?)"
         parameters = (title,column_id, sequence_number)
@@ -64,10 +64,16 @@ class CardsDB:
         ])
         return sql, tuple(parameters.values())
 
-    def select_card(self, **kwargs):  # TODO
+    def select_card(self, **kwargs):
         sql = 'SELECT * FROM Cards WHERE '
         sql, parameters = self.format_args(sql, kwargs)
         return self.execute(sql, parameters, fetchone=True)
+        # пример использования команды select_desk(id=131, name='JoJo')
+
+    def select_cards(self, **kwargs):
+        sql = 'SELECT * FROM Cards WHERE '
+        sql, parameters = self.format_args(sql, kwargs)
+        return self.execute(sql, parameters, fetchall=True)
         # пример использования команды select_desk(id=131, name='JoJo')
 
     def count_cards(self):
@@ -83,3 +89,10 @@ class CardsDB:
         self.execute(sql, parameters=(new_data, card_id), commit=True)
         return
         # функция удаления (нужно написать удаление по id)
+
+# a = CardsDB()
+# a.add_card('1', 99, 8)
+# a.add_card('1', 2, 99)
+# a.add_card('1', 2, 77)
+#
+# print(a.select_cards(column_id=99))

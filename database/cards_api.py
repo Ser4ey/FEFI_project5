@@ -1,4 +1,5 @@
-from FEFI_project5.database.cards import CardsDB
+from database.cards import CardsDB
+
 
 class CardsAPI:
     def __init__(self):
@@ -7,20 +8,6 @@ class CardsAPI:
     def get_cards(self):
         return self.card_db.select_all_cards()
         '''Список всех карточек'''
-
-
-    def get_cards_by_desk_id(self, desk_id):
-        sql = 'SELECT * FROM Cards, Columns WHERE Cards.column_id = Columns.id and Columns.desk_id=?'
-        cards = self.card_db.execute(sql, (desk_id,), fetchall=True)
-        # zxc = []
-        # for i in range(len(cards)):
-        #     if cards[i][7] == desk_id:
-        #         zxc.append(cards[i])
-        print(len(cards))
-        return cards
-        '''Список всех карточек принадлежащих desk_id'''
-        # return [('card_id', 'column_id', 'card_title', 'card_text', 'card_status', 'sequence_number'), ()]
-
 
     def get_cards_by_column_id(self, column_id):  # TODO
         sql = 'SELECT * FROM Cards WHERE column_id=?'

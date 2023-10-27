@@ -1,9 +1,9 @@
 import sqlite3
-import FEFI_project5.data.config
+import data.config
 
 class DesksDB:
     '''Низкоуровневый класс для работы с бд Desks (росто ф)'''
-    def __init__(self, path_to_db=FEFI_project5.data.config.path_to_db):
+    def __init__(self, path_to_db=data.config.path_to_db):
         self.path_to_db = path_to_db
         self.create_table_of_desks()
 
