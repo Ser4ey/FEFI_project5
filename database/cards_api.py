@@ -5,20 +5,17 @@ class CardsAPI:
     def __init__(self):
         self.card_db = CardsDB()
 
+
     def get_cards(self):
         return self.card_db.select_all_cards()
-        '''Список всех карточек'''
 
-    def get_cards_by_column_id(self, column_id):  # TODO
-        sql = 'SELECT * FROM Cards WHERE column_id=?'
-        return self.card_db.execute(sql, (column_id,), fetchall=True)
-        # return self.card_db.select_card(column_id=column_id)
-        '''Список всех карточек принадлежащих column_id'''
+
+    def get_cards_by_column_id(self, column_id):
+        return self.card_db.select_cards_by_column_id(column_id=column_id)
 
 
     def add_card(self, column_id, card_name):
-        last_sequence_number = 'SELECT MAX(sequence_number) FROM Cards WHERE column_id  =?'
-        last_sequence_number = self.card_db.execute(last_sequence_number, (column_id,), fetchone=True)[0]
+        last_sequence_number = self.card_db.get_last_sequence_number_by_desk_id(column_id=column_id)
 
         if last_sequence_number is None:
             last_sequence_number = 0 + 1
@@ -28,29 +25,30 @@ class CardsAPI:
         self.card_db.add_card(title=card_name, column_id=column_id, sequence_number=last_sequence_number)
         return True
 
+
     def del_card(self, card_id):
         zxc = self.card_db.select_card(id=card_id)
 
         if zxc is not None:
-            self.card_db.execute('DELETE FROM Cards WHERE id=?', (card_id,), commit=True)
-
+            cards_to_update = []
+            self.card_db.del_card_by_card_id(card_id)
             deleted_card_id = zxc[1]
-            cards_to_update = self.card_db.execute('SELECT * FROM Cards WHERE column_id=? and sequence_number > ?', (deleted_card_id, zxc[-1]), fetchall=True)
+            cards = self.card_db.select_cards_by_column_id(deleted_card_id)
 
-            for card in cards_to_update:
-                self.card_db.update_any_info_about_card(card[0], 'sequence_number', card[5]-1)
+            for i in range(len(cards)):
+                if cards[i][-1] > zxc[-1]:
+                    self.card_db.update_any_info_about_card(cards[i][0], 'sequence_number', cards[i][-1] - 1)
+                    cards_to_update.append(cards[i])
+
             return True
         else:
             return False
 
 
-    def chage_card_info(self, card_id, name=None, title=None, text=None, status=None):
+    def chage_card_info(self, card_id, title=None, text=None, status=None):
         zxc = self.card_db.select_card(id=card_id)
 
         if zxc is not None:
-            if name is not None:
-                # self.card_db.update_any_info_about_card(id=card_id, )
-                pass
             if title is not None:
                 self.card_db.update_any_info_about_card(card_id, 'title', title)
             if text is not None:

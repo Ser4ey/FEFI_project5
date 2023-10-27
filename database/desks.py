@@ -75,9 +75,13 @@ class DesksDB:
         sql = f"UPDATE Desks SET {thing_to_change}=? WHERE id=?"
         self.execute(sql, parameters=(new_data, desk_id), commit=True)
         return
-    # функция удаления (нужно написать удаление по id)
 
 
-# desk_test = DesksDB()
-# print(desk_test.count_desks())
-# print(desk_test.update_any_info_about_desk(1, "name", 'poka'))
+    def del_desk(self, desk_id):
+        zxc = self.select_desk(id=desk_id)
+
+        if len(zxc) != 0:
+            self.execute("DELETE FROM Desks WHERE id=?", (desk_id,), commit=True)
+            return True
+        else:
+            return False

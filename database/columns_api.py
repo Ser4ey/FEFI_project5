@@ -4,19 +4,17 @@ class ColumnsAPI:
     def __init__(self):
         self.column_db = ColumnsDB()
 
+
     def get_columns(self):
-        '''Список всех колонок'''
         return self.column_db.select_all_columns()
 
-    def get_columns_by_desk_id(self, desk_id):  # TODO
-        sql = 'SELECT * FROM Columns WHERE desk_id=?'
-        return self.column_db.execute(sql, (desk_id,), fetchall=True)
-        '''Список всех колонок принадлежащих desk_id'''
-        # return self.column_db.select_column(desk_id=desk_id)
+
+    def get_columns_by_desk_id(self, desk_id):
+        return self.column_db.select_columns_by_desk_id(desk_id=desk_id)
+
 
     def add_column(self, desk_id, column_name):
-        last_sequence_number = 'SELECT MAX(sequence_number) FROM Columns WHERE desk_id=?'
-        last_sequence_number = self.column_db.execute(last_sequence_number,(desk_id,), fetchone=True)[0]
+        last_sequence_number = self.column_db.get_last_sequence_number_by_desk_id(desk_id=desk_id)
 
         if last_sequence_number is None:
             last_sequence_number = 0 + 1
@@ -34,13 +32,16 @@ class ColumnsAPI:
         zxc = self.column_db.select_column(id=column_id)
 
         if zxc is not None:
-            self.column_db.execute("DELETE FROM Columns WHERE id=?", (column_id,), commit=True)
-
+            columns_to_update = []
+            self.column_db.del_column_by_column_id(column_id)
             deleted_column_id = zxc[1]  # desk_id удаленной строки, чтобы потом пересчитать sequence_number у этой доски
-            columns_to_update = self.column_db.execute('SELECT * FROM Columns WHERE desk_id=? and sequence_number > ?', (deleted_column_id, zxc[3]), fetchall=True)
+            columns = self.column_db.select_columns_by_desk_id(desk_id=deleted_column_id)
 
-            for column in columns_to_update:
-                self.column_db.update_any_info_about_column(column[0], 'sequence_number', column[3]-1)
+            for i in range(len(columns)):
+                if columns[i][3] > zxc[3]:
+                    self.column_db.update_any_info_about_column(columns[i][0], 'sequence_number', columns[i][3] - 1)
+                    columns_to_update.append(columns[i])
+
             return True
         else:
             return False
