@@ -82,9 +82,10 @@ class ColumnsDB:
         return
 
 
-columns_test = ColumnsDB()
+# columns_test = ColumnsDB()
 # columns_test.create_table_of_columns()
 # columns_test.add_column('test3', 2)
 # print(columns_test.select_column(id=2, name='test2'))
 # print(columns_test.count_columns())
 # print(columns_test.update_any_info_about_column(1, 'name', 'test!'))
+
