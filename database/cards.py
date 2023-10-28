@@ -56,6 +56,12 @@ class CardsDB:
         sql = 'SELECT * FROM Cards'
         return self.execute(sql, fetchall=True)
 
+
+    def select_cards_by_column_id(self, column_id):  # TODO
+        sql = 'SELECT * FROM Cards WHERE column_id=?'
+        return self.execute(sql, (column_id,), fetchall=True)
+
+
     @staticmethod
     def format_args(sql, parameters: dict):
         # используется для создания sql команды с нужными параметрами для команды ниже
@@ -88,11 +94,20 @@ class CardsDB:
         sql = f"UPDATE Cards SET {field_to_change}=? WHERE id=?"
         self.execute(sql, parameters=(new_data, card_id), commit=True)
         return
-        # функция удаления (нужно написать удаление по id)
 
-# a = CardsDB()
-# a.add_card('1', 99, 8)
-# a.add_card('1', 2, 99)
-# a.add_card('1', 2, 77)
-#
-# print(a.select_cards(column_id=99))
+    def get_last_sequence_number_by_desk_id(self, column_id):
+        sql = 'SELECT MAX(sequence_number) FROM Cards WHERE column_id=?'
+        result = self.execute(sql, (column_id,), fetchone=True)
+
+        return result[0]
+
+
+    def del_card_by_card_id(self, card_id):
+        zxc = self.select_card(id=card_id)
+
+        if len(zxc) != 0:
+            self.execute('DELETE FROM Cards WHERE id=?', (card_id,), commit=True)
+            return True
+        else:
+            return False
+

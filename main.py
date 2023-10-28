@@ -56,23 +56,22 @@ desk_api_test = DeskAPI()  # OK
 
 # print(desk_api_test.add_desk('misha7'))
 
-# print(desk_api_test.del_desk(4))
+# print(desk_api_test.del_desk_by_id(3))
 
 # print(desk_api_test.rename_desk(2, 'new_misha2'))
 
 
 
 column_api_test = ColumnsAPI()
-
 # print(column_api_test.get_columns())
 
 # print(column_api_test.get_columns_by_desk_id(1))
 
 # for i in range(4):
 #     print(column_api_test.add_column(3, f'misha1_{i}'))
-# print(column_api_test.add_column(3, 'misha1_0'))
+# print(column_api_test.add_column(5, 'misha5_1'))
 
-# print(column_api_test.del_column(11))
+# print(column_api_test.del_column(14))
 
 # print(column_api_test.rename_column(12, 'misha1_3'))
 
@@ -84,13 +83,11 @@ card_api_test = CardsAPI()
 
 # print(card_api_test.get_cards())
 
-# print(card_api_test.get_cards_by_desk_id(2))
+# print(card_api_test.get_cards_by_column_id(2))
 
-# print(card_api_test.get_cards_by_column_id(1))
+# print(card_api_test.add_card(7, '7_6'))
 
-# print(card_api_test.add_card(1, '1_4'))
-
-# print(card_api_test.del_card(2))
+# print(card_api_test.del_card(23))
 
 # print(card_api_test.chage_card_info(8, text='zxczxczxc'))
 
