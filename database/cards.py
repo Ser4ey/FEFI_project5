@@ -111,3 +111,22 @@ class CardsDB:
         else:
             return False
 
+    def change_card_sequence_number(self, card_id, new_sequence_number):
+        sql = 'SELECT sequence_number FROM Cards WHERE id=?'
+        card_sequence_number = self.select_card(id=card_id)[-1]
+        card_columnn_id = self.select_card(id=card_id)[1]
+
+        if card_sequence_number < new_sequence_number:
+            sql = 'UPDATE Cards SET sequence_number=sequence_number-1 WHERE sequence_number > ? and sequence_number <= ? and column_id=?'
+            self.execute(sql, (card_sequence_number, new_sequence_number, card_columnn_id,), commit=True)
+            self.update_any_info_about_card(card_id, 'sequence_number', new_sequence_number)
+            return True
+
+        elif card_sequence_number > new_sequence_number:
+            sql = 'UPDATE Cards SET sequence_number=sequence_number+1 WHERE sequence_number >= ? and sequence_number < ? and column_id=?'
+            self.execute(sql, (new_sequence_number, card_sequence_number, card_columnn_id), commit=True)
+            self.update_any_info_about_card(card_id, 'sequence_number', new_sequence_number)
+            return True
+
+        else:
+            return True
