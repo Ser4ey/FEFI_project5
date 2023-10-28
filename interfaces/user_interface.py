@@ -1,25 +1,4 @@
-#
-
-
-class AuthInterface:
-    def __init__(self):
-        pass
-
-    def is_user_set_password(self):
-        '''Установил ли пользователь пароль'''
-        return False
-
-    def set_user_password(self, password):
-        '''Устанавливает пользователю пароль. Нужно использовать только для установки пароль в 1первый раз'''
-        return True
-
-    def update_user_password(self, old_password, password):
-        '''Меняет пароль пользователю'''
-        return
-
-    def check_password(self, password):
-        '''Проверяет правильность пароля'''
-        return
+from interfaces.exceptions.user_interface_exceptions import UserInterfaceExceptions
 
 
 class UserInterface:
@@ -104,9 +83,3 @@ class UserInterface:
     def del_card(self, card_id):
         '''Удалить карточку'''
         return
-
-
-class Interface:
-    AuthInterface = AuthInterface()
-    UserInterface = UserInterface()
-
