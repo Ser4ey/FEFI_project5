@@ -102,3 +102,24 @@ class ColumnsDB:
             return True
         else:
             return False
+
+
+    def change_column_sequence_number(self, column_id, new_sequence_number):
+        sql = 'SELECT sequence_number FROM Columns WHERE id=?'
+        column_sequence_number = self.select_column(id=column_id)[-1]
+        column_desk_id = self.select_column(id=column_id)[1]
+
+        if column_sequence_number < new_sequence_number:
+            sql = 'UPDATE Columns SET sequence_number=sequence_number-1 WHERE sequence_number > ? and sequence_number <= ? and desk_id=?'
+            self.execute(sql, (column_sequence_number, new_sequence_number, column_desk_id,), commit=True)
+            self.update_any_info_about_column(column_id, 'sequence_number', new_sequence_number)
+            return True
+
+        elif column_sequence_number > new_sequence_number:
+            sql = 'UPDATE Columns SET sequence_number=sequence_number+1 WHERE sequence_number >= ? and sequence_number < ? and desk_id=?'
+            self.execute(sql, (new_sequence_number, column_sequence_number, column_desk_id), commit=True)
+            self.update_any_info_about_column(column_id, 'sequence_number', new_sequence_number)
+            return True
+
+        else:
+            return True

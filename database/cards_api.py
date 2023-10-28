@@ -5,7 +5,6 @@ class CardsAPI:
     def __init__(self):
         self.card_db = CardsDB()
 
-
     def get_cards(self):
         return self.card_db.select_all_cards()
 
@@ -61,33 +60,4 @@ class CardsAPI:
 
 
     def change_card_sequence_number(self, card_id, new_sequence_number):
-        '''
-        Нужно менять номера для всех съехавших колонок
-        0
-        1 (ставим на 3)
-        2
-        3
-        4
-        ->
-        0 (0)
-        2 (1) - номер съхал на 1 вниз
-        3 (2) - номер съхал на 1 вниз
-        1 (3)
-        4 (4)
-
-        0
-        1
-        2
-        3 (ставим на 1)
-        4
-        ->
-        0 (0)
-        3 (1) - номер съхал на 1 вверх
-        1 (2) - номер съхал на 1 вверх
-        2 (3)
-        4 (4)
-
-        :param desk_id:
-        :param new_sequence_number:
-        :return:
-        '''
+        return self.card_db.change_card_sequence_number(card_id, new_sequence_number)
