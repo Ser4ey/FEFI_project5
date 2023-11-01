@@ -8,6 +8,7 @@ import ctypes
 from ctypes.wintypes import DWORD, ULONG
 from ctypes import windll, c_bool, c_int, POINTER, Structure
 
+import time
 
 class AccentPolicy(Structure):
     _fields_ = [
