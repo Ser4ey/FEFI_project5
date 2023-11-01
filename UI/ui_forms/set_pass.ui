@@ -17,6 +17,9 @@
    <string notr="true">TaskManager</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="class" stdset="0">
+    <string>mainPlane</string>
+   </property>
    <widget class="QWidget" name="plane" native="true">
     <property name="geometry">
      <rect>
@@ -131,7 +134,7 @@
       <string>textInput</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="okButton">
      <property name="geometry">
       <rect>
        <x>210</x>
@@ -147,7 +150,7 @@
       <string>whiteButton</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="cancelButton">
      <property name="geometry">
       <rect>
        <x>334</x>
@@ -163,6 +166,95 @@
       <string>redButton</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="themeButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>31</x>
+      <y>1</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::ClickFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../icons/lighttheme.png</normaloff>../icons/lighttheme.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+    <property name="class" stdset="0">
+     <string>iconButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pinButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>2</x>
+      <y>1</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::ClickFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../icons/pin_icon.png</normaloff>
+      <activeoff>../icons/pin_icon_active.png</activeoff>../icons/pin_icon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+    <property name="class" stdset="0">
+     <string>iconButton</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="exitButton">
     <property name="geometry">
@@ -184,8 +276,8 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>icons/exit_icon.png</normaloff>
-      <activeoff>icons/exit_icon_hover.png</activeoff>icons/exit_icon.png</iconset>
+      <normaloff>../icons/exit_icon.png</normaloff>
+      <activeoff>../icons/exit_icon_hover.png</activeoff>../icons/exit_icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -200,13 +292,10 @@
      <string>iconButton</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pinButton">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
+   <widget class="QPushButton" name="minButton">
     <property name="geometry">
      <rect>
-      <x>1</x>
+      <x>970</x>
       <y>1</y>
       <width>25</width>
       <height>25</height>
@@ -215,24 +304,16 @@
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
-    <property name="focusPolicy">
-     <enum>Qt::ClickFocus</enum>
-    </property>
-    <property name="contextMenuPolicy">
-     <enum>Qt::NoContextMenu</enum>
+    <property name="inputMethodHints">
+     <set>Qt::ImhHiddenText</set>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>icons/pin_icon.png</normaloff>
-      <disabledoff>icons/pin_icon_active.png</disabledoff>
-      <disabledon>icons/pin_icon_active.png</disabledon>
-      <activeoff>icons/pin_icon_active.png</activeoff>
-      <activeon>icons/pin_icon.png</activeon>
-      <selectedoff>icons/pin_icon_active.png</selectedoff>
-      <selectedon>icons/pin_icon_active.png</selectedon>icons/pin_icon.png</iconset>
+      <normaloff>../icons/minimize_icon.png</normaloff>
+      <activeoff>../icons/minimize_icon_active.png</activeoff>../icons/minimize_icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -241,10 +322,10 @@
      </size>
     </property>
     <property name="checkable">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
-    <property name="checked">
-     <bool>true</bool>
+    <property name="flat">
+     <bool>false</bool>
     </property>
     <property name="class" stdset="0">
      <string>iconButton</string>

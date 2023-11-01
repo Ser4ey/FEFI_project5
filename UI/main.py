@@ -1,9 +1,8 @@
-
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
 from PyQt6.QtGui import QFontDatabase, QIcon
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QRect
 
 import ctypes
 from ctypes.wintypes import DWORD, ULONG
@@ -36,18 +35,13 @@ class MainUI(QMainWindow):
         self.pinned = False  # The pinned state
         self.theme = True  # Theme style
         self.setFixedSize(1024, 768)
-        self.setBlurBehindWindow()
+        self.blur_background()
         self.load_ui()
         self.connect_buttons()
 
-
-    def setBlurBehindWindow(self):
+    def blur_background(self):
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
-
-        #self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground) окно лагает и полупрозрачные элементы не обновляются
-        # с этим клики проходят сквозь окно
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-
         accent_policy = AccentPolicy()
         accent_policy.AccentState = 3  # ACCENT_ENABLE_BLURBEHIND
 
@@ -60,23 +54,22 @@ class MainUI(QMainWindow):
 
     def load_ui(self):
         with open("styles/dark_theme.css") as style:
-            uic.loadUi('ui_forms/change_pass.ui', self)
+            uic.loadUi('ui_forms/auth.ui', self)
             QFontDatabase.addApplicationFont("fonts/Comfortaa/Comfortaa-Medium.ttf")
             self.setStyleSheet(style.read())
             self.show()
 
     def connect_buttons(self):
-        self.exit_button = self.findChild(QPushButton, 'exitButton')
         self.pin_button = self.findChild(QPushButton, 'pinButton')
         self.theme_button = self.findChild(QPushButton, 'themeButton')
-        # self.set_pass_button = self.findChild(QPushButton, 'setPassButton')
-        # self.skip_pass_button = self.findChild(QPushButton, 'skipPassButton')
+        self.exit_button = self.findChild(QPushButton, 'exitButton')
+        self.min_button = self.findChild(QPushButton, 'minButton')
 
-        self.exit_button.clicked.connect(self.exit_app)
+
         self.pin_button.clicked.connect(self.pin_toggle)
         self.theme_button.clicked.connect(self.theme_toggle)
-        # self.set_pass_button.clicked.connect(self.set_password)
-        # self.skip_pass_button.clicked.connect(self.skip_password)
+        self.exit_button.clicked.connect(self.exit_app)
+        self.min_button.clicked.connect(self.min_app)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
@@ -93,9 +86,6 @@ class MainUI(QMainWindow):
         delta = event.pos() - self.old_pos
         self.move(self.pos() + delta)
 
-    def exit_app(self):
-        app.quit()
-
     def pin_toggle(self):
         self.pinned = not self.pinned
         if self.pinned:
@@ -111,18 +101,18 @@ class MainUI(QMainWindow):
         if self.theme:
             with open("styles/dark_theme.css") as style:
                 self.setStyleSheet(style.read())
-                self.theme_button.setIcon(QIcon("icons/darktheme.png"))
+                self.theme_button.setIcon(QIcon("icons/lighttheme.png"))
         else:
             with open("styles/light_theme.css") as style:
                 self.setStyleSheet(style.read())
-                self.theme_button.setIcon(QIcon("icons/lighttheme.png"))
+                self.theme_button.setIcon(QIcon("icons/darktheme.png"))
         self.show()
 
-    def set_password(self):
+    def exit_app(self):
         app.quit()
 
-    def skip_password(self):
-        app.quit()
+    def min_app(self):
+        self.showMinimized()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

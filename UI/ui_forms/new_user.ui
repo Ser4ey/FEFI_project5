@@ -16,10 +16,10 @@
   <property name="windowTitle">
    <string notr="true">TaskManager</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true">border: 1px solid #323232;</string>
-  </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="class" stdset="0">
+    <string>mainPlane</string>
+   </property>
    <widget class="QWidget" name="plane" native="true">
     <property name="geometry">
      <rect>
@@ -96,7 +96,7 @@
    <widget class="QPushButton" name="exitButton">
     <property name="geometry">
      <rect>
-      <x>999</x>
+      <x>998</x>
       <y>1</y>
       <width>25</width>
       <height>25</height>
@@ -113,8 +113,8 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>icons/exit_icon.png</normaloff>
-      <activeoff>icons/exit_icon_hover.png</activeoff>icons/exit_icon.png</iconset>
+      <normaloff>../icons/exit_icon.png</normaloff>
+      <activeoff>../icons/exit_icon_hover.png</activeoff>../icons/exit_icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -123,6 +123,88 @@
      </size>
     </property>
     <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="class" stdset="0">
+     <string>iconButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="themeButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>1</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::ClickFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../icons/lighttheme.png</normaloff>../icons/lighttheme.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+    <property name="class" stdset="0">
+     <string>iconButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="minButton">
+    <property name="geometry">
+     <rect>
+      <x>969</x>
+      <y>1</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="inputMethodHints">
+     <set>Qt::ImhHiddenText</set>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../icons/minimize_icon.png</normaloff>../icons/minimize_icon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
      <bool>false</bool>
     </property>
     <property name="class" stdset="0">
@@ -155,13 +237,8 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>icons/pin_icon.png</normaloff>
-      <disabledoff>icons/pin_icon_active.png</disabledoff>
-      <disabledon>icons/pin_icon_active.png</disabledon>
-      <activeoff>icons/pin_icon_active.png</activeoff>
-      <activeon>icons/pin_icon.png</activeon>
-      <selectedoff>icons/pin_icon_active.png</selectedoff>
-      <selectedon>icons/pin_icon_active.png</selectedon>icons/pin_icon.png</iconset>
+      <normaloff>../icons/pin_icon.png</normaloff>
+      <activeoff>../icons/pin_icon_active.png</activeoff>../icons/pin_icon.png</iconset>
     </property>
     <property name="iconSize">
      <size>
