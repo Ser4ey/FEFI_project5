@@ -30,15 +30,13 @@ SetWindowCompositionAttribute = windll.user32.SetWindowCompositionAttribute
 SetWindowCompositionAttribute.restype = c_bool
 SetWindowCompositionAttribute.argtypes = [c_int, POINTER(WINCOMPATTRDATA)]
 
-
 # ui types:
-class UI(str):
-    auth = 'auth'
-    card = 'card'
-    change_pass = 'change_pass'
-    desks = 'desks'
-    new_user = 'new_user'
-    set_pass = 'set_pass'
+auth = 'auth'
+card = 'card'
+change_pass = 'change_pass'
+desks = 'desks'
+new_user = 'new_user'
+set_pass = 'set_pass'
 
 
 class UserInterface(QMainWindow):
@@ -68,7 +66,6 @@ class UserInterface(QMainWindow):
 
     def load_ui(self, ui_type):
         with open("styles/dark_theme.css") as style:
-
             uic.loadUi(f'ui_forms/{ui_type}.ui', self)
             QFontDatabase.addApplicationFont("fonts/Comfortaa/Comfortaa-Medium.ttf")
             self.setStyleSheet(style.read())
@@ -79,7 +76,6 @@ class UserInterface(QMainWindow):
         self.theme_button = self.findChild(QPushButton, 'themeButton')
         self.exit_button = self.findChild(QPushButton, 'exitButton')
         self.min_button = self.findChild(QPushButton, 'minButton')
-
 
         self.pin_button.clicked.connect(self.pin_toggle)
         self.theme_button.clicked.connect(self.theme_toggle)
@@ -123,6 +119,7 @@ class UserInterface(QMainWindow):
                 self.theme_button.setIcon(QIcon("icons/darktheme.png"))
         self.show()
 
+    @staticmethod
     def exit_app(self):
         app.quit()
 
@@ -130,7 +127,37 @@ class UserInterface(QMainWindow):
         self.showMinimized()
 
 
+class UIAuthentication(UserInterface):
+    def __init__(self):
+        super().__init__(auth)
+
+
+class UINewUser(UserInterface):
+    def __init__(self):
+        super().__init__(new_user)
+
+
+class UISetPassword(UserInterface):
+    def __init__(self):
+        super().__init__(set_pass)
+
+
+class UIChangePassword(UserInterface):
+    def __init__(self):
+        super().__init__(change_pass)
+
+
+class UIDesks(UserInterface):
+    def __init__(self):
+        super().__init__(desks)
+
+
+class UICard(UserInterface):
+    def __init__(self):
+        super().__init__(card)
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = UserInterface(UI.new_user)
+    window = UINewUser()
     sys.exit(app.exec())
