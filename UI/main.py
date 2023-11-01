@@ -2,11 +2,12 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
 from PyQt6.QtGui import QFontDatabase, QIcon
-from PyQt6.QtCore import Qt, QRect
+from PyQt6.QtCore import Qt
 
 import ctypes
 from ctypes.wintypes import DWORD, ULONG
 from ctypes import windll, c_bool, c_int, POINTER, Structure
+
 
 class AccentPolicy(Structure):
     _fields_ = [
@@ -29,14 +30,27 @@ SetWindowCompositionAttribute = windll.user32.SetWindowCompositionAttribute
 SetWindowCompositionAttribute.restype = c_bool
 SetWindowCompositionAttribute.argtypes = [c_int, POINTER(WINCOMPATTRDATA)]
 
-class MainUI(QMainWindow):
-    def __init__(self):
+
+# ui types:
+class UI(str):
+    auth = 'auth'
+    card = 'card'
+    change_pass = 'change_pass'
+    desks = 'desks'
+    new_user = 'new_user'
+    set_pass = 'set_pass'
+
+
+class UserInterface(QMainWindow):
+    def __init__(self, ui_type):
         super().__init__()
         self.pinned = False  # The pinned state
         self.theme = True  # Theme style
+
+        self._ui_type = ui_type
         self.setFixedSize(1024, 768)
         self.blur_background()
-        self.load_ui()
+        self.load_ui(self._ui_type)
         self.connect_buttons()
 
     def blur_background(self):
@@ -52,9 +66,10 @@ class MainUI(QMainWindow):
 
         SetWindowCompositionAttribute(c_int(int(self.winId())), ctypes.pointer(win_comp_attr_data))
 
-    def load_ui(self):
+    def load_ui(self, ui_type):
         with open("styles/dark_theme.css") as style:
-            uic.loadUi('ui_forms/auth.ui', self)
+
+            uic.loadUi(f'ui_forms/{ui_type}.ui', self)
             QFontDatabase.addApplicationFont("fonts/Comfortaa/Comfortaa-Medium.ttf")
             self.setStyleSheet(style.read())
             self.show()
@@ -114,7 +129,8 @@ class MainUI(QMainWindow):
     def min_app(self):
         self.showMinimized()
 
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = MainUI()
+    window = UserInterface(UI.new_user)
     sys.exit(app.exec())
