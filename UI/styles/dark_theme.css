@@ -1,5 +1,5 @@
-.mainWindow {
-	border: 1px solid #323232;
+.mainPlane {
+	background: rgba(255, 255, 255, 0.01);
 }
 
 .plane {
@@ -70,7 +70,7 @@
 	color: #C4CDFF;
 	text-align: center;
 	font-family: Comfortaa;
-	font-size: 20px;
+	font-size: 12px;
 	font-style: normal;
 	font-weight: 400;
 	line-height: 24px; /* 120% */

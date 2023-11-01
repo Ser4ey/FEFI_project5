@@ -17,6 +17,12 @@
    <string notr="true">TaskManager</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
+   <property name="class" stdset="0">
+    <string>mainPlane</string>
+   </property>
    <widget class="QWidget" name="plane" native="true">
     <property name="geometry">
      <rect>
@@ -311,7 +317,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../icons/daynnight.png</normaloff>../icons/daynnight.png</iconset>
+      <normaloff>../icons/darktheme.png</normaloff>../icons/darktheme.png</iconset>
     </property>
     <property name="iconSize">
      <size>

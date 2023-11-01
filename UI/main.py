@@ -2,7 +2,7 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
-from PyQt6.QtGui import QFontDatabase
+from PyQt6.QtGui import QFontDatabase, QIcon
 from PyQt6.QtCore import Qt
 
 import ctypes
@@ -43,7 +43,10 @@ class MainUI(QMainWindow):
 
     def setBlurBehindWindow(self):
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
-        self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground)
+
+        #self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground) окно лагает и полупрозрачные элементы не обновляются
+        # с этим клики проходят сквозь окно
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
         accent_policy = AccentPolicy()
         accent_policy.AccentState = 3  # ACCENT_ENABLE_BLURBEHIND
@@ -70,7 +73,7 @@ class MainUI(QMainWindow):
         # self.skip_pass_button = self.findChild(QPushButton, 'skipPassButton')
 
         self.exit_button.clicked.connect(self.exit_app)
-        self.pin_button.clicked.connect(self.pin_app)
+        self.pin_button.clicked.connect(self.pin_toggle)
         self.theme_button.clicked.connect(self.theme_toggle)
         # self.set_pass_button.clicked.connect(self.set_password)
         # self.skip_pass_button.clicked.connect(self.skip_password)
@@ -93,9 +96,14 @@ class MainUI(QMainWindow):
     def exit_app(self):
         app.quit()
 
-    def pin_app(self):
+    def pin_toggle(self):
         self.pinned = not self.pinned
-        self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, self.pinned)
+        if self.pinned:
+            self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, True)
+            self.pin_button.setIcon(QIcon("icons/pin_icon_active.png"))
+        else:
+            self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, False)
+            self.pin_button.setIcon(QIcon("icons/pin_icon.png"))
         self.show()
 
     def theme_toggle(self):
@@ -103,9 +111,11 @@ class MainUI(QMainWindow):
         if self.theme:
             with open("styles/dark_theme.css") as style:
                 self.setStyleSheet(style.read())
+                self.theme_button.setIcon(QIcon("icons/darktheme.png"))
         else:
             with open("styles/light_theme.css") as style:
                 self.setStyleSheet(style.read())
+                self.theme_button.setIcon(QIcon("icons/lighttheme.png"))
         self.show()
 
     def set_password(self):
