@@ -1,0 +1,103 @@
+.mainWindow {
+    border: 1px solid #D6D6D6;
+}
+
+.plane {
+    border-radius: 10px;
+    border: 2px solid #D6D6D6;
+    background: #FFFFFF;
+}
+
+.headerText {
+    color: #333333;
+    font-family: 'Comfortaa';
+    font-size: 40px;
+    font-weight: 700;
+    border: none;
+    text-shadow: none;
+}
+
+.smallheaderText {
+    color: #333333;
+    font-family: 'Comfortaa';
+    font-size: 30px;
+    font-weight: 700;
+    border: none;
+    text-shadow: none;
+}
+
+.iconButton {
+    background-color: transparent;
+    border: none;
+}
+
+.regularButton {
+    border-radius: 10px;
+    border: 1px solid #727CB0;
+    background: #727CB0;
+    color: #FFFFFF;
+    text-align: center;
+    font-family: Comfortaa;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.regularButton:hover {
+    background: rgb(153, 163, 216);
+    color: rgb(61, 64, 80);
+}
+
+.hintButton {
+    color: rgba(61, 64, 80, 0.46);
+    text-align: center;
+    font-family: Comfortaa;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    border: 0px solid #727CB0;
+}
+
+.hintButton:hover {
+    color: rgb(160, 171, 231);
+}
+
+.textInput {
+    border-radius: 10px;
+    border: 1px solid #727CB0;
+    background: #FFFFFF;
+    color: #333333;
+    text-align: center;
+    font-family: Comfortaa;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.whiteButton {
+    border-radius: 10px;
+    border: 1px solid #727CB0;
+    background: #FFFFFF;
+    color: #333333;
+    text-align: center;
+    font-family: Comfortaa;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.redButton {
+    border-radius: 10px;
+    border: 1px solid #FF7D7D;
+    background: #FF3F3F;
+    color: #FFFFFF;
+    text-align: center;
+    font-family: Comfortaa;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+}

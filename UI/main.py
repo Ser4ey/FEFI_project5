@@ -54,8 +54,8 @@ class MainUI(QMainWindow):
         SetWindowCompositionAttribute(c_int(int(self.winId())), ctypes.pointer(win_comp_attr_data))
 
     def load_ui(self):
-        with open("style.css") as style:
-            uic.loadUi('change_pass.ui', self)
+        with open("styles/light_theme.css") as style:
+            uic.loadUi('ui_forms/change_pass.ui', self)
             QFontDatabase.addApplicationFont("fonts/Comfortaa/Comfortaa-Medium.ttf")
             self.setStyleSheet(style.read())
             self.show()
