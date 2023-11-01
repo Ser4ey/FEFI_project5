@@ -30,14 +30,6 @@ SetWindowCompositionAttribute = windll.user32.SetWindowCompositionAttribute
 SetWindowCompositionAttribute.restype = c_bool
 SetWindowCompositionAttribute.argtypes = [c_int, POINTER(WINCOMPATTRDATA)]
 
-# ui types:
-auth = 'auth'
-card = 'card'
-change_pass = 'change_pass'
-desks = 'desks'
-new_user = 'new_user'
-set_pass = 'set_pass'
-
 
 class UserInterface(QMainWindow):
     def __init__(self, ui_type):
@@ -127,37 +119,12 @@ class UserInterface(QMainWindow):
         self.showMinimized()
 
 
-class UIAuthentication(UserInterface):
+class Application:
     def __init__(self):
-        super().__init__(auth)
-
-
-class UINewUser(UserInterface):
-    def __init__(self):
-        super().__init__(new_user)
-
-
-class UISetPassword(UserInterface):
-    def __init__(self):
-        super().__init__(set_pass)
-
-
-class UIChangePassword(UserInterface):
-    def __init__(self):
-        super().__init__(change_pass)
-
-
-class UIDesks(UserInterface):
-    def __init__(self):
-        super().__init__(desks)
-
-
-class UICard(UserInterface):
-    def __init__(self):
-        super().__init__(card)
-
+        super().__init__()
+        self.ui = UserInterface('auth')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = UINewUser()
+    window = Application()
     sys.exit(app.exec())
