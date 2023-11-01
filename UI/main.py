@@ -33,6 +33,8 @@ SetWindowCompositionAttribute.argtypes = [c_int, POINTER(WINCOMPATTRDATA)]
 class MainUI(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.pinned = False  # The pinned state
+        self.theme = True  # Theme style
         self.setFixedSize(1024, 768)
         self.setBlurBehindWindow()
         self.load_ui()
@@ -54,22 +56,22 @@ class MainUI(QMainWindow):
         SetWindowCompositionAttribute(c_int(int(self.winId())), ctypes.pointer(win_comp_attr_data))
 
     def load_ui(self):
-        with open("styles/light_theme.css") as style:
+        with open("styles/dark_theme.css") as style:
             uic.loadUi('ui_forms/change_pass.ui', self)
             QFontDatabase.addApplicationFont("fonts/Comfortaa/Comfortaa-Medium.ttf")
             self.setStyleSheet(style.read())
             self.show()
 
     def connect_buttons(self):
-        self.pinned = False  # The pinned state
-
         self.exit_button = self.findChild(QPushButton, 'exitButton')
         self.pin_button = self.findChild(QPushButton, 'pinButton')
+        self.theme_button = self.findChild(QPushButton, 'themeButton')
         # self.set_pass_button = self.findChild(QPushButton, 'setPassButton')
         # self.skip_pass_button = self.findChild(QPushButton, 'skipPassButton')
 
         self.exit_button.clicked.connect(self.exit_app)
         self.pin_button.clicked.connect(self.pin_app)
+        self.theme_button.clicked.connect(self.theme_toggle)
         # self.set_pass_button.clicked.connect(self.set_password)
         # self.skip_pass_button.clicked.connect(self.skip_password)
 
@@ -94,6 +96,16 @@ class MainUI(QMainWindow):
     def pin_app(self):
         self.pinned = not self.pinned
         self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, self.pinned)
+        self.show()
+
+    def theme_toggle(self):
+        self.theme = not self.theme
+        if self.theme:
+            with open("styles/dark_theme.css") as style:
+                self.setStyleSheet(style.read())
+        else:
+            with open("styles/light_theme.css") as style:
+                self.setStyleSheet(style.read())
         self.show()
 
     def set_password(self):
