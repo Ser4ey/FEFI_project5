@@ -193,7 +193,7 @@
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../icons/lighttheme.png</normaloff>../icons/lighttheme.png</iconset>
+      <normaloff>../icons/dark_theme.png</normaloff>../icons/dark_theme.png</iconset>
     </property>
     <property name="iconSize">
      <size>

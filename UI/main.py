@@ -36,12 +36,12 @@ class UserInterface(QMainWindow):
     def __init__(self, ui_type):
         super().__init__()
         self.pinned = False  # The pinned state
-        self.theme = True  # Theme style
+        self.theme = 'dark_theme'  # Theme style
 
         self._ui_type = ui_type
         self.setFixedSize(1024, 768)
         self.blur_background()
-        self.load_ui(self._ui_type)
+        self.setup_ui_form(self._ui_type)
         self.connect_buttons()
 
     def blur_background(self):
@@ -57,7 +57,7 @@ class UserInterface(QMainWindow):
 
         SetWindowCompositionAttribute(c_int(int(self.winId())), ctypes.pointer(win_comp_attr_data))
 
-    def load_ui(self, ui_type):
+    def setup_ui_form(self, ui_type):
         with open("styles/dark_theme.css") as style:
             uic.loadUi(f'ui_forms/{ui_type}.ui', self)
             QFontDatabase.addApplicationFont("fonts/Comfortaa/Comfortaa-Medium.ttf")
@@ -101,18 +101,16 @@ class UserInterface(QMainWindow):
         self.show()
 
     def theme_toggle(self):
-        self.theme = not self.theme
-        if self.theme:
-            with open("styles/dark_theme.css") as style:
-                self.setStyleSheet(style.read())
-                self.theme_button.setIcon(QIcon("icons/lighttheme.png"))
+        if self.theme == 'dark_theme':
+            self.theme = 'light_theme'
         else:
-            with open("styles/light_theme.css") as style:
-                self.setStyleSheet(style.read())
-                self.theme_button.setIcon(QIcon("icons/darktheme.png"))
+            self.theme = 'dark_theme'
+
+        with open(f"styles/{self.theme}.css") as style:
+            self.setStyleSheet(style.read())
+            self.theme_button.setIcon(QIcon(f"icons/{self.theme}.png"))
         self.show()
 
-    @staticmethod
     def exit_app(self):
         app.quit()
 
@@ -120,12 +118,7 @@ class UserInterface(QMainWindow):
         self.showMinimized()
 
 
-class Application:
-    def __init__(self):
-        super().__init__()
-        self.ui = UserInterface('auth')
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = Application()
+    window = UserInterface('auth')
     sys.exit(app.exec())
