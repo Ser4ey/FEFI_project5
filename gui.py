@@ -10,6 +10,7 @@ from ctypes.wintypes import DWORD, ULONG
 from ctypes import windll, c_bool, c_int, POINTER, Structure
 
 from interfaces import AppInterface
+from interfaces.exceptions import AuthInterfaceExceptions
 
 
 class AccentPolicy(Structure):
@@ -43,7 +44,6 @@ card = 5
 icons_path = "UI/icons"
 fonts_path = "UI/fonts"
 styles_path = "UI/styles"
-
 
 class GUI(QMainWindow):
     def __init__(self):
@@ -129,27 +129,28 @@ class GUI(QMainWindow):
         pass_input_valid = self.findChild(QLineEdit, 'passInput_valid')
         warning_str = self.findChild(QLabel, 'hintText_3')
 
-        if pass_input.text() == pass_input_valid.text() and len(
-                pass_input.text()) > 1 and AppInterface.AuthInterface.set_user_password(pass_input.text()):
-            self.stacked_widget.setCurrentIndex(auth)
-            warning_str.setText("")
-            pass_input.clear()
-            pass_input_valid.clear()
+        try:
+            if pass_input.text() == pass_input_valid.text() and len(
+                    pass_input.text()) > 1 and AppInterface.AuthInterface.set_user_password(pass_input.text()):
+                self.stacked_widget.setCurrentIndex(auth)
+                warning_str.setText("")
+                pass_input.clear()
+                pass_input_valid.clear()
 
-        elif pass_input.text() != pass_input_valid.text():
-            warning_str.setText("Пароли не совпадают!")
-            pass_input.clear()
-            pass_input_valid.clear()
+            elif pass_input.text() != pass_input_valid.text():
+                warning_str.setText("Пароли не совпадают!")
+                pass_input.clear()
+                pass_input_valid.clear()
 
-        elif len(pass_input.text()) < 2:
-            warning_str.setText("Слишком короткий пароль!")
-            pass_input.clear()
-            pass_input_valid.clear()
+            elif len(pass_input.text()) < 2:
+                warning_str.setText("Слишком короткий пароль!")
+                pass_input.clear()
+                pass_input_valid.clear()
 
-        elif AppInterface.AuthInterface.set_user_password(pass_input.text()) == 'PasswordAlreadySet':
-            warning_str.setText("Пароль уже установлен!")
-            pass_input.clear()
-            pass_input_valid.clear()
+        except AuthInterfaceExceptions.PasswordAlreadySet:
+                warning_str.setText("Пароль уже установлен!")
+                pass_input.clear()
+                pass_input_valid.clear()
 
     def set_pass_cancel(self):
         pass_input = self.findChild(QLineEdit, 'passInput')
@@ -177,40 +178,38 @@ class GUI(QMainWindow):
         new_pass_input_valid = self.findChild(QLineEdit, 'newpassInput_valid')
         warning_str = self.findChild(QLabel, 'hintText_2')
 
-        if new_pass_input.text() == new_pass_input_valid.text() and len(
-                new_pass_input.text()) > 1 and AppInterface.AuthInterface.change_user_password(pass_input.text(),
-                                                                                               new_pass_input.text()):
-            self.stacked_widget.setCurrentIndex(auth)
-            warning_str.setText("")
-            pass_input.clear()
-            new_pass_input.clear()
-            new_pass_input_valid.clear()
+        try:
+            if new_pass_input.text() == new_pass_input_valid.text() and len(new_pass_input.text()) > 1 and AppInterface.AuthInterface.change_user_password(pass_input.text(), new_pass_input.text()):
+                self.stacked_widget.setCurrentIndex(auth)
+                warning_str.setText("")
+                pass_input.clear()
+                new_pass_input.clear()
+                new_pass_input_valid.clear()
 
-        elif new_pass_input.text() != new_pass_input_valid.text():
-            warning_str.setText("Пароли не совпадают!")
-            pass_input.clear()
-            new_pass_input.clear()
-            new_pass_input_valid.clear()
+            elif new_pass_input.text() != new_pass_input_valid.text():
+                warning_str.setText("Пароли не совпадают!")
+                pass_input.clear()
+                new_pass_input.clear()
+                new_pass_input_valid.clear()
 
-        elif len(new_pass_input.text()) < 2:
-            warning_str.setText("Слишком короткий пароль!")
-            pass_input.clear()
-            new_pass_input.clear()
-            new_pass_input_valid.clear()
+            elif len(new_pass_input.text()) < 2:
+                warning_str.setText("Слишком короткий пароль!")
+                pass_input.clear()
+                new_pass_input.clear()
+                new_pass_input_valid.clear()
 
-        elif AppInterface.AuthInterface.change_user_password(pass_input.text(),
-                                                             new_pass_input.text()) == 'PasswordNotSet':
-            warning_str.setText("Вы еще не установили пароль!")
-            pass_input.clear()
-            new_pass_input.clear()
-            new_pass_input_valid.clear()
 
-        elif AppInterface.AuthInterface.change_user_password(pass_input.text(),
-                                                             new_pass_input.text()) == 'IncorrectPassword ':
-            warning_str.setText("Неверный пароль!")
-            pass_input.clear()
-            new_pass_input.clear()
-            new_pass_input_valid.clear()
+        except AuthInterfaceExceptions.PasswordNotSet:
+                warning_str.setText("Пароль еще не установлен!")
+                pass_input.clear()
+                new_pass_input.clear()
+                new_pass_input_valid.clear()
+
+        except AuthInterfaceExceptions.IncorrectPassword:
+                warning_str.setText("Неверный пароль!")
+                pass_input.clear()
+                new_pass_input.clear()
+                new_pass_input_valid.clear()
 
     def change_pass_cancel(self):
         pass_input = self.findChild(QLineEdit, 'oldpassInput')
