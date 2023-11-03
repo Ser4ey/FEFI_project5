@@ -11,6 +11,7 @@ from ctypes import windll, c_bool, c_int, POINTER, Structure
 
 from interfaces import AppInterface
 
+
 class AccentPolicy(Structure):
     _fields_ = [
         ('AccentState', DWORD),
@@ -42,6 +43,7 @@ card = 5
 icons_path = "UI/icons"
 fonts_path = "UI/fonts"
 styles_path = "UI/styles"
+
 
 class GUI(QMainWindow):
     def __init__(self):
@@ -127,7 +129,8 @@ class GUI(QMainWindow):
         pass_input_valid = self.findChild(QLineEdit, 'passInput_valid')
         warning_str = self.findChild(QLabel, 'hintText_3')
 
-        if pass_input.text() == pass_input_valid.text() and len(pass_input.text()) > 1 and AppInterface.AuthInterface.set_user_password(pass_input.text()):
+        if pass_input.text() == pass_input_valid.text() and len(
+                pass_input.text()) > 1 and AppInterface.AuthInterface.set_user_password(pass_input.text()):
             self.stacked_widget.setCurrentIndex(auth)
             warning_str.setText("")
             pass_input.clear()
@@ -174,7 +177,9 @@ class GUI(QMainWindow):
         new_pass_input_valid = self.findChild(QLineEdit, 'newpassInput_valid')
         warning_str = self.findChild(QLabel, 'hintText_2')
 
-        if new_pass_input.text() == new_pass_input_valid.text() and len(new_pass_input.text()) > 1 and AppInterface.AuthInterface.change_user_password(pass_input.text(), new_pass_input.text()):
+        if new_pass_input.text() == new_pass_input_valid.text() and len(
+                new_pass_input.text()) > 1 and AppInterface.AuthInterface.change_user_password(pass_input.text(),
+                                                                                               new_pass_input.text()):
             self.stacked_widget.setCurrentIndex(auth)
             warning_str.setText("")
             pass_input.clear()
@@ -193,13 +198,15 @@ class GUI(QMainWindow):
             new_pass_input.clear()
             new_pass_input_valid.clear()
 
-        elif AppInterface.AuthInterface.change_user_password(pass_input.text(), new_pass_input.text()) == 'PasswordNotSet':
+        elif AppInterface.AuthInterface.change_user_password(pass_input.text(),
+                                                             new_pass_input.text()) == 'PasswordNotSet':
             warning_str.setText("Вы еще не установили пароль!")
             pass_input.clear()
             new_pass_input.clear()
             new_pass_input_valid.clear()
 
-        elif AppInterface.AuthInterface.change_user_password(pass_input.text(), new_pass_input.text()) == 'IncorrectPassword ':
+        elif AppInterface.AuthInterface.change_user_password(pass_input.text(),
+                                                             new_pass_input.text()) == 'IncorrectPassword ':
             warning_str.setText("Неверный пароль!")
             pass_input.clear()
             new_pass_input.clear()
@@ -233,7 +240,8 @@ class GUI(QMainWindow):
     def pin_toggle(self):
         self.pinned = not self.pinned
         self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, self.pinned)
-        self.pin_button.setIcon(QIcon(f"{icons_path}/pin_icon_active.png" if self.pinned else f"{icons_path}/pin_icon.png"))
+        self.pin_button.setIcon(
+            QIcon(f"{icons_path}/pin_icon_active.png" if self.pinned else f"{icons_path}/pin_icon.png"))
         self.show()
 
     def theme_toggle(self):
