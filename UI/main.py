@@ -31,6 +31,12 @@ SetWindowCompositionAttribute = windll.user32.SetWindowCompositionAttribute
 SetWindowCompositionAttribute.restype = c_bool
 SetWindowCompositionAttribute.argtypes = [c_int, POINTER(WINCOMPATTRDATA)]
 
+new_user = 0
+auth = 1
+set_pass = 2
+change_pass = 3
+desks = 4
+card = 5
 
 class UserInterface(QMainWindow):
     def __init__(self):
@@ -82,13 +88,53 @@ class UserInterface(QMainWindow):
         self.skippass_button = self.findChild(QPushButton, 'skipPassButton')
         self.skippass_button.clicked.connect(self.skip_pass)
 
+        self.cancel_button = self.findChild(QPushButton, 'cancelButton')
+        self.cancel_button.clicked.connect(self.set_pass_cancel)
+
+        self.ok_button = self.findChild(QPushButton, 'okButton')
+        self.ok_button.clicked.connect(self.set_pass_confirm)
+
+        self.changepass_button = self.findChild(QPushButton, 'changePassButton')
+        self.changepass_button.clicked.connect(self.change_pass)
+
+        self.login_button = self.findChild(QPushButton, 'loginButton')
+        self.login_button.clicked.connect(self.login)
+
+        self.cancel_button2 = self.findChild(QPushButton, 'cancelButton_2')
+        self.cancel_button2.clicked.connect(self.change_pass_cancel)
+
+        self.ok_button2 = self.findChild(QPushButton, 'okButton_2')
+        self.ok_button2.clicked.connect(self.change_pass_confirm)
+
     # TODO
     def set_pass(self):
-        self.stacked_widget.setCurrentIndex(1)
+        self.stacked_widget.setCurrentIndex(set_pass)
+
+    # TODO
+    def set_pass_confirm(self):
+        self.stacked_widget.setCurrentIndex(auth)
+
+    def set_pass_cancel(self):
+        self.stacked_widget.setCurrentIndex(new_user)
 
     # TODO
     def skip_pass(self):
-        self.stacked_widget.setCurrentIndex(0)
+        pass
+
+    # TODO
+    def change_pass(self):
+        self.stacked_widget.setCurrentIndex(change_pass)
+
+    # TODO
+    def change_pass_confirm(self):
+        self.stacked_widget.setCurrentIndex(auth)
+
+    def change_pass_cancel(self):
+        self.stacked_widget.setCurrentIndex(auth)
+
+    # TODO
+    def login(self):
+        pass
 
     def pin_toggle(self):
         self.pinned = not self.pinned
