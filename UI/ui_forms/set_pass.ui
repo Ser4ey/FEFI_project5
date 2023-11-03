@@ -94,7 +94,7 @@
       <string>textInput</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="passInput_validation">
+    <widget class="QLineEdit" name="passInput_valid">
      <property name="geometry">
       <rect>
        <x>187</x>
@@ -143,6 +143,9 @@
        <height>23</height>
       </rect>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>OK</string>
      </property>
@@ -159,6 +162,9 @@
        <height>23</height>
       </rect>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>Отмена</string>
      </property>
@@ -173,7 +179,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>31</x>
+      <x>30</x>
       <y>1</y>
       <width>25</width>
       <height>25</height>
@@ -217,7 +223,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>2</x>
+      <x>1</x>
       <y>1</y>
       <width>25</width>
       <height>25</height>
@@ -259,7 +265,7 @@
    <widget class="QPushButton" name="exitButton">
     <property name="geometry">
      <rect>
-      <x>999</x>
+      <x>998</x>
       <y>1</y>
       <width>25</width>
       <height>25</height>
@@ -295,7 +301,7 @@
    <widget class="QPushButton" name="minButton">
     <property name="geometry">
      <rect>
-      <x>970</x>
+      <x>969</x>
       <y>1</y>
       <width>25</width>
       <height>25</height>
