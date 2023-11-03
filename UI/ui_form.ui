@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string notr="true">TaskManager</string>
+   <string notr="true">Task Manager</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="class" stdset="0">
@@ -62,7 +62,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>940</x>
       <y>1</y>
       <width>25</width>
       <height>25</height>
@@ -144,7 +144,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>1</x>
+      <x>911</x>
       <y>1</y>
       <width>25</width>
       <height>25</height>
@@ -193,7 +193,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="new_user_page">
      <widget class="QWidget" name="plane" native="true">
@@ -250,7 +250,7 @@
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>80</y>
+         <y>60</y>
          <width>455</width>
          <height>40</height>
         </rect>
@@ -325,7 +325,7 @@
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>80</y>
+         <y>60</y>
          <width>455</width>
          <height>40</height>
         </rect>
@@ -361,9 +361,6 @@
        <property name="acceptDrops">
         <bool>false</bool>
        </property>
-       <property name="text">
-        <string/>
-       </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>
@@ -381,6 +378,28 @@
        </property>
        <property name="class" stdset="0">
         <string>textInput</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="hintText">
+       <property name="geometry">
+        <rect>
+         <x>245</x>
+         <y>130</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="class" stdset="0">
+        <string>hintText</string>
        </property>
       </widget>
      </widget>
@@ -402,7 +421,7 @@
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>80</y>
+         <y>60</y>
          <width>455</width>
          <height>40</height>
         </rect>
@@ -538,6 +557,28 @@
         <string>redButton</string>
        </property>
       </widget>
+      <widget class="QLabel" name="hintText_3">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>130</y>
+         <width>211</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="class" stdset="0">
+        <string>hintText</string>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="change_pass_page">
@@ -557,7 +598,7 @@
        <property name="geometry">
         <rect>
          <x>80</x>
-         <y>80</y>
+         <y>60</y>
          <width>455</width>
          <height>40</height>
         </rect>
@@ -733,8 +774,144 @@
         <string>textInput</string>
        </property>
       </widget>
+      <widget class="QLabel" name="hintText_2">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>110</y>
+         <width>211</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="class" stdset="0">
+        <string>hintText</string>
+       </property>
+      </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="desks_page">
+     <widget class="QLabel" name="headerText_5">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>290</y>
+        <width>455</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>Окно с досками</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="class" stdset="0">
+       <string>smallheaderText</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="card_page">
+     <widget class="QLabel" name="headerText_6">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>320</y>
+        <width>455</width>
+        <height>40</height>
+       </rect>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="text">
+       <string>Окно карточки</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="class" stdset="0">
+       <string>smallheaderText</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="appIcon">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>1</x>
+      <y>1</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>icons/app_icon.png</normaloff>icons/app_icon.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>25</width>
+      <height>25</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+    <property name="class" stdset="0">
+     <string>iconButton</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Title">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>6</y>
+      <width>101</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>Task Manager</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="class" stdset="0">
+     <string>titleText</string>
+    </property>
    </widget>
   </widget>
  </widget>
