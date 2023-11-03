@@ -1,7 +1,7 @@
 import sys
 
 from PyQt6 import uic, QtCore, QtGui, QtWidgets
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
+from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QStackedWidget
 from PyQt6.QtGui import QFontDatabase, QIcon
 from PyQt6.QtCore import Qt
 
@@ -33,14 +33,15 @@ SetWindowCompositionAttribute.argtypes = [c_int, POINTER(WINCOMPATTRDATA)]
 
 
 class UserInterface(QMainWindow):
-    def __init__(self, ui_type):
+    def __init__(self):
         super().__init__()
         self.pinned = False
         self.theme = 'dark_theme'
-        self.ui_type = ui_type
         self.setFixedSize(1024, 768)
         self.blur_background()
-        self.setup_ui_form(self.ui_type)
+        self.setup_ui_form()
+        self.stacked_widget = self.findChild(QStackedWidget, 'pageStack')
+        self.connect_buttons()
 
     def blur_background(self):
         self.setWindowFlag(Qt.WindowType.FramelessWindowHint)
@@ -55,14 +56,13 @@ class UserInterface(QMainWindow):
 
         SetWindowCompositionAttribute(c_int(int(self.winId())), ctypes.pointer(win_comp_attr_data))
 
-    def setup_ui_form(self, ui_type):
+    def setup_ui_form(self):
         with open(f"styles/{self.theme}.css") as style:
-            uic.loadUi(f'ui_forms/{ui_type}.ui', self)
+            uic.loadUi('ui_form.ui', self)
             QFontDatabase.addApplicationFont("fonts/Comfortaa/Comfortaa-Medium.ttf")
             self.setStyleSheet(style.read())
             self.show()
             self.add_menu()
-            self.connect_buttons()
 
     def add_menu(self):
         self.pin_button = self.findChild(QPushButton, 'pinButton')
@@ -76,34 +76,19 @@ class UserInterface(QMainWindow):
         self.min_button.clicked.connect(self.min_app)
 
     def connect_buttons(self):
-        if self.ui_type == 'new_user':
-            self.setpass_button = self.findChild(QPushButton, 'setPassButton')
-            self.skippass_button = self.findChild(QPushButton, 'skipPassButton')
+        self.setpass_button = self.findChild(QPushButton, 'setPassButton')
+        self.setpass_button.clicked.connect(self.set_pass)
 
-            self.setpass_button.clicked.connect(self.set_pass)
-            self.skippass_button.clicked.connect(self.skip_pass)
+        self.skippass_button = self.findChild(QPushButton, 'skipPassButton')
+        self.skippass_button.clicked.connect(self.skip_pass)
 
-        if self.ui_type == 'set_pass':
-            self.ok_button = self.findChild(QPushButton, 'okButton')
-            self.cancel_button = self.findChild(QPushButton, 'cancelButton')
+    # TODO
+    def set_pass(self):
+        self.stacked_widget.setCurrentIndex(1)
 
-            self.ok_button.clicked.connect(self.set_pass_complete)
-            self.cancel_button.clicked.connect(self.set_pass_cancel)
-
-    def mousePressEvent(self, event):
-        if event.button() == Qt.MouseButton.LeftButton:
-            self.old_pos = event.pos()
-
-    def mouseReleaseEvent(self, event):
-        if event.button() == Qt.MouseButton.LeftButton:
-            self.old_pos = None
-
-    def mouseMoveEvent(self, event):
-        if not self.old_pos:
-            return
-
-        delta = event.pos() - self.old_pos
-        self.move(self.pos() + delta)
+    # TODO
+    def skip_pass(self):
+        self.stacked_widget.setCurrentIndex(0)
 
     def pin_toggle(self):
         self.pinned = not self.pinned
@@ -124,29 +109,24 @@ class UserInterface(QMainWindow):
     def min_app(self):
         self.showMinimized()
 
-    # TODO
-    def set_pass(self):
-        self.ui_type = 'set_pass'
-        self.setup_ui_form('set_pass')
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.old_pos = event.pos()
 
-    # TODO
-    def set_pass_complete(self):
-        self.ui_type = 'auth'
-        self.setup_ui_form('auth')
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.old_pos = None
 
-    # TODO
-    def set_pass_cancel(self):
-        self.ui_type = 'new_user'
-        self.setup_ui_form('new_user')
+    def mouseMoveEvent(self, event):
+        if not self.old_pos:
+            return
 
-    # TODO
-    def skip_pass(self):
-        self.ui_type = 'auth'
-        self.setup_ui_form('auth')
+        delta = event.pos() - self.old_pos
+        self.move(self.pos() + delta)
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = UserInterface('new_user')
+    window = UserInterface()
     window.show()
     sys.exit(app.exec())
