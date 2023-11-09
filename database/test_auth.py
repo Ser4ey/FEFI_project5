@@ -8,7 +8,6 @@ class TestAuthDB(unittest.TestCase):
     def setUp(self):
         # self.db = AuthDB(':memory:')  # Use an in-memory database for testing
         self.db = AuthDB('test.db')  # Use an in-memory database for testing
-        # self.db.create_auth_table()
 
     def tearDown(self):
         self.db.connection.close()
@@ -31,11 +30,15 @@ class TestAuthDB(unittest.TestCase):
         self.assertEqual(result[0][1], 'test_password')
 
     def test_select_password(self):
+        result = self.db.select_password(password='some_password')
+        self.assertIsNone(result)
+
         self.db.add_password('test_password')
         result = self.db.select_password(password='test_password')
         self.assertEqual(result[1], 'test_password')
 
     def test_count_passwords(self):
+        self.assertEqual(self.db.count_passwords(), 0)
         self.db.add_password('test_password')
         self.assertEqual(self.db.count_passwords(), 1)
 
@@ -44,6 +47,11 @@ class TestAuthDB(unittest.TestCase):
         self.db.update_password(1, 'new_password')
         result = self.db.select_password(id=1)
         self.assertEqual(result[1], 'new_password')
+
+    def test_update_invalid_password(self):
+        self.db.update_password(0, 'new_password')
+        result = self.db.select_password(id=0)
+        self.assertIsNone(result)
 
 
 if __name__ == '__main__':
