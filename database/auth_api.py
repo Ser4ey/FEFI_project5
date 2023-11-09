@@ -1,9 +1,10 @@
+import data.config
 from database.auth import AuthDB
 
 
 class AuthAPI:
-    def __init__(self):
-        self.auth_db = AuthDB()
+    def __init__(self, path_to_db=data.config.path_to_db):
+        self.auth_db = AuthDB(path_to_db)
 
     def is_user_set_password(self):
         return bool(self.auth_db.count_passwords())
