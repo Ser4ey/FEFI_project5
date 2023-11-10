@@ -1,9 +1,10 @@
+import data.config
 from database.desks import DesksDB
 
 
 class DeskAPI:
-    def __init__(self):
-        self.desk_db = DesksDB()
+    def __init__(self, path_to_db=data.config.path_to_db):
+        self.desk_db = DesksDB(path_to_db)
 
 
     def get_desks(self):

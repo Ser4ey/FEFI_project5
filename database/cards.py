@@ -1,6 +1,6 @@
 import sqlite3
 import data.config
-# import FEFI_project5.data.config
+
 
 class CardsDB:
     def __init__(self, path_to_db=data.config.path_to_db):
@@ -130,3 +130,5 @@ class CardsDB:
 
         else:
             return True
+
+

@@ -1,9 +1,10 @@
-from database.columns import  ColumnsDB
+import data.config
+from database.columns import ColumnsDB
+
 
 class ColumnsAPI:
-    def __init__(self):
-        self.column_db = ColumnsDB()
-
+    def __init__(self, path_to_db=data.config.path_to_db):
+        self.column_db = ColumnsDB(path_to_db)
 
     def get_columns(self):
         return self.column_db.select_all_columns()

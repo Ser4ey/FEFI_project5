@@ -1,9 +1,10 @@
+import data.config
 from database.cards import CardsDB
 
 
 class CardsAPI:
-    def __init__(self):
-        self.card_db = CardsDB()
+    def __init__(self, path_to_db=data.config.path_to_db):
+        self.card_db = CardsDB(path_to_db)
 
     def get_cards(self):
         return self.card_db.select_all_cards()
