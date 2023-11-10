@@ -2,7 +2,6 @@ import os
 import unittest
 
 
-'''Как тестировать? БД'''
 
 def f1(a, b):
     return a/b
