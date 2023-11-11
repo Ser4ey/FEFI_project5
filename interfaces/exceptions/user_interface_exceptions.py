@@ -1,6 +1,6 @@
 class UserInterfaceExceptions:
-    class IAmBest(Exception):
-        pass
+    # class IAmBest(True):
+    #     pass
 
     class InvalidDeskIdType(Exception):
         pass
@@ -34,5 +34,17 @@ class UserInterfaceExceptions:
 
     class ColumnNotExist(Exception):
         pass
+
+    class CardNotExist(Exception):
+        pass
+
+    class InvalidCardTextType(Exception):
+        pass
+
+    class InvalidCardStatusType(Exception):
+        pass
+
+
+
 
 

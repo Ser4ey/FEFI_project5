@@ -273,8 +273,35 @@ class UserInterface:
                 'sequence_number': 0
             }
 
-    def change_card_info(self, card_id, title='', text='', status=''):
-        return
+    def change_card_info(self, card_id, card_title: str = None, card_text: str = None, card_status: int = None) -> bool:
+        if type(card_id) != int:
+            raise UserInterfaceExceptions.InvalidCardIdType()
+
+        if self.get_card_by_card_id(card_id) is None:
+            raise UserInterfaceExceptions.CardNotExist()
+
+        if not (card_title is None):
+            if type(card_title) != str:
+                raise UserInterfaceExceptions.InvalidCardTitleType()
+
+            if card_title.strip() == "":
+                raise UserInterfaceExceptions.InvalidCardTitleContent()
+
+            # обновляем заголовок карточки
+
+        if not (card_text is None):
+            if type(card_text) != str:
+                raise UserInterfaceExceptions.InvalidCardTextType()
+
+            # обновляем текст карточки
+
+        if not (card_status is None):
+            if type(card_status) != int:
+                raise UserInterfaceExceptions.InvalidCardStatusType()
+
+            # обновляем текст карточки
+
+        return True
 
     def move_card(self, card_id, ):
         '''перемещает карточку в новый столбец'''
