@@ -203,13 +203,48 @@ class UserInterface:
 
         return True
 
-    def get_cards_by_column_id(self, column_id):
+    def get_cards_by_column_id(self, column_id: int) -> list:
         '''Получаем карточки в колонке по column_id'''
-        return
+        if type(column_id) != int:
+            raise UserInterfaceExceptions.InvalidColumnIdType()
 
-    def add_card_to_column(self, card_title, card_status, column_id):
+        if self.get_column_by_column_id(column_id) is None:
+            raise UserInterfaceExceptions.ColumnNotExist()
+
+        return [
+            {
+                'card_id': 0,
+                'column_id': 2,
+                'card_title': 'Заголовок',
+                'card_text': 'Много-многоножка',
+                'card_status': 1,
+                'sequence_number': 0
+            },
+            {
+                'card_id': 1,
+                'column_id': 2,
+                'card_title': 'Заголовок 2',
+                'card_text': 'Лакричный жук',
+                'card_status': 2,
+                'sequence_number': 1
+            }
+        ]
+
+    def add_card_to_column(self, card_title: str, column_id: int) -> bool:
         '''Добавляем карточку в колонку'''
-        return
+        if type(column_id) != int:
+            raise UserInterfaceExceptions.InvalidColumnIdType()
+
+        if self.get_column_by_column_id(column_id) is None:
+            raise UserInterfaceExceptions.ColumnNotExist()
+
+        if type(card_title) != str:
+            raise UserInterfaceExceptions.InvalidCardTitleType()
+
+        if card_title.strip() == "":
+            raise UserInterfaceExceptions.InvalidCardTitleContent()
+
+        return True
 
     def get_cards_from_column(self, column_id):
         '''Получаем список всех карточек в колонке'''
