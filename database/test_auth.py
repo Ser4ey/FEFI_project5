@@ -6,11 +6,9 @@ from database.auth import AuthDB
 
 class TestAuthDB(unittest.TestCase):
     def setUp(self):
-        # self.db = AuthDB(':memory:')  # Use an in-memory database for testing
         self.db = AuthDB('test.db')  # Use an in-memory database for testing
 
     def tearDown(self):
-        self.db.connection.close()
         if os.path.exists('test.db'):
             os.remove('test.db')
         else:

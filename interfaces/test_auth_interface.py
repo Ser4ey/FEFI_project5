@@ -9,9 +9,7 @@ from database import AuthAPI
 class TestAuthInterface(unittest.TestCase):
     def setUp(self):
         self.AuthInterface = AppInterface.AuthInterface
-        new_AuthAPI_db = AuthAPI('test.db')
-
-        self.AuthInterface.auth_db_api = new_AuthAPI_db
+        self.AuthInterface.AuthAPI = AuthAPI('test.db')
 
     def tearDown(self):
         if os.path.exists('test.db'):
@@ -26,10 +24,10 @@ class TestAuthInterface(unittest.TestCase):
 
     def test_set_user_password(self):
         self.AuthInterface.set_user_password('123')
-        passwords = self.AuthInterface.auth_db_api.auth_db.select_all_passwords()
+        passwords = self.AuthInterface.AuthAPI.auth_db.select_all_passwords()
 
         self.assertEqual(passwords[0][1], '123')
-        self.assertEqual(self.AuthInterface.auth_db_api.auth_db.count_passwords(), 1)
+        self.assertEqual(self.AuthInterface.AuthAPI.auth_db.count_passwords(), 1)
 
     def test_set_user_password_exceptions(self):
         with self.assertRaises(AuthInterfaceExceptions.InvalidPasswordType):
@@ -69,10 +67,10 @@ class TestAuthInterface(unittest.TestCase):
 
         self.AuthInterface.change_user_password('qwerty123', 'I77G')
 
-        self.assertEqual(self.AuthInterface.auth_db_api.auth_db.count_passwords(), 1)
+        self.assertEqual(self.AuthInterface.AuthAPI.auth_db.count_passwords(), 1)
 
-        self.assertIsNotNone(self.AuthInterface.auth_db_api.auth_db.select_password(password='I77G'))
-        self.assertEqual(self.AuthInterface.auth_db_api.auth_db.select_password(password='I77G')[1], 'I77G')
+        self.assertIsNotNone(self.AuthInterface.AuthAPI.auth_db.select_password(password='I77G'))
+        self.assertEqual(self.AuthInterface.AuthAPI.auth_db.select_password(password='I77G')[1], 'I77G')
 
 
 

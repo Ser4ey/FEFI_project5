@@ -1,10 +1,13 @@
 from interfaces.exceptions.user_interface_exceptions import UserInterfaceExceptions
+from database import DeskAPI, ColumnsAPI, CardsAPI
 
 
 # TODO: Gleb
 class UserInterface:
     def __init__(self):
-        pass
+        self.DeskAPI = DeskAPI()
+        self.ColumnsAPI = ColumnsAPI()
+        self.CardsAPI = CardsAPI()
 
     def get_decks(self) -> list:
         '''Возвращает все доски пользователя.
