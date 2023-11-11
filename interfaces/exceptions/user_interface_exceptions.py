@@ -11,6 +11,9 @@ class UserInterfaceExceptions:
     class InvalidColumnIdType(Exception):
         pass
 
+    class InvalidSequenceNumberType(Exception):
+        pass
+
     class InvalidDeskNameContent(Exception):
         pass
 

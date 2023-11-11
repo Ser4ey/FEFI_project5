@@ -184,9 +184,24 @@ class UserInterface:
 
         return True
 
-    def change_column_position_in_desk(self):
+    def change_column_position_in_desk(self, desk_id: int, column_id: int, new_sequence_number: int) -> bool:
         '''Меняем номер колонки в таблице '''
-        return
+        if type(desk_id) != int:
+            raise UserInterfaceExceptions.InvalidDeskIdType()
+
+        if self.get_deck_by_desk_id(desk_id) is None:
+            raise UserInterfaceExceptions.DeskNotExist()
+
+        if type(column_id) != int:
+            raise UserInterfaceExceptions.InvalidColumnIdType()
+
+        if self.get_column_by_column_id(column_id) is None:
+            raise UserInterfaceExceptions.ColumnNotExist()
+
+        if type(new_sequence_number) != int:
+            raise UserInterfaceExceptions.InvalidSequenceNumberType()
+
+        return True
 
     def get_cards_by_column_id(self, column_id):
         '''Получаем карточки в колонке по column_id'''
