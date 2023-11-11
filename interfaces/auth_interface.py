@@ -12,6 +12,9 @@ class AuthInterface:
 
     def set_user_password(self, password: str) -> bool:
         '''Устанавливает пользователю пароль. Нужно использовать только для установки пароля в 1 первый раз'''
+        if type(password) != str:
+            raise AuthInterfaceExceptions.InvalidPasswordType()
+
         if self.is_password_set():
             raise AuthInterfaceExceptions.PasswordAlreadySet()
 
@@ -19,12 +22,19 @@ class AuthInterface:
 
     def check_password(self, password: str) -> bool:
         '''Проверяет правильность пароля'''
+        if type(password) != str:
+            raise AuthInterfaceExceptions.InvalidPasswordType()
+
         if not self.is_password_set():
             raise AuthInterfaceExceptions.PasswordNotSet()
+
         return self.auth_db_api.check_password(password)
 
     def change_user_password(self, old_password: str, new_password: str) -> bool:
         '''Меняет пароль пользователю'''
+        if type(old_password) != str or type(new_password) != str:
+            raise AuthInterfaceExceptions.InvalidPasswordType()
+
         if not self.is_password_set():
             raise AuthInterfaceExceptions.PasswordNotSet()
         if not self.check_password(old_password):

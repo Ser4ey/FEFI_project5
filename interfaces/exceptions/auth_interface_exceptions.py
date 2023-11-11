@@ -1,4 +1,7 @@
 class AuthInterfaceExceptions:
+    class InvalidPasswordType(Exception):
+        pass
+
     class PasswordAlreadySet(Exception):
         pass
 
