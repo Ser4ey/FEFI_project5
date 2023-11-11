@@ -5,17 +5,40 @@ class UserInterface:
     def __init__(self):
         pass
 
-    def get_decks(self):
+    # TODO: Gleb
+    def get_decks(self) -> list:
         '''Возвращает все доски пользователя.
-            Формат: '''
-        decks = {
-            'desk_id': ['desk_name', '']
-        }
-        return
+            Формат: [
+            {
+                'deck_id': 0,
+                'desk_name': 'some name'
+            },
+            {
+                'deck_id': 1,
+                'desk_name': 'Task99'
+            }
+        ]'''
+        return [
+            {
+                'deck_id': 0,
+                'desk_name': 'some name'
+            },
+            {
+                'deck_id': 1,
+                'desk_name': 'Task99'
+            }
+        ]
 
-    def create_desk(self, desk_name):
+    # TODO: Gleb
+    def create_desk(self, desk_name: str) -> bool:
+        if type(desk_name) != str:
+            raise UserInterfaceExceptions.InvalidDeskNameType()
+
+        if desk_name.strip() == "":
+            raise UserInterfaceExceptions.InvalidDeskNameContent()
+
         '''Создаёт доску с именем desk_name'''
-        return
+        return True
 
     def del_desk(self, desk_id):
         '''Удоляем колонку по desk_id'''
