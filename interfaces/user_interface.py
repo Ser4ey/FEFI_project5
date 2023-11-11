@@ -69,16 +69,19 @@ class UserInterface:
 
     def change_desk_name(self, desk_id: int, desk_name: str) -> bool:
         '''Меняет имя у доски с id=desk_id на desk_name'''
+        if type(desk_id) != int:
+            raise UserInterfaceExceptions.InvalidDeskIdType()
 
-        return
+        if type(desk_name) != str:
+            raise UserInterfaceExceptions.InvalidDeskNameType()
 
-    def move_desk(self):
-        '''Перемещаем доску'''
-        return
+        if desk_name.strip() == "":
+            raise UserInterfaceExceptions.InvalidDeskNameContent()
 
-    def get_desk_info(self, desk_id):
-        '''Получаем всю информацию о доске  '''
-        return
+        if self.get_deck_by_desk_id(desk_id) is None:
+            raise UserInterfaceExceptions.DeskNotExist()
+
+        return True
 
     def get_columns_by_desk_id(self, desk_id):
         '''Получаем все колонки в доске по desk_id'''
