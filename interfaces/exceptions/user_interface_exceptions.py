@@ -8,6 +8,9 @@ class UserInterfaceExceptions:
     class InvalidDeskNameType(Exception):
         pass
 
+    class InvalidColumnIdType(Exception):
+        pass
+
     class InvalidDeskNameContent(Exception):
         pass
 
