@@ -246,13 +246,32 @@ class UserInterface:
 
         return True
 
-    def get_cards_from_column(self, column_id):
-        '''Получаем список всех карточек в колонке'''
-        return
+    def get_card_by_card_id(self, card_id: int) -> dict | None:
+        '''Получаем информацию о карточке по card_id
+        Формат возвращаемых данных:
+        {
+            'card_id': 0,
+            'column_id': 2,
+            'card_title': 'Заголовок',
+            'card_text': 'Много-многоножка',
+            'card_status': 1,
+            'sequence_number': 0
+        }
+        '''
 
-    def get_card_info(self, card_id):
-        ''''''
-        return
+        if type(card_id) != int:
+            raise UserInterfaceExceptions.InvalidCardIdType()
+
+        if card_id == 'не существует':
+            return None
+        return {
+                'card_id': 0,
+                'column_id': 2,
+                'card_title': 'Заголовок',
+                'card_text': 'Много-многоножка',
+                'card_status': 1,
+                'sequence_number': 0
+            }
 
     def change_card_info(self, card_id, title='', text='', status=''):
         return

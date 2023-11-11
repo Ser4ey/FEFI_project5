@@ -14,6 +14,9 @@ class UserInterfaceExceptions:
     class InvalidSequenceNumberType(Exception):
         pass
 
+    class InvalidCardIdType(Exception):
+        pass
+
     class InvalidCardTitleType(Exception):
         pass
 
