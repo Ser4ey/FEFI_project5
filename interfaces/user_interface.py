@@ -307,6 +307,18 @@ class UserInterface:
         '''перемещает карточку в новый столбец'''
         return
 
-    def del_card(self, card_id):
-        '''Удалить карточку'''
-        return
+    def del_card(self, card_id: int) -> bool:
+        '''Удалить карточку + смещаем все карточки ниже вверх'''
+        if type(card_id) != int:
+            raise UserInterfaceExceptions.InvalidCardIdType()
+
+        if self.get_card_by_card_id(card_id) is None:
+            raise UserInterfaceExceptions.CardNotExist()
+
+        return True
+
+
+
+
+
+
