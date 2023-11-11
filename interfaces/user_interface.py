@@ -303,9 +303,24 @@ class UserInterface:
 
         return True
 
-    def move_card(self, card_id, ):
-        '''перемещает карточку в новый столбец'''
-        return
+    def move_card(self, card_id: int, column_id: int, new_sequence_number: int) -> bool:
+        '''перемещает карточку. Карточки можно перемещать не только в раммках одной колонки, но и между колонками.'''
+        if type(card_id) != int:
+            raise UserInterfaceExceptions.InvalidCardIdType()
+
+        if self.get_card_by_card_id(card_id) is None:
+            raise UserInterfaceExceptions.CardNotExist()
+
+        if type(column_id) != int:
+            raise UserInterfaceExceptions.InvalidColumnIdType()
+
+        if self.get_column_by_column_id(column_id) is None:
+            raise UserInterfaceExceptions.ColumnNotExist()
+
+        if type(new_sequence_number) != int:
+            raise UserInterfaceExceptions.InvalidSequenceNumberType()
+
+        return True
 
     def del_card(self, card_id: int) -> bool:
         '''Удалить карточку + смещаем все карточки ниже вверх'''
