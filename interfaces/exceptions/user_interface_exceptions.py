@@ -14,7 +14,13 @@ class UserInterfaceExceptions:
     class InvalidDeskNameContent(Exception):
         pass
 
+    class InvalidColumnNameContent(Exception):
+        pass
+
     class DeskNotExist(Exception):
+        pass
+
+    class ColumnNotExist(Exception):
         pass
 
 

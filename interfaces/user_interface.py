@@ -142,24 +142,54 @@ class UserInterface:
                 'sequence_number': 32
             }
 
-    def change_column_name(self, column_id, column_name):
+    def change_column_name(self, column_id: int, column_name: str) -> bool:
         '''Меняем имя колонки по column_id'''
+        if type(column_id) != int:
+            raise UserInterfaceExceptions.InvalidColumnIdType()
+
+        if type(column_name) != str:
+            raise UserInterfaceExceptions.InvalidColumnNameContent()
+
+        if column_name.strip() == "":
+            raise UserInterfaceExceptions.InvalidColumnNameContent()
+
+        if self.get_column_by_column_id(column_id) is None:
+            raise UserInterfaceExceptions.ColumnNotExist()
+
+        return True
+
+    def del_column(self, column_id: int) -> bool:
+        '''Удаляем колонку + нужно удалить все карточки в колонке'''
+        if type(column_id) != int:
+            raise UserInterfaceExceptions.InvalidColumnIdType()
+
+        if self.get_column_by_column_id(column_id) is None:
+            raise UserInterfaceExceptions.ColumnNotExist()
+
+        return True
+
+    def add_column_to_desk(self, desk_id: int, column_name: str) -> bool:
+        '''Добавляем колонку в таблицу'''
+        if type(desk_id) != int:
+            raise UserInterfaceExceptions.InvalidDeskIdType()
+
+        if type(column_name) != str:
+            raise UserInterfaceExceptions.InvalidColumnNameContent()
+
+        if column_name.strip() == "":
+            raise UserInterfaceExceptions.InvalidColumnNameContent()
+
+        if self.get_deck_by_desk_id(desk_id) is None:
+            raise UserInterfaceExceptions.DeskNotExist()
+
+        return True
+
+    def change_column_position_in_desk(self):
+        '''Меняем номер колонки в таблице '''
         return
 
     def get_cards_by_column_id(self, column_id):
         '''Получаем карточки в колонке по column_id'''
-        return
-
-    def del_column(self, column_id):
-        '''Удоляем колонку'''
-        return
-
-    def add_column_to_desk(self, desk_id, column_name):
-        '''Добавляем колонку в таблицу'''
-        return
-
-    def change_column_position_in_desk(self):
-        '''Меняем номер колонки в таблице '''
         return
 
     def add_card_to_column(self, card_title, card_status, column_id):
