@@ -45,7 +45,7 @@ class CardsAPI:
             return False
 
 
-    def chage_card_info(self, card_id, title=None, text=None, status=None):
+    def change_card_info(self, card_id, title=None, text=None, status=None):
         zxc = self.card_db.select_card(id=card_id)
 
         if zxc is not None:

@@ -85,10 +85,10 @@ card_api_test = CardsAPI() # OK
 
 # print(card_api_test.get_cards_by_column_id(2))
 
-print(card_api_test.add_card(1, '1_5'))
+# print(card_api_test.add_card(1, '1_5'))
 
-# print(card_api_test.del_card(23))
+print(card_api_test.del_card(1))
 
-# print(card_api_test.chage_card_info(8, text='zxczxczxc'))
+# print(card_api_test.change_card_info(8, text='zxczxczxc'))
 
 # print(card_api_test.change_card_sequence_number(28, 1))
