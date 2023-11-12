@@ -70,7 +70,7 @@ column_api_test = ColumnsAPI() # OK
 # for i in range(5, 6):
 #     print(column_api_test.add_column(1, f'misha1_{i+1}'))
 # print(column_api_test.add_column(5, 'misha5_1'))
-# print(column_api_test.add_column(1, 'misha1_5'))
+# print(column_api_test.add_column(2, 'misha2_1'))
 # print(column_api_test.del_column(7))
 
 # print(column_api_test.rename_column(12, 'misha1_3'))
@@ -87,7 +87,7 @@ card_api_test = CardsAPI() # OK
 
 # print(card_api_test.add_card(1, '1_5'))
 
-print(card_api_test.del_card(1))
+# print(card_api_test.del_card(1))
 
 # print(card_api_test.change_card_info(8, text='zxczxczxc'))
 

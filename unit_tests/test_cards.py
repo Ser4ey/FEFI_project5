@@ -82,7 +82,6 @@ class TestCardsDB(unittest.TestCase):
         self.assertIsNone(result1)
 
         result2 = self.db.select_card(title="test_card2")
-
         self.assertEqual(len(result2), 6)
         self.assertEqual(result2[1], 1)
         self.assertEqual(result2[-1], 2)
