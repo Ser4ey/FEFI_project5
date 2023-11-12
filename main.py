@@ -62,7 +62,7 @@ desk_api_test = DeskAPI()  # OK
 
 
 
-column_api_test = ColumnsAPI()
+column_api_test = ColumnsAPI() # OK
 # print(column_api_test.get_columns())
 
 # print(column_api_test.get_columns_by_desk_id(1))
@@ -75,17 +75,17 @@ column_api_test = ColumnsAPI()
 
 # print(column_api_test.rename_column(12, 'misha1_3'))
 
-print(column_api_test.change_column_sequence_number(2, 2))  # TODO Сделать
+# print(column_api_test.change_column_sequence_number(2, 2))
 
 
 
-card_api_test = CardsAPI()
+card_api_test = CardsAPI() # OK
 
 # print(card_api_test.get_cards())
 
 # print(card_api_test.get_cards_by_column_id(2))
 
-# print(card_api_test.add_card(9, '9_6'))
+print(card_api_test.add_card(1, '1_5'))
 
 # print(card_api_test.del_card(23))
 
