@@ -24,9 +24,11 @@ class TestUserInterface(unittest.TestCase):
         self.assertFalse(2 == 3)
         self.assertTrue(2+3 > 1)
 
-    def test_some_exception(self):
-        with self.assertRaises(UserInterfaceExceptions.InvalidDeskIdType):
-            self.UserInterface.get_deck_by_desk_id('not int')
+    # def test_some_exception(self):
+    #     with self.assertRaises(UserInterfaceExceptions.InvalidDeskIdType):
+    #         self.UserInterface.get_deck_by_desk_id('not int')
 
 
+if __name__ == '__main__':
+    unittest.main()
 

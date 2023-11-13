@@ -9,66 +9,78 @@ class UserInterface:
         self.ColumnsAPI = ColumnsAPI()
         self.CardsAPI = CardsAPI()
 
-    def get_decks(self) -> list:
+
+    def get_desks(self) -> list:
         '''Возвращает все доски пользователя.
             Формат: [
             {
-                'deck_id': 0,
+                'desk_id': 0,
                 'desk_name': 'some name'
             },
             {
-                'deck_id': 1,
+                'desk_id': 1,
                 'desk_name': 'Task99'
             }
         ]'''
-        return [
-            {
-                'deck_id': 0,
-                'desk_name': 'some name'
-            },
-            {
-                'deck_id': 1,
-                'desk_name': 'Task99'
-            }
-        ]
 
-    def get_deck_by_desk_id(self, desk_id: int) -> dict | None:
+        all_desks = self.DeskAPI.get_desks()
+        all_desk_id = [desk[0] for desk in all_desks]
+        all_desk_name = [desk[1] for desk in all_desks]
+
+        zxc = []
+        for i in range(len(all_desks)):
+            desk_dict = {"desk_id": all_desk_id[i], "desk_name": all_desk_name[i]}
+
+            zxc.append(desk_dict)
+        return zxc
+
+
+    def get_desk_by_desk_id(self, desk_id: int) -> dict | None:
         '''Возвращает все доски пользователя.
         Формат:
         {
-            'deck_id': 0,
+            'desk_id': 0,
             'desk_name': 'some name'
         } или None
         '''
+
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
-        if desk_id == 'доски с таким id не существует':
+        desk = self.DeskAPI.get_desk_by_id(desk_id)
+        if len(desk) != 0:
+            desk_dict = {"desk_id": desk[0][0], "desk_name": desk[0][1]}
+            return desk_dict
+
+        if len(desk) == 0:
             return None
 
-        return {
-                'deck_id': 0,
-                 'desk_name': 'some name'
-                }
 
     def create_desk(self, desk_name: str) -> bool:
         '''Создаёт доску с именем desk_name'''
+
         if type(desk_name) != str:
             raise UserInterfaceExceptions.InvalidDeskNameType()
 
         if desk_name.strip() == "":
             raise UserInterfaceExceptions.InvalidDeskNameContent()
 
+        self.DeskAPI.add_desk(desk_name)
+
         return True
 
     def del_desk(self, desk_id: int) -> bool:
-        '''Удоляем колонку по desk_id + нужно удалить все колонки и карточки, которые принадлежат этой доске'''
+        '''Удаляем колонку по desk_id + нужно удалить все колонки и карточки, которые принадлежат этой доске'''
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
-        if self.get_deck_by_desk_id(desk_id) is None:
+        if self.get_desk_by_desk_id(desk_id) is None:
             raise UserInterfaceExceptions.DeskNotExist()
-        return True
+
+        zxc = self.DeskAPI.del_desk_by_id(desk_id)
+
+        return zxc
+
 
     def change_desk_name(self, desk_id: int, desk_name: str) -> bool:
         '''Меняет имя у доски с id=desk_id на desk_name'''
@@ -81,10 +93,12 @@ class UserInterface:
         if desk_name.strip() == "":
             raise UserInterfaceExceptions.InvalidDeskNameContent()
 
-        if self.get_deck_by_desk_id(desk_id) is None:
+        if self.get_desk_by_desk_id(desk_id) is None:
             raise UserInterfaceExceptions.DeskNotExist()
 
-        return True
+        zxc = self.DeskAPI.rename_desk(desk_id, desk_name)
+
+        return zxc
 
     def get_columns_by_desk_id(self, desk_id: int) -> list:
         '''Возвращает все колонки пользователя по desk_id.
@@ -102,61 +116,61 @@ class UserInterface:
                 'sequence_number': 1
             },
         ]'''
+
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
-        if self.get_deck_by_desk_id(desk_id) is None:
+        if self.get_desk_by_desk_id(desk_id) is None:
             raise UserInterfaceExceptions.DeskNotExist()
 
-        return [
-            {
-                'column_id': 0,
-                'desk_id': 12,
-                'column_name': 'Колонка 33',
-                'sequence_number': 0
-            },
-            {
-                'column_id': 1,
-                'desk_id': 12,
-                'column_name': 'Колонка 44',
-                'sequence_number': 1
-            },
-        ]
+        all_columns = self.ColumnsAPI.get_columns_by_desk_id(desk_id)
+        all_columns_id = [column[0] for column in all_columns]
+        all_desk_id = [column[1] for column in all_columns]
+        all_columns_name = [column[2] for column in all_columns]
+        all_sequence_number = [column[3] for column in all_columns]
 
-    def get_column_by_column_id(self, column_id: int) -> dict | None:
+        zxc = []
+        for i in range(len(all_columns)):
+            desk_dict = {"column_id": all_columns_id[i], "desk_id": all_desk_id[i], "column_name": all_columns_name[i], "sequence_number": all_sequence_number[i]}
+            zxc.append(desk_dict)
+
+        return zxc
+
+    def get_column_by_column_id(self, column_id: int) -> dict | None:  # TODO
         '''Получаем информацию о колонку по column_id
         Формат:
             {
-                'deck_id': 0,
+                'desk_id': 0,
                 'desk_name': 'some name'
             } или None
         '''
 
         if type(column_id) != int:
+            print("!")
             raise UserInterfaceExceptions.InvalidColumnIdType()
 
         if column_id == 'доски с таким id не существует':
+            print("!!")
             return None
 
-        return {
-                'column_id': 7,
-                'desk_id': 12,
-                'column_name': 'Колонка 33',
-                'sequence_number': 32
-            }
+        # column = self.ColumnsAPI.
 
     def change_column_name(self, column_id: int, column_name: str) -> bool:
         '''Меняем имя колонки по column_id'''
         if type(column_id) != int:
+            print("!")
             raise UserInterfaceExceptions.InvalidColumnIdType()
 
         if type(column_name) != str:
+            print("!!")
             raise UserInterfaceExceptions.InvalidColumnNameContent()
 
         if column_name.strip() == "":
+            print("!!!")
             raise UserInterfaceExceptions.InvalidColumnNameContent()
 
         if self.get_column_by_column_id(column_id) is None:
+            print("!!!!")
             raise UserInterfaceExceptions.ColumnNotExist()
 
         return True
@@ -334,9 +348,4 @@ class UserInterface:
             raise UserInterfaceExceptions.CardNotExist()
 
         return True
-
-
-
-
-
 

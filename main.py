@@ -7,6 +7,8 @@ from database.columns_api import ColumnsAPI
 from database.desks import DesksDB
 from database.desk_api import DeskAPI
 
+
+from interfaces.user_interface import UserInterface
 class App:
     def __init__(self):
         self._decks = []
@@ -69,7 +71,7 @@ column_api_test = ColumnsAPI() # OK
 
 # for i in range(5, 6):
 #     print(column_api_test.add_column(1, f'misha1_{i+1}'))
-# print(column_api_test.add_column(5, 'misha5_1'))
+# print(column_api_test.add_column(5, 'misha5_5'))
 # print(column_api_test.add_column(2, 'misha2_1'))
 # print(column_api_test.del_column(7))
 
@@ -92,3 +94,8 @@ card_api_test = CardsAPI() # OK
 # print(card_api_test.change_card_info(8, text='zxczxczxc'))
 
 # print(card_api_test.change_card_sequence_number(28, 1))
+
+
+user_interface_test = UserInterface()
+
+print(user_interface_test.change_column_name(1, ))
