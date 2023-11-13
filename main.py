@@ -62,7 +62,7 @@ desk_api_test = DeskAPI()  # OK
 
 
 
-column_api_test = ColumnsAPI()
+column_api_test = ColumnsAPI() # OK
 # print(column_api_test.get_columns())
 
 # print(column_api_test.get_columns_by_desk_id(1))
@@ -70,25 +70,25 @@ column_api_test = ColumnsAPI()
 # for i in range(5, 6):
 #     print(column_api_test.add_column(1, f'misha1_{i+1}'))
 # print(column_api_test.add_column(5, 'misha5_1'))
-# print(column_api_test.add_column(1, 'misha1_5'))
+# print(column_api_test.add_column(2, 'misha2_1'))
 # print(column_api_test.del_column(7))
 
 # print(column_api_test.rename_column(12, 'misha1_3'))
 
-print(column_api_test.change_column_sequence_number(2, 2))  # TODO Сделать
+# print(column_api_test.change_column_sequence_number(2, 2))
 
 
 
-card_api_test = CardsAPI()
+card_api_test = CardsAPI() # OK
 
 # print(card_api_test.get_cards())
 
 # print(card_api_test.get_cards_by_column_id(2))
 
-# print(card_api_test.add_card(9, '9_6'))
+# print(card_api_test.add_card(1, '1_5'))
 
-# print(card_api_test.del_card(23))
+# print(card_api_test.del_card(1))
 
-# print(card_api_test.chage_card_info(8, text='zxczxczxc'))
+# print(card_api_test.change_card_info(8, text='zxczxczxc'))
 
 # print(card_api_test.change_card_sequence_number(28, 1))
