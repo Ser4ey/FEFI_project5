@@ -3,10 +3,17 @@ import unittest
 
 from database.columns import ColumnsDB
 
-
 class TestCardsDB(unittest.TestCase):
     def setUp(self):
         self.db = ColumnsDB('test.db')
+        self.db.execute('''
+            CREATE TABLE IF NOT EXISTS Cards(
+                id integer PRIMARY KEY AUTOINCREMENT,
+                column_id integer,
+                card_data text,
+                FOREIGN KEY (column_id) REFERENCES Columns(id)
+            );
+        ''', commit=True)
 
 
     def tearDown(self):
@@ -122,8 +129,8 @@ class TestCardsDB(unittest.TestCase):
 
     def test_del_column_by_column_id(self):
         self.db.add_column(1, "test_column1", 1)
-        self.db.add_column(1, "test_column2", 2)
-        self.db.add_column(2, "test_column3", 1)
+        self.db.execute("INSERT INTO Cards (column_id, card_data) VALUES (?, ?)", (1, "test_card_data"), commit=True)
+        self.db.execute("")
 
         result = self.db.del_column_by_column_id(1)
         self.assertEqual(result, True)
@@ -145,6 +152,18 @@ class TestCardsDB(unittest.TestCase):
         self.assertEqual(column3[-1], 5)
         self.assertEqual(column4[-1], 3)
         self.assertEqual(column5[-1], 4)
+
+
+    def test_select_column_by_column_id(self):
+        self.db.add_column(1, "test_column1", 1)
+        self.db.add_column(1, "test_column2", 2)
+        self.db.add_column(2, "test_column3", 1)
+
+        result1 = self.db.select_column_by_column_id(4)
+        self.assertIsNone(result1)
+
+        result2 = self.db.select_column_by_column_id(1)
+        self.assertEqual(result2[0], 1)
 
 
 if __name__ == '__main__':

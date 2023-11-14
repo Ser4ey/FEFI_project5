@@ -13,6 +13,8 @@ class CardsAPI:
     def get_cards_by_column_id(self, column_id):
         return self.card_db.select_cards_by_column_id(column_id=column_id)
 
+    def get_card_by_card_id(self, card_id):
+        return self.card_db.select_card_by_card_id(card_id)
 
     def add_card(self, column_id, card_name):
         last_sequence_number = self.card_db.get_last_sequence_number_by_desk_id(column_id=column_id)

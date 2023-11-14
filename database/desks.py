@@ -78,7 +78,7 @@ class DesksDB:
         return
 
 
-    def del_desk(self, desk_id):
+    def del_desk(self, desk_id):  # TODO: Gleb
         zxc = self.select_desk(id=desk_id)
 
         if len(zxc) != 0:
