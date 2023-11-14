@@ -167,6 +167,18 @@ class TestCardsDB(unittest.TestCase):
         self.assertEqual(card5[-1], 4)
 
 
+    def test_get_card_by_card_id(self):
+        self.db.add_card("test_card1", 1, 1)
+        self.db.add_card("test_card2", 1, 2)
+        self.db.add_card("test_card3", 1, 3)
+
+        result1 = self.db.select_card_by_card_id(4)
+        self.assertIsNone(result1)
+
+        result2 = self.db.select_card_by_card_id(1)
+        self.assertEqual(result2[2], "test_card1")
+
+
 if __name__ == '__main__':
     unittest.main()
 

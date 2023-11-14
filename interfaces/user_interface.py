@@ -245,24 +245,20 @@ class UserInterface:
         if self.get_column_by_column_id(column_id) is None:
             raise UserInterfaceExceptions.ColumnNotExist()
 
-        return [
-            {
-                'card_id': 0,
-                'column_id': 2,
-                'card_title': 'Заголовок',
-                'card_text': 'Много-многоножка',
-                'card_status': 1,
-                'sequence_number': 0
-            },
-            {
-                'card_id': 1,
-                'column_id': 2,
-                'card_title': 'Заголовок 2',
-                'card_text': 'Лакричный жук',
-                'card_status': 2,
-                'sequence_number': 1
-            }
-        ]
+        all_cards = self.CardsAPI.get_cards_by_column_id(column_id)
+        all_card_id = [card[0] for card in all_cards]
+        all_column_id = [card[1] for card in all_cards]
+        all_card_title = [card[2] for card in all_cards]
+        all_card_text = [card[3] for card in all_cards]
+        all_card_status = [card[4] for card in all_cards]
+        all_sequence_number = [card[5] for card in all_cards]
+
+        zxc = []
+        for i in range(len(all_cards)):
+            card_dict = {"card_id": all_card_id[i], "column_id": all_column_id[i], "card_title": all_card_title[i], "card_text": all_card_text[i], "card_status": all_card_status[i], "sequence_number": all_sequence_number[i]}
+            zxc.append(card_dict)
+
+        return zxc
 
     def add_card_to_column(self, card_title: str, column_id: int) -> bool:
         '''Добавляем карточку в колонку'''
@@ -277,6 +273,8 @@ class UserInterface:
 
         if card_title.strip() == "":
             raise UserInterfaceExceptions.InvalidCardTitleContent()
+
+        self.CardsAPI.add_card(column_id, card_title)
 
         return True
 
@@ -294,18 +292,18 @@ class UserInterface:
         '''
 
         if type(card_id) != int:
+            print("!")
             raise UserInterfaceExceptions.InvalidCardIdType()
 
-        if card_id == 'не существует':
+        card = self.CardsAPI.get_card_by_card_id(card_id)
+        zxc = {}
+        if card:
+            zxc = {"card_id": card[0], "column_id": card[1], "card_title": card[2], "card_text": card[3], "card_status": card[4], "sequence_number": card[5]}
+            return zxc
+
+        if len(zxc) == 0:
             return None
-        return {
-                'card_id': 0,
-                'column_id': 2,
-                'card_title': 'Заголовок',
-                'card_text': 'Много-многоножка',
-                'card_status': 1,
-                'sequence_number': 0
-            }
+
 
     def change_card_info(self, card_id, card_title: str = None, card_text: str = None, card_status: int = None) -> bool:
         if type(card_id) != int:
@@ -321,24 +319,25 @@ class UserInterface:
             if card_title.strip() == "":
                 raise UserInterfaceExceptions.InvalidCardTitleContent()
 
-            # обновляем заголовок карточки
+            self.CardsAPI.change_card_info(card_id=card_id, title=card_title)
 
         if not (card_text is None):
             if type(card_text) != str:
                 raise UserInterfaceExceptions.InvalidCardTextType()
 
             # обновляем текст карточки
+            self.CardsAPI.change_card_info(card_id=card_id, text=card_text)
 
         if not (card_status is None):
             if type(card_status) != int:
                 raise UserInterfaceExceptions.InvalidCardStatusType()
 
-            # обновляем текст карточки
+            self.CardsAPI.change_card_info(card_id=card_id, status=card_status)
 
         return True
 
     def move_card(self, card_id: int, column_id: int, new_sequence_number: int) -> bool:
-        '''перемещает карточку. Карточки можно перемещать не только в раммках одной колонки, но и между колонками.'''
+        '''Перемещает карточку. Карточки можно перемещать не только в рамках одной колонки, но и между колонками.'''
         if type(card_id) != int:
             raise UserInterfaceExceptions.InvalidCardIdType()
 
@@ -354,6 +353,24 @@ class UserInterface:
         if type(new_sequence_number) != int:
             raise UserInterfaceExceptions.InvalidSequenceNumberType()
 
+        card = self.CardsAPI.get_card_by_card_id(card_id)
+        count_cards = len(self.get_cards_by_column_id(column_id))
+
+        if new_sequence_number < 1:
+            new_sequence_number = 1
+        elif new_sequence_number > count_cards:
+            new_sequence_number = count_cards
+
+        if card[1] == column_id:
+            self.CardsAPI.change_card_sequence_number(card_id, new_sequence_number)
+
+        else:
+            self.CardsAPI.add_card(column_id, card[2])
+            new_card_id = self.CardsAPI.get_cards_by_column_id(column_id)[-1][0]
+
+            self.CardsAPI.change_card_sequence_number(new_card_id, new_sequence_number)
+            self.CardsAPI.del_card(card_id)
+
         return True
 
     def del_card(self, card_id: int) -> bool:
@@ -363,6 +380,8 @@ class UserInterface:
 
         if self.get_card_by_card_id(card_id) is None:
             raise UserInterfaceExceptions.CardNotExist()
+
+        self.CardsAPI.del_card(card_id)
 
         return True
 

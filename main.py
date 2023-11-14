@@ -86,19 +86,26 @@ column_api_test = ColumnsAPI() # OK
 # print(column_api_test.get_columns_by_column_id(1))
 
 
+column_db_test = ColumnsDB()
+
+# print(column_db_test.del_column_by_column_id(20))
+
+
 card_api_test = CardsAPI() # OK
 
 # print(card_api_test.get_cards())
 
 # print(card_api_test.get_cards_by_column_id(2))
 
-# print(card_api_test.add_card(1, '1_5'))
+# print(card_api_test.add_card(14, '14_5'))
 
-# print(card_api_test.del_card(1))
+# print(card_api_test.del_card(15))
 
 # print(card_api_test.change_card_info(8, text='zxczxczxc'))
 
 # print(card_api_test.change_card_sequence_number(28, 1))
+
+# print(card_api_test.get_card_by_card_id(8))
 
 
 user_interface_test = UserInterface()
@@ -112,3 +119,18 @@ user_interface_test = UserInterface()
 # print(user_interface_test.add_column_to_desk(5, "misha5_6"))
 
 # print(user_interface_test.change_column_position_in_desk(5, 12, 6))
+
+# print(user_interface_test.add_card_to_column("1_4", 11))
+# print(user_interface_test.add_card_to_column("1_4", 11))
+
+# print(user_interface_test.get_card_by_card_id(8))
+
+# print(user_interface_test.change_card_info(20, card_title="123"))
+
+# print(user_interface_test.get_card_by_card_id(20))
+
+# print(user_interface_test.change_card_info(8, card_status=1))
+
+# print(user_interface_test.move_card(24, 14, 3))
+
+print(user_interface_test.del_card(8))

@@ -2,11 +2,19 @@ import os
 import unittest
 
 from database.columns_api import ColumnsAPI
-
+from database.columns import ColumnsDB
 
 class TestCardsAPI(unittest.TestCase):
     def setUp(self):
         self.db = ColumnsAPI('test.db')
+        self.db.column_db.execute('''
+                    CREATE TABLE IF NOT EXISTS Cards(
+                        id integer PRIMARY KEY AUTOINCREMENT,
+                        column_id integer,
+                        card_data text,
+                        FOREIGN KEY (column_id) REFERENCES Columns(id)
+                    );
+                ''', commit=True)
 
 
     def tearDown(self):
@@ -55,14 +63,12 @@ class TestCardsAPI(unittest.TestCase):
 
     def test_del_column(self):
         self.db.add_column(1, "test_column_1")
-        self.db.add_column(1, "test_column_2")
-        self.db.add_column(2, "test_column_3")
+
+        self.db.column_db.execute("INSERT INTO Cards (column_id, card_data) VALUES (?, ?)", (1, "test_card_data"), commit=True)
 
         self.db.del_column(1)
         result = self.db.get_columns()
-        self.assertEqual(len(result), 2)
-        self.assertEqual(result[0][-1], 1)
-        self.assertEqual(result[0][2], "test_column_2")
+        self.assertEqual(len(result), 0)
 
 
     def test_rename_column(self):

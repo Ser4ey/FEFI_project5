@@ -100,8 +100,7 @@ class ColumnsDB:
 
     def del_column_by_column_id(self, column_id):
         zxc = self.select_column(id=column_id)
-
-        if len(zxc) != 0:
+        if zxc:
             self.execute("DELETE FROM Columns WHERE id=?", (column_id,), commit=True)
             self.execute("DELETE FROM Cards WHERE column_id=?", (column_id,), commit=True)
             return True

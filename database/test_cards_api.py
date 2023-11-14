@@ -88,6 +88,19 @@ class TestCardsAPI(unittest.TestCase):
         self.assertEqual(result[3][-1], 3)
         self.assertEqual(result[4][-1], 4)
 
+
+    def test_get_card_by_card_id(self):
+        self.db.add_card(1, "test_card1")
+        self.db.add_card(1, "test_card2")
+        self.db.add_card(1, "test_card3")
+
+        result1 = self.db.get_card_by_card_id(4)
+        self.assertIsNone(result1)
+
+        result2 = self.db.get_card_by_card_id(2)
+        self.assertEqual(result2[2], "test_card2")
+
+
 if __name__ == '__main__':
     unittest.main()
 

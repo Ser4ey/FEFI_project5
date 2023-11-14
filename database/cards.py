@@ -62,6 +62,10 @@ class CardsDB:
         return self.execute(sql, (column_id,), fetchall=True)
 
 
+    def select_card_by_card_id(self, card_id):
+        sql = 'SELECT * FROM Cards WHERE id=?'
+        return self.execute(sql, (card_id,), fetchone=True)
+
     @staticmethod
     def format_args(sql, parameters: dict):
         # используется для создания sql команды с нужными параметрами для команды ниже
