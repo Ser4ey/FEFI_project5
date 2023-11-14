@@ -24,7 +24,7 @@ class TestUserInterface(unittest.TestCase):
         self.assertFalse(2 == 3)
         self.assertTrue(2+3 > 1)
 
-    def test_del_desk(self):
+    def test_del_desk_from_Ser4ey(self):
         self.UserInterface.DeskAPI.add_desk("new_desk")
 
         desk = self.UserInterface.get_desk_by_desk_id(1)
@@ -42,7 +42,7 @@ class TestUserInterface(unittest.TestCase):
         columns = self.UserInterface.ColumnsAPI.get_columns_by_desk_id(1)
         self.assertEqual(len(columns), 0)
 
-    def test_del_desk2(self):
+    def test_del_desk2_from_Ser4ey(self):
         self.UserInterface.DeskAPI.add_desk("new_desk")
         self.UserInterface.add_column_to_desk(1, "column1")
 
@@ -62,10 +62,70 @@ class TestUserInterface(unittest.TestCase):
         cards = self.UserInterface.CardsAPI.get_cards_by_column_id(1)
         self.assertEqual(len(cards), 0)
 
-
-
         columns = self.UserInterface.ColumnsAPI.get_columns_by_desk_id(1)
         self.assertEqual(len(columns), 0)
+
+    def test_change_desk_name_from_Ser4ey(self):
+        self.UserInterface.DeskAPI.add_desk("new_desk")
+        self.UserInterface.add_column_to_desk(1, "column1")
+
+        self.assertEqual(self.UserInterface.get_column_by_column_id(1)['column_name'], 'column1')
+
+        self.UserInterface.change_column_name(1, 'hahaha')
+
+        self.assertEqual(self.UserInterface.get_column_by_column_id(1)['column_name'], 'hahaha')
+
+        self.assertEqual(len(self.UserInterface.ColumnsAPI.get_columns()), 1)
+
+    def test_change_column_position_in_desk_from_Ser4ey(self):
+        self.UserInterface.DeskAPI.add_desk("new_desk")
+        for i in range(1, 10):
+            self.UserInterface.add_column_to_desk(1, f"column{i}")
+
+        self.assertEqual(len(self.UserInterface.get_columns_by_desk_id(1)), 9)
+
+        self.UserInterface.change_column_position_in_desk(1, 2, 8)
+        columns = self.UserInterface.get_columns_by_desk_id(1)
+        columns.sort(key=lambda x: x['sequence_number'])
+        columns = [i['column_id'] for i in columns]
+        self.assertEqual(columns, [1, 3, 4, 5, 6, 7, 8, 2, 9])
+
+        self.UserInterface.change_column_position_in_desk(1, 3, 8)
+        columns = self.UserInterface.get_columns_by_desk_id(1)
+        columns.sort(key=lambda x: x['sequence_number'])
+        columns = [i['column_id'] for i in columns]
+        self.assertEqual(columns, [1, 4, 5, 6, 7, 8, 2, 3, 9])
+
+        self.UserInterface.change_column_position_in_desk(1, 8, 3)
+        columns = self.UserInterface.get_columns_by_desk_id(1)
+        columns.sort(key=lambda x: x['sequence_number'])
+        columns = [i['column_id'] for i in columns]
+        self.assertEqual(columns, [1, 4, 8, 5, 6, 7, 2, 3, 9])
+
+        self.UserInterface.change_column_position_in_desk(1, 9, 1)
+        columns = self.UserInterface.get_columns_by_desk_id(1)
+        columns.sort(key=lambda x: x['sequence_number'])
+        columns = [i['column_id'] for i in columns]
+        self.assertEqual(columns, [9, 1, 4, 8, 5, 6, 7, 2, 3])
+
+    def test_move_card_from_Ser4ey(self):
+        self.UserInterface.DeskAPI.add_desk("new_desk")
+        for i in range(2):
+            self.UserInterface.add_column_to_desk(1, f"column{i+1}")
+
+        self.UserInterface.add_card_to_column("card1", 1)
+        self.assertIsNotNone(self.UserInterface.get_card_by_card_id(1))
+        print(self.UserInterface.get_card_by_card_id(1))
+
+        self.UserInterface.add_card_to_column("card2", 2)
+        self.UserInterface.add_card_to_column("card3", 2)
+        self.UserInterface.add_card_to_column("card4", 2)
+
+        self.UserInterface.move_card(1, 2, 1)
+
+        print(self.UserInterface.get_card_by_card_id(1))
+        self.assertIsNotNone(self.UserInterface.get_card_by_card_id(1))
+        print(self.UserInterface.CardsAPI.get_cards())
 
 if __name__ == '__main__':
     unittest.main()
