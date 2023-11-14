@@ -103,6 +103,7 @@ class ColumnsDB:
 
         if len(zxc) != 0:
             self.execute("DELETE FROM Columns WHERE id=?", (column_id,), commit=True)
+            self.execute("DELETE FROM Cards WHERE column_id=?", (column_id,), commit=True)
             return True
         else:
             return False

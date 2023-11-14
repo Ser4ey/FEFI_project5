@@ -149,39 +149,45 @@ class UserInterface:
             print("!")
             raise UserInterfaceExceptions.InvalidColumnIdType()
 
-        if column_id == 'доски с таким id не существует':
-            print("!!")
+        column = self.ColumnsAPI.get_columns_by_column_id(column_id)
+        zxc = {}
+        if column:
+            zxc = {"column_id": column[0], "desk_id": column[1], "column_name": column[2], "sequence_number": column[3]}
+            return zxc
+
+        if len(zxc) == 0:
             return None
 
-        # column = self.ColumnsAPI.
 
     def change_column_name(self, column_id: int, column_name: str) -> bool:
         '''Меняем имя колонки по column_id'''
         if type(column_id) != int:
-            print("!")
             raise UserInterfaceExceptions.InvalidColumnIdType()
 
         if type(column_name) != str:
-            print("!!")
             raise UserInterfaceExceptions.InvalidColumnNameContent()
 
         if column_name.strip() == "":
-            print("!!!")
             raise UserInterfaceExceptions.InvalidColumnNameContent()
 
         if self.get_column_by_column_id(column_id) is None:
-            print("!!!!")
             raise UserInterfaceExceptions.ColumnNotExist()
 
+        self.ColumnsAPI.rename_column(column_id, column_name)
         return True
+
 
     def del_column(self, column_id: int) -> bool:
         '''Удаляем колонку + нужно удалить все карточки в колонке'''
         if type(column_id) != int:
+            print("!")
             raise UserInterfaceExceptions.InvalidColumnIdType()
 
         if self.get_column_by_column_id(column_id) is None:
+            print("!!")
             raise UserInterfaceExceptions.ColumnNotExist()
+
+        self.ColumnsAPI.del_column(column_id)
 
         return True
 
@@ -196,9 +202,10 @@ class UserInterface:
         if column_name.strip() == "":
             raise UserInterfaceExceptions.InvalidColumnNameContent()
 
-        if self.get_deck_by_desk_id(desk_id) is None:
+        if self.get_desk_by_desk_id(desk_id) is None:
             raise UserInterfaceExceptions.DeskNotExist()
 
+        self.ColumnsAPI.add_column(desk_id, column_name)
         return True
 
     def change_column_position_in_desk(self, desk_id: int, column_id: int, new_sequence_number: int) -> bool:
@@ -206,7 +213,7 @@ class UserInterface:
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
-        if self.get_deck_by_desk_id(desk_id) is None:
+        if self.get_desk_by_desk_id(desk_id) is None:
             raise UserInterfaceExceptions.DeskNotExist()
 
         if type(column_id) != int:
@@ -217,6 +224,16 @@ class UserInterface:
 
         if type(new_sequence_number) != int:
             raise UserInterfaceExceptions.InvalidSequenceNumberType()
+
+        columns_count = len(self.ColumnsAPI.get_columns_by_desk_id(desk_id))
+
+        if new_sequence_number < 1:
+            new_sequence_number = 1
+
+        elif new_sequence_number > columns_count:
+            new_sequence_number = columns_count
+
+        self.ColumnsAPI.change_column_sequence_number(column_id, new_sequence_number)
 
         return True
 

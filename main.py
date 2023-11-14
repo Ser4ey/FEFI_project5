@@ -62,9 +62,12 @@ desk_api_test = DeskAPI()  # OK
 
 # print(desk_api_test.rename_desk(2, 'new_misha2'))
 
+# print(desk_api_test.get_desk_by_id(1))
+
 
 
 column_api_test = ColumnsAPI() # OK
+
 # print(column_api_test.get_columns())
 
 # print(column_api_test.get_columns_by_desk_id(1))
@@ -72,14 +75,15 @@ column_api_test = ColumnsAPI() # OK
 # for i in range(5, 6):
 #     print(column_api_test.add_column(1, f'misha1_{i+1}'))
 # print(column_api_test.add_column(5, 'misha5_5'))
-# print(column_api_test.add_column(2, 'misha2_1'))
-# print(column_api_test.del_column(7))
+# print(column_api_test.add_column(1, 'misha1_6'))
+
+# print(column_api_test.del_column(2))
 
 # print(column_api_test.rename_column(12, 'misha1_3'))
 
 # print(column_api_test.change_column_sequence_number(2, 2))
 
-print(column_api_test.get_columns_by_column_id(1))
+# print(column_api_test.get_columns_by_column_id(1))
 
 
 card_api_test = CardsAPI() # OK
@@ -99,4 +103,12 @@ card_api_test = CardsAPI() # OK
 
 user_interface_test = UserInterface()
 
-# print(user_interface_test.change_column_name(1, ))
+# print(user_interface_test.change_column_name(2, "new_misha2_1"))
+
+# print(user_interface_test.del_column(1))
+
+# print(user_interface_test.add_column_to_desk(1, "new_misha1_6"))
+
+# print(user_interface_test.add_column_to_desk(5, "misha5_6"))
+
+# print(user_interface_test.change_column_position_in_desk(5, 12, 6))
