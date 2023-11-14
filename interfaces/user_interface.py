@@ -365,11 +365,16 @@ class UserInterface:
             self.CardsAPI.change_card_sequence_number(card_id, new_sequence_number)
 
         else:
-            self.CardsAPI.add_card(column_id, card[2])
-            new_card_id = self.CardsAPI.get_cards_by_column_id(column_id)[-1][0]
+            self.CardsAPI.change_card_info(card_id, column_id=column_id, sequence_number=count_cards+1)
 
-            self.CardsAPI.change_card_sequence_number(new_card_id, new_sequence_number)
-            self.CardsAPI.del_card(card_id)
+            last_max_sequence_number = len(self.CardsAPI.get_cards_by_column_id(card[1]))
+
+            last_cards = self.CardsAPI.get_cards_by_column_id(card[1])
+
+            for i in range(last_max_sequence_number):
+                self.CardsAPI.change_card_info(last_cards[i][0], sequence_number=i+1)
+
+            self.CardsAPI.change_card_sequence_number(card_id, new_sequence_number)
 
         return True
 

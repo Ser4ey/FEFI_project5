@@ -130,7 +130,6 @@ class TestCardsDB(unittest.TestCase):
     def test_del_column_by_column_id(self):
         self.db.add_column(1, "test_column1", 1)
         self.db.execute("INSERT INTO Cards (column_id, card_data) VALUES (?, ?)", (1, "test_card_data"), commit=True)
-        self.db.execute("")
 
         result = self.db.del_column_by_column_id(1)
         self.assertEqual(result, True)
