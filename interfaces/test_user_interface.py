@@ -114,18 +114,24 @@ class TestUserInterface(unittest.TestCase):
             self.UserInterface.add_column_to_desk(1, f"column{i+1}")
 
         self.UserInterface.add_card_to_column("card1", 1)
+        self.UserInterface.change_card_info(1, card_text='some info about')
         self.assertIsNotNone(self.UserInterface.get_card_by_card_id(1))
-        print(self.UserInterface.get_card_by_card_id(1))
+        self.assertEqual(self.UserInterface.get_card_by_card_id(1)['card_text'], 'some info about')
 
         self.UserInterface.add_card_to_column("card2", 2)
         self.UserInterface.add_card_to_column("card3", 2)
         self.UserInterface.add_card_to_column("card4", 2)
 
-        self.UserInterface.move_card(1, 2, 1)
-
-        print(self.UserInterface.get_card_by_card_id(1))
-        self.assertIsNotNone(self.UserInterface.get_card_by_card_id(1))
         print(self.UserInterface.CardsAPI.get_cards())
+        self.UserInterface.move_card(1, 2, 1)
+        print(self.UserInterface.CardsAPI.get_cards())
+
+        self.assertIsNotNone(self.UserInterface.get_card_by_card_id(1))
+        self.assertEqual(self.UserInterface.get_card_by_card_id(1)[''], 'some info about')
+        print(self.UserInterface.CardsAPI.get_cards())
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
