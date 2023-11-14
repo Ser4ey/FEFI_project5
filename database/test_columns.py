@@ -147,6 +147,18 @@ class TestCardsDB(unittest.TestCase):
         self.assertEqual(column5[-1], 4)
 
 
+    def test_select_column_by_column_id(self):
+        self.db.add_column(1, "test_column1", 1)
+        self.db.add_column(1, "test_column2", 2)
+        self.db.add_column(2, "test_column3", 1)
+
+        result1 = self.db.select_column_by_column_id(4)
+        self.assertIsNone(result1)
+
+        result2 = self.db.select_column_by_column_id(1)
+        self.assertEqual(result2[0], 1)
+
+
 if __name__ == '__main__':
     unittest.main()
 

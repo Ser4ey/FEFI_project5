@@ -79,6 +79,7 @@ column_api_test = ColumnsAPI() # OK
 
 # print(column_api_test.change_column_sequence_number(2, 2))
 
+print(column_api_test.get_columns_by_column_id(1))
 
 
 card_api_test = CardsAPI() # OK
@@ -98,4 +99,4 @@ card_api_test = CardsAPI() # OK
 
 user_interface_test = UserInterface()
 
-print(user_interface_test.change_column_name(1, ))
+# print(user_interface_test.change_column_name(1, ))

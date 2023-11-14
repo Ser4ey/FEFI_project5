@@ -70,12 +70,10 @@ class TestCardsAPI(unittest.TestCase):
         self.db.add_column(1, "test_column_2")
 
         result = self.db.get_columns_by_desk_id(1)
-        print(result)
 
         self.db.rename_column(1, "test_column_new")
 
         result = self.db.get_columns_by_desk_id(1)
-        print(result)
         self.assertEqual(result[-1][2], "test_column_new")
 
 
@@ -89,12 +87,21 @@ class TestCardsAPI(unittest.TestCase):
         self.db.change_column_sequence_number(3, 5)
 
         result = self.db.get_columns()
-        for i in result:
-            print(i)
 
         self.assertEqual(result[2][-1], 5)
         self.assertEqual(result[3][-1], 3)
         self.assertEqual(result[4][-1], 4)
+
+
+    def test_get_columns_by_column_id(self):
+        self.db.add_column(1, "test_column_1")
+        self.db.add_column(1, "test_column_2")
+
+        result1 = self.db.get_columns_by_column_id(3)
+        self.assertIsNone(result1)
+
+        result2 = self.db.get_columns_by_column_id(2)
+        self.assertEqual(result2[2], "test_column_2")
 
 
 if __name__ == '__main__':

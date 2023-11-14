@@ -14,6 +14,10 @@ class ColumnsAPI:
         return self.column_db.select_columns_by_desk_id(desk_id=desk_id)
 
 
+    def get_columns_by_column_id(self, column_id):
+            return self.column_db.select_column_by_column_id(column_id)
+
+
     def add_column(self, desk_id, column_name):
         last_sequence_number = self.column_db.get_last_sequence_number_by_desk_id(desk_id=desk_id)
 

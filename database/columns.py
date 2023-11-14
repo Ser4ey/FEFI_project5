@@ -75,6 +75,9 @@ class ColumnsDB:
         sql = 'SELECT * FROM Columns WHERE desk_id=?'
         return self.execute(sql, (desk_id,), fetchall=True)
 
+    def select_column_by_column_id(self, column_id):
+        sql = 'SELECT * FROM Columns WHERE id=?'
+        return self.execute(sql, (column_id,), fetchone=True)
 
     def count_columns(self):
         return self.execute("SELECT COUNT(*) FROM Columns;", fetchone=True)[0]
@@ -124,3 +127,4 @@ class ColumnsDB:
 
         else:
             return True
+
