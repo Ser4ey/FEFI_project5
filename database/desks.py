@@ -78,11 +78,19 @@ class DesksDB:
         return
 
 
-    def del_desk(self, desk_id):  # TODO: Gleb
+    def del_desk(self, desk_id):
         zxc = self.select_desk(id=desk_id)
 
         if len(zxc) != 0:
             self.execute("DELETE FROM Desks WHERE id=?", (desk_id,), commit=True)
+
+            columns_id = self.execute("SELECT id FROM Columns WHERE desk_id=?", (desk_id,), fetchall=True)
+            columns_id = [i[0] for i in columns_id]  # [10, 11, 12, 13, 14, 17]
+            self.execute("DELETE FROM Columns WHERE desk_id=?", (desk_id,), commit=True)
+
+            for i in range(len(columns_id)):
+                self.execute("DELETE FROM Cards WHERE column_id=?", (columns_id[i],), commit=True)
+
             return True
         else:
             return False

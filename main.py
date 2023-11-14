@@ -58,7 +58,7 @@ desk_api_test = DeskAPI()  # OK
 
 # print(desk_api_test.add_desk('misha7'))
 
-# print(desk_api_test.del_desk_by_id(3))
+print(desk_api_test.del_desk_by_id(6))
 
 # print(desk_api_test.rename_desk(2, 'new_misha2'))
 
@@ -75,7 +75,7 @@ column_api_test = ColumnsAPI() # OK
 # for i in range(5, 6):
 #     print(column_api_test.add_column(1, f'misha1_{i+1}'))
 # print(column_api_test.add_column(5, 'misha5_5'))
-# print(column_api_test.add_column(1, 'misha1_6'))
+# print(column_api_test.add_column(6, "misha6_5"))
 
 # print(column_api_test.del_column(2))
 
@@ -133,4 +133,4 @@ user_interface_test = UserInterface()
 
 # print(user_interface_test.move_card(24, 14, 3))
 
-print(user_interface_test.del_card(8))
+# print(user_interface_test.del_card(100))
