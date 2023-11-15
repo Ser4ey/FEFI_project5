@@ -359,22 +359,23 @@ class UserInterface:
         if new_sequence_number < 1:
             new_sequence_number = 1
         elif new_sequence_number > count_cards:
-            new_sequence_number = count_cards
+            new_sequence_number = count_cards+1
 
-        if card[1] == column_id:
+
+        if card[1] == column_id:  # Если пермешение внутри этой же колонки
             self.CardsAPI.change_card_sequence_number(card_id, new_sequence_number)
 
-        else:
-            self.CardsAPI.change_card_info(card_id, column_id=column_id, sequence_number=count_cards+1)
+        else:  # Если перемещение в другую колонку
+            self.CardsAPI.change_card_info(card_id, column_id=column_id, sequence_number=count_cards+1)  #  Меняем column_id на новый; sequence_number становится равным количеству карт в этой колонки+1
 
-            last_max_sequence_number = len(self.CardsAPI.get_cards_by_column_id(card[1]))
+            last_max_sequence_number = len(self.CardsAPI.get_cards_by_column_id(card[1]))  # Получаем максимальный sequence_number в старой колонки и перезаписываем sequence_number
 
-            last_cards = self.CardsAPI.get_cards_by_column_id(card[1])
+            last_cards = self.CardsAPI.get_cards_by_column_id(card[1])  # Список всех карт старой колонки
 
-            for i in range(last_max_sequence_number):
+            for i in range(last_max_sequence_number):  # Перезаписываем sequence_number в старой колонки
                 self.CardsAPI.change_card_info(last_cards[i][0], sequence_number=i+1)
 
-            self.CardsAPI.change_card_sequence_number(card_id, new_sequence_number)
+            self.CardsAPI.change_card_sequence_number(card_id, new_sequence_number)  # Меняем порядок карт в новой колонки на правильный
 
         return True
 
