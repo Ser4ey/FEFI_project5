@@ -122,13 +122,34 @@ class TestUserInterface(unittest.TestCase):
         self.UserInterface.add_card_to_column("card3", 2)
         self.UserInterface.add_card_to_column("card4", 2)
 
-        print(self.UserInterface.CardsAPI.get_cards())
+        self.assertEqual(len(self.UserInterface.CardsAPI.get_cards_by_column_id(1)), 1)
+        self.assertEqual(len(self.UserInterface.CardsAPI.get_cards_by_column_id(2)), 3)
         self.UserInterface.move_card(1, 2, 1)
-        print(self.UserInterface.CardsAPI.get_cards())
+        self.assertEqual(len(self.UserInterface.CardsAPI.get_cards_by_column_id(1)), 0)
+        self.assertEqual(len(self.UserInterface.CardsAPI.get_cards_by_column_id(2)), 4)
 
         self.assertIsNotNone(self.UserInterface.get_card_by_card_id(1))
-        self.assertEqual(self.UserInterface.get_card_by_card_id(1)[''], 'some info about')
-        print(self.UserInterface.CardsAPI.get_cards())
+        self.assertEqual(self.UserInterface.get_card_by_card_id(1)['card_text'], 'some info about')
+
+        cards = self.UserInterface.get_cards_by_column_id(2)
+        cards.sort(key=lambda x: x['sequence_number'])
+        cards = [i["card_id"] for i in cards]
+        self.assertEqual(cards, [1, 2, 3, 4])
+
+        self.UserInterface.move_card(3, 1, 1)
+        self.assertEqual(len(self.UserInterface.CardsAPI.get_cards_by_column_id(1)), 1)
+        self.assertEqual(len(self.UserInterface.CardsAPI.get_cards_by_column_id(2)), 3)
+
+        column1 = self.UserInterface.get_cards_by_column_id(1)
+        column2 = self.UserInterface.get_cards_by_column_id(2)
+
+        self.assertEqual(column1[0]['sequence_number'], 1)
+        self.assertEqual(column1[0]['card_id'], 3)
+
+        self.assertEqual(self.UserInterface.get_card_by_card_id(4)['sequence_number'], 3)
+        print(column1)
+        print(column2)
+        # print(self.UserInterface.get_cards_by_column_id(2))
 
 
 
