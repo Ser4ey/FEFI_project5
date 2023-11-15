@@ -68,7 +68,7 @@ class TestCardsAPI(unittest.TestCase):
         self.db.add_card(1, "test_card1")
         self.db.add_card(2, "test_card2")
 
-        self.db.change_card_info(1, "card1", "text1", 1)
+        self.db.change_card_info(card_id=1, title="card1", text="text1", status=1)
         result = self.db.get_cards_by_column_id(1)
         self.assertEqual(result[0][3], "text1")
 

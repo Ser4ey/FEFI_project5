@@ -47,16 +47,21 @@ class CardsAPI:
             return False
 
 
-    def change_card_info(self, card_id, title=None, text=None, status=None):
+    def change_card_info(self, card_id, column_id=None, title=None, text=None, status=None, sequence_number=None):
         zxc = self.card_db.select_card(id=card_id)
 
         if zxc is not None:
+            if column_id is not None:
+                self.card_db.update_any_info_about_card(card_id, 'column_id', column_id)
             if title is not None:
                 self.card_db.update_any_info_about_card(card_id, 'title', title)
             if text is not None:
                 self.card_db.update_any_info_about_card(card_id, 'text', text)
             if status is not None:
                 self.card_db.update_any_info_about_card(card_id, 'status', status)
+            if sequence_number is not None:
+                self.card_db.update_any_info_about_card(card_id, 'sequence_number', sequence_number)
+
             return True
         else:
             return False

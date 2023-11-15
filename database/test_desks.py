@@ -8,6 +8,29 @@ class TestCardsDB(unittest.TestCase):
     def setUp(self):
         self.db = DesksDB('test.db')
 
+        self.db.execute('''
+            CREATE TABLE IF NOT EXISTS Columns(
+                id integer PRIMARY KEY AUTOINCREMENT,
+                desk_id integer,
+                name text,
+                sequence_number integer,
+                FOREIGN KEY (desk_id) REFERENCES Desks(id),
+                unique (desk_id, name)
+        );
+        ''', commit=True)
+
+        self.db.execute('''
+            CREATE TABLE IF NOT EXISTS Cards (
+            id integer PRIMARY KEY AUTOINCREMENT,
+            column_id integer,
+            title text,
+            text text,
+            status integer,
+            sequence_number integer,
+            FOREIGN KEY (column_id) REFERENCES Columns(id)
+        );
+        ''', commit=True)
+
     def tearDown(self):
         self.db.connection.close()
         if os.path.exists('test.db'):
@@ -65,6 +88,11 @@ class TestCardsDB(unittest.TestCase):
     def test_del_desk(self):
         self.db.add_desk("test_desk_1")
         self.db.add_desk("test_desk_2")
+
+        self.db.execute("INSERT INTO Columns (desk_id, name, sequence_number) VALUES  (?, ?, ?)", (1, 'column_1', 1), (2, 'column_2', 1), commit=True)
+
+        self.db.execute("INSERT INTO Cards (column_id, title, sequence_number) VALUES (?, ?, ?)", (1, 'card_1', 1), (2, 'card_2', 1), commit=True)
+
 
         self.db.del_desk(1)
         result = self.db.select_all_desks()
