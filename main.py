@@ -138,6 +138,13 @@ user_interface_test = UserInterface()
 
 # print(user_interface_test.change_card_info(8, card_status=1))
 
+
+# for i in range(4):
+#     card_api_test.add_card(10, f'10_{i+1}')
+# for i in range(5):
+#     card_api_test.add_card(11, f'11_{i+1}')
+
 # print(user_interface_test.move_card(2, 11, 3))
+
 
 # print(user_interface_test.del_card(100))
