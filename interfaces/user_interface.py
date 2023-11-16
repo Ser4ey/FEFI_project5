@@ -11,18 +11,6 @@ class UserInterface:
 
 
     def get_desks(self) -> list:
-        '''Возвращает все доски пользователя.
-            Формат: [
-            {
-                'desk_id': 0,
-                'desk_name': 'some name'
-            },
-            {
-                'desk_id': 1,
-                'desk_name': 'Task99'
-            }
-        ]'''
-
         all_desks = self.DeskAPI.get_desks()
         all_desk_id = [desk[0] for desk in all_desks]
         all_desk_name = [desk[1] for desk in all_desks]
@@ -36,14 +24,6 @@ class UserInterface:
 
 
     def get_desk_by_desk_id(self, desk_id: int) -> dict | None:
-        '''Возвращает все доски пользователя.
-        Формат:
-        {
-            'desk_id': 0,
-            'desk_name': 'some name'
-        } или None
-        '''
-
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
@@ -57,8 +37,6 @@ class UserInterface:
 
 
     def create_desk(self, desk_name: str) -> bool:
-        '''Создаёт доску с именем desk_name'''
-
         if type(desk_name) != str:
             raise UserInterfaceExceptions.InvalidDeskNameType()
 
@@ -69,8 +47,8 @@ class UserInterface:
 
         return True
 
+
     def del_desk(self, desk_id: int) -> bool:
-        '''Удаляем колонку по desk_id + нужно удалить все колонки и карточки, которые принадлежат этой доске'''
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
@@ -83,7 +61,6 @@ class UserInterface:
 
 
     def change_desk_name(self, desk_id: int, desk_name: str) -> bool:
-        '''Меняет имя у доски с id=desk_id на desk_name'''
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
@@ -100,23 +77,8 @@ class UserInterface:
 
         return zxc
 
-    def get_columns_by_desk_id(self, desk_id: int) -> list:
-        '''Возвращает все колонки пользователя по desk_id.
-            Формат: [
-            {
-                'column_id': 0,
-                'desk_id': 12,
-                'column_name': 'Колонка 33',
-                'sequence_number': 0
-            },
-            {
-                'column_id': 1,
-                'desk_id': 12,
-                'column_name': 'Колонка 44',
-                'sequence_number': 1
-            },
-        ]'''
 
+    def get_columns_by_desk_id(self, desk_id: int) -> list:
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
@@ -136,17 +98,9 @@ class UserInterface:
 
         return zxc
 
-    def get_column_by_column_id(self, column_id: int) -> dict | None:  # TODO
-        '''Получаем информацию о колонку по column_id
-        Формат:
-            {
-                'desk_id': 0,
-                'desk_name': 'some name'
-            } или None
-        '''
 
+    def get_column_by_column_id(self, column_id: int) -> dict | None:
         if type(column_id) != int:
-            print("!")
             raise UserInterfaceExceptions.InvalidColumnIdType()
 
         column = self.ColumnsAPI.get_columns_by_column_id(column_id)
@@ -160,7 +114,6 @@ class UserInterface:
 
 
     def change_column_name(self, column_id: int, column_name: str) -> bool:
-        '''Меняем имя колонки по column_id'''
         if type(column_id) != int:
             raise UserInterfaceExceptions.InvalidColumnIdType()
 
@@ -178,7 +131,6 @@ class UserInterface:
 
 
     def del_column(self, column_id: int) -> bool:
-        '''Удаляем колонку + нужно удалить все карточки в колонке'''
         if type(column_id) != int:
             print("!")
             raise UserInterfaceExceptions.InvalidColumnIdType()
@@ -191,8 +143,8 @@ class UserInterface:
 
         return True
 
+
     def add_column_to_desk(self, desk_id: int, column_name: str) -> bool:
-        '''Добавляем колонку в таблицу'''
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
@@ -208,8 +160,8 @@ class UserInterface:
         self.ColumnsAPI.add_column(desk_id, column_name)
         return True
 
+
     def change_column_position_in_desk(self, desk_id: int, column_id: int, new_sequence_number: int) -> bool:
-        '''Меняем номер колонки в таблице '''
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
@@ -237,8 +189,8 @@ class UserInterface:
 
         return True
 
+
     def get_cards_by_column_id(self, column_id: int) -> list:
-        '''Получаем карточки в колонке по column_id'''
         if type(column_id) != int:
             raise UserInterfaceExceptions.InvalidColumnIdType()
 
@@ -260,8 +212,8 @@ class UserInterface:
 
         return zxc
 
+
     def add_card_to_column(self, card_title: str, column_id: int) -> bool:
-        '''Добавляем карточку в колонку'''
         if type(column_id) != int:
             raise UserInterfaceExceptions.InvalidColumnIdType()
 
@@ -278,19 +230,8 @@ class UserInterface:
 
         return True
 
-    def get_card_by_card_id(self, card_id: int) -> dict | None:
-        '''Получаем информацию о карточке по card_id
-        Формат возвращаемых данных:
-        {
-            'card_id': 0,
-            'column_id': 2,
-            'card_title': 'Заголовок',
-            'card_text': 'Много-многоножка',
-            'card_status': 1,
-            'sequence_number': 0
-        }
-        '''
 
+    def get_card_by_card_id(self, card_id: int) -> dict | None:
         if type(card_id) != int:
             print("!")
             raise UserInterfaceExceptions.InvalidCardIdType()
@@ -318,26 +259,22 @@ class UserInterface:
 
             if card_title.strip() == "":
                 raise UserInterfaceExceptions.InvalidCardTitleContent()
-
             self.CardsAPI.change_card_info(card_id=card_id, title=card_title)
 
         if not (card_text is None):
             if type(card_text) != str:
                 raise UserInterfaceExceptions.InvalidCardTextType()
-
-            # обновляем текст карточки
             self.CardsAPI.change_card_info(card_id=card_id, text=card_text)
 
         if not (card_status is None):
             if type(card_status) != int:
                 raise UserInterfaceExceptions.InvalidCardStatusType()
-
             self.CardsAPI.change_card_info(card_id=card_id, status=card_status)
 
         return True
 
+
     def move_card(self, card_id: int, column_id: int, new_sequence_number: int) -> bool:
-        '''Перемещает карточку. Карточки можно перемещать не только в рамках одной колонки, но и между колонками.'''
         if type(card_id) != int:
             raise UserInterfaceExceptions.InvalidCardIdType()
 
@@ -379,8 +316,8 @@ class UserInterface:
 
         return True
 
+
     def del_card(self, card_id: int) -> bool:
-        '''Удалить карточку + смещаем все карточки ниже вверх'''
         if type(card_id) != int:
             raise UserInterfaceExceptions.InvalidCardIdType()
 
