@@ -17,6 +17,15 @@
 	text-shadow: none;
 }
 
+.title {
+	color: #C4CDFF;
+	font-family: Comfortaa;
+	font-size: 48px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: 15px;
+}
+
 .headerText {
 	color: #C4CDFF;
 	font-family: 'Comfortaa';
@@ -24,6 +33,16 @@
 	font-weight: 700;
 	border: none;
 	text-shadow: none;
+}
+
+.regularText {
+	color: #C4CDFF;
+	text-align: center;
+	font-family: Comfortaa;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 24px; /* 120% */
 }
 
 .hintText {
