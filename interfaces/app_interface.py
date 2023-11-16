@@ -6,5 +6,3 @@ class AppInterface:
     '''Высокоуровневый интерфейс, содержащий все интерфейсы программы'''
     AuthInterface = AuthInterface()
     UserInterface = UserInterface()
-
-

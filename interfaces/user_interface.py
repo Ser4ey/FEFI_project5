@@ -69,6 +69,7 @@ class UserInterface:
 
         return True
 
+
     def del_desk(self, desk_id: int) -> bool:
         '''Удаляем колонку по desk_id + нужно удалить все колонки и карточки, которые принадлежат этой доске'''
         if type(desk_id) != int:
@@ -100,23 +101,8 @@ class UserInterface:
 
         return zxc
 
-    def get_columns_by_desk_id(self, desk_id: int) -> list:
-        '''Возвращает все колонки пользователя по desk_id.
-            Формат: [
-            {
-                'column_id': 0,
-                'desk_id': 12,
-                'column_name': 'Колонка 33',
-                'sequence_number': 0
-            },
-            {
-                'column_id': 1,
-                'desk_id': 12,
-                'column_name': 'Колонка 44',
-                'sequence_number': 1
-            },
-        ]'''
 
+    def get_columns_by_desk_id(self, desk_id: int) -> list:
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
 
@@ -136,17 +122,9 @@ class UserInterface:
 
         return zxc
 
-    def get_column_by_column_id(self, column_id: int) -> dict | None:  # TODO
-        '''Получаем информацию о колонку по column_id
-        Формат:
-            {
-                'desk_id': 0,
-                'desk_name': 'some name'
-            } или None
-        '''
 
+    def get_column_by_column_id(self, column_id: int) -> dict | None:
         if type(column_id) != int:
-            print("!")
             raise UserInterfaceExceptions.InvalidColumnIdType()
 
         column = self.ColumnsAPI.get_columns_by_column_id(column_id)
@@ -318,20 +296,16 @@ class UserInterface:
 
             if card_title.strip() == "":
                 raise UserInterfaceExceptions.InvalidCardTitleContent()
-
             self.CardsAPI.change_card_info(card_id=card_id, title=card_title)
 
         if not (card_text is None):
             if type(card_text) != str:
                 raise UserInterfaceExceptions.InvalidCardTextType()
-
-            # обновляем текст карточки
             self.CardsAPI.change_card_info(card_id=card_id, text=card_text)
 
         if not (card_status is None):
             if type(card_status) != int:
                 raise UserInterfaceExceptions.InvalidCardStatusType()
-
             self.CardsAPI.change_card_info(card_id=card_id, status=card_status)
 
         return True
