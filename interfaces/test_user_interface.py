@@ -136,6 +136,7 @@ class TestUserInterface(unittest.TestCase):
         cards = [i["card_id"] for i in cards]
         self.assertEqual(cards, [1, 2, 3, 4])
 
+        self.UserInterface.change_card_info(card_id=3, card_status=1)
         self.UserInterface.move_card(3, 1, 1)
         self.assertEqual(len(self.UserInterface.CardsAPI.get_cards_by_column_id(1)), 1)
         self.assertEqual(len(self.UserInterface.CardsAPI.get_cards_by_column_id(2)), 3)
@@ -147,6 +148,7 @@ class TestUserInterface(unittest.TestCase):
         self.assertEqual(column1[0]['card_id'], 3)
 
         self.assertEqual(self.UserInterface.get_card_by_card_id(4)['sequence_number'], 3)
+        self.assertEqual(self.UserInterface.get_card_by_card_id(3)['card_status'], 1)
         print(column1)
         print(column2)
         # print(self.UserInterface.get_cards_by_column_id(2))
