@@ -1,8 +1,8 @@
 from PyQt6 import uic, QtCore
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QStackedWidget, QLineEdit, QLabel, QWidget, \
     QVBoxLayout, QScrollArea, QDialog, QFormLayout, QDialogButtonBox
-from PyQt6.QtGui import QFontDatabase, QIcon, QCursor
-from PyQt6.QtCore import Qt, QCoreApplication
+from PyQt6.QtGui import QFontDatabase, QIcon, QCursor, QPixmap
+from PyQt6.QtCore import Qt, QCoreApplication, QSize
 
 import ctypes
 from ctypes.wintypes import DWORD, ULONG
@@ -353,6 +353,12 @@ class GUI(QMainWindow):
             desk_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             desk_button.setStyleSheet(style)
             desk_button.setFixedSize(190, 60)
+
+            if "сигма" in desk_name.lower() or "sigma" in desk_name.lower():
+                image = QPixmap("UI/icons/sigma.png")
+                desk_button.setIcon(QIcon(image))
+                desk_button.setIconSize(QSize(60, 60))
+
 
             self.desks_buttons.append([desk_button, id])
 
