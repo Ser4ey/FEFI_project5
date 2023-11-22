@@ -6,6 +6,6 @@ class UIConst:
     desks_page = 4
     card_page = 5
 
-    icons_path = "data/icons"
-    fonts_path = "data/fonts"
-    styles_path = "data/styles"
+    icons_path = "data/ui/icons"
+    fonts_path = "data/ui/fonts"
+    styles_path = "data/ui/styles"

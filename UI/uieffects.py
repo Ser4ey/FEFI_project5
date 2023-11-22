@@ -46,7 +46,7 @@ def blur_background(window):
 
 def setup_ui_form(window, ui_form):
     with open(f"{UIConst.styles_path}/{window.theme}.css") as style:
-        uic.loadUi(f'data/{ui_form}.ui', window)
+        uic.loadUi(f'data/ui/{ui_form}.ui', window)
         QFontDatabase.addApplicationFont(f"{UIConst.fonts_path}/Comfortaa/Comfortaa-Medium.ttf")
         window.setStyleSheet(style.read())
         window.show()

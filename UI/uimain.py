@@ -1,4 +1,4 @@
-from PyQt6.QtCore import QSize
+from PyQt6.QtCore import QSize, QCoreApplication
 from PyQt6.QtGui import QIcon, QCursor, QPixmap
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QStackedWidget, QLineEdit, QLabel, QWidget, \
     QVBoxLayout, QScrollArea, QDialog
