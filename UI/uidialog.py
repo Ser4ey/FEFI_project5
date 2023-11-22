@@ -25,19 +25,18 @@ class UIDialog(QDialog):
     def get_new_name(self):
         return self.new_name_input.text()
 
-    def mouse_press_event(self, event):
+    def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             self.old_pos = event.pos()
 
-    def mouse_release_event(self, event):
+    def mouseReleaseEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             self.old_pos = None
 
-    def mouse_move_event(self, event):
-        if not self.old_pos:
-            return
-
+    def mouseMoveEvent(self, event):
         try:
+            if not self.old_pos:
+                return
             delta = event.pos() - self.old_pos
             self.move(self.pos() + delta)
         except Exception:
