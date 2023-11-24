@@ -47,7 +47,7 @@ class CardsDB:
 
     def add_card(self, title, column_id, sequence_number):
         sql = "INSERT INTO Cards(title, column_id, sequence_number) VALUES(?, ?, ?)"
-        parameters = (title,column_id, sequence_number)
+        parameters = (title, column_id, sequence_number)
         self.execute(sql, parameters=parameters, commit=True)
         return True
 
@@ -90,7 +90,7 @@ class CardsDB:
         # return int(self.execute("SELECT COUNT(*) FROM Columns;", fetchone=True))
         return self.execute("SELECT COUNT(*) FROM Cards;", fetchone=True)[0]
 
-    def update_any_info_about_card(self, card_id, field_to_change, new_data):  # TODO
+    def update_any_info_about_card(self, card_id, field_to_change, new_data):
         result = self.select_card(id=card_id)
         if not result:
             return f'Карты {card_id} не существует, проверьте правильность id'

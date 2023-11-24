@@ -40,8 +40,7 @@ class ColumnsDB:
                 desk_id integer,
                 name text,
                 sequence_number integer,
-                FOREIGN KEY (desk_id) REFERENCES Desks(id),
-                unique (desk_id, name)
+                FOREIGN KEY (desk_id) REFERENCES Desks(id)
         );
         '''
         self.execute(sql, commit=True)

@@ -36,7 +36,7 @@ class DesksDB:
         sql = """
             CREATE TABLE IF NOT EXISTS Desks (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name varchar unique
+                name varchar
             );
             """
         self.execute(sql, commit=True)

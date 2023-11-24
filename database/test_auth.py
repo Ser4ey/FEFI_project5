@@ -17,13 +17,11 @@ class TestAuthDB(unittest.TestCase):
     def test_create_auth_table(self):
         self.db.create_auth_table()
         result = self.db.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Auth'", fetchone=True)
-        # print(result)
         self.assertEqual(result[0], 'Auth')
 
     def test_add_password(self):
         self.db.add_password('test_password')
         result = self.db.select_all_passwords()
-        # print(result)
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0][1], 'test_password')
 

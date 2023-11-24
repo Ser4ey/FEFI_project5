@@ -2,20 +2,13 @@ import os
 import unittest
 
 from database.columns_api import ColumnsAPI
-from database.columns import ColumnsDB
+from database.cards_api import CardsAPI
 
-class TestCardsAPI(unittest.TestCase):
+
+class TestColumnsAPI(unittest.TestCase):
     def setUp(self):
         self.db = ColumnsAPI('test.db')
-        self.db.column_db.execute('''
-                    CREATE TABLE IF NOT EXISTS Cards(
-                        id integer PRIMARY KEY AUTOINCREMENT,
-                        column_id integer,
-                        card_data text,
-                        FOREIGN KEY (column_id) REFERENCES Columns(id)
-                    );
-                ''', commit=True)
-
+        self.cards_db = CardsAPI('test.db')
 
     def tearDown(self):
         if os.path.exists('test.db'):
@@ -64,10 +57,14 @@ class TestCardsAPI(unittest.TestCase):
     def test_del_column(self):
         self.db.add_column(1, "test_column_1")
 
-        self.db.column_db.execute("INSERT INTO Cards (column_id, card_data) VALUES (?, ?)", (1, "test_card_data"), commit=True)
+        self.cards_db.add_card(1, "test_card_data")
+        # self.db.column_db.execute("INSERT INTO Cards (column_id, card_data) VALUES (?, ?)", (1, "test_card_data"), commit=True)
 
         self.db.del_column(1)
         result = self.db.get_columns()
+        self.assertEqual(len(result), 0)
+
+        result = self.cards_db.get_cards_by_column_id(1)
         self.assertEqual(len(result), 0)
 
 
@@ -78,9 +75,8 @@ class TestCardsAPI(unittest.TestCase):
         result = self.db.get_columns_by_desk_id(1)
 
         self.db.rename_column(1, "test_column_new")
-
-        result = self.db.get_columns_by_desk_id(1)
-        self.assertEqual(result[-1][2], "test_column_new")
+        result = self.db.get_columns_by_column_id(1)
+        self.assertEqual(result[2], "test_column_new")
 
 
     def test_change_column_sequence_number(self):

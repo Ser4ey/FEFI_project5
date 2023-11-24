@@ -3,6 +3,7 @@ import unittest
 
 from database.columns import ColumnsDB
 
+
 class TestCardsDB(unittest.TestCase):
     def setUp(self):
         self.db = ColumnsDB('test.db')

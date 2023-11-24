@@ -150,8 +150,7 @@ class TestUserInterface(unittest.TestCase):
         self.assertEqual(self.UserInterface.get_card_by_card_id(4)['sequence_number'], 3)
 
         self.assertEqual(self.UserInterface.get_card_by_card_id(3)['card_status'], 1)
-        print(column1)
-        print(column2)
+
 
     def test_get_desks(self):
         result1 = self.UserInterface.get_desks()
