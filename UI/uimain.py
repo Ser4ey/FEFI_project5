@@ -1,7 +1,7 @@
 from PyQt6.QtCore import QSize, QCoreApplication
 from PyQt6.QtGui import QIcon, QCursor, QPixmap
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QStackedWidget, QLineEdit, QLabel, QWidget, \
-    QVBoxLayout, QScrollArea, QDialog, QHBoxLayout
+    QVBoxLayout, QScrollArea, QDialog, QHBoxLayout, QLayout
 
 from UI.uieffects import *
 from UI.uiconstants import UIConst
@@ -234,7 +234,7 @@ class UIMain(QMainWindow):
             desk_button.setStyleSheet(UIConst.desk_button_style)
             desk_button.setFixedSize(190, 60)
 
-            if "сигма" in desk_name.lower() or "sigma" in desk_name.lower():
+            if "сигм" in desk_name.lower() or "sigm" in desk_name.lower():
                 image = QPixmap(f"{UIConst.icons_path}/sigma.png")
                 desk_button.setIcon(QIcon(image))
                 desk_button.setIconSize(QSize(60, 60))
@@ -250,20 +250,6 @@ class UIMain(QMainWindow):
                 self.desks_buttons[0][0].click()
 
             self.desks_scroll_layout.addWidget(desk_button)
-
-    def add_new_desk(self):
-        dialog = UIDialog("Введите имя доски", self.theme)
-        result = dialog.exec()
-
-        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
-            name = dialog.get_new_name()
-
-            try:
-                AppInterface.UserInterface.create_desk(name)
-            except Exception:
-                pass
-
-        self.load_desks(self.active_desk_id)
 
     def open_desk(self, id):
         style_not_active = """
@@ -313,21 +299,92 @@ class UIMain(QMainWindow):
 
     def load_columns(self, id):
         self.columns = []
+
         for i in reversed(range(self.columns_scroll_layout.count())):
-            widgetToRemove = self.columns_scroll_layout.itemAt(i).widget()
-            self.columns_scroll_layout.removeWidget(widgetToRemove)
-            widgetToRemove.setParent(None)
+            item = self.columns_scroll_layout.takeAt(i)
+            widget = item.widget()
+            if widget is not None:
+                widget.setParent(None)
+                widget.deleteLater()
+            else:
+                subLayout = item.layout()
+                if subLayout is not None:
+                    while subLayout.count():
+                        subItem = subLayout.takeAt(0)
+                        subWidget = subItem.widget()
+                        if subWidget is not None:
+                            subWidget.setParent(None)
+                            subWidget.deleteLater()
 
         for column in AppInterface.UserInterface.get_columns_by_desk_id(id):
             id = column["column_id"]
             column_name = column['column_name']
 
+            column_layout = QVBoxLayout()
+            column_name_button = QPushButton(column_name)
+            column_name_button.setFixedSize(231, 55)
+            column_name_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+            column_name_button.setStyleSheet(UIConst.column_name_button_style)
+            column_name_button.clicked.connect(lambda _, idx=id: self.rename_column(idx))
+
             column_area = QScrollArea()
-            column_area.setFixedSize(231, 521)
+            column_area.setFixedSize(231, 500)
             column_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
             column_area.setStyleSheet(UIConst.column_scroll_area_style)
-            self.columns.append([column_area, id])
-            self.columns_scroll_layout.addWidget(column_area)
+            column_scroll_content = QWidget()
+            column_scroll_layout = QVBoxLayout(column_scroll_content)
+            column_area.setWidgetResizable(True)
+            column_area.setWidget(column_scroll_content)
+            self.load_cards(column_scroll_layout, id)
+
+            column_add_card_button = QPushButton("+ карточка")
+            column_add_card_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+            column_add_card_button.setStyleSheet(UIConst.column_button_style)
+            column_add_card_button.clicked.connect(lambda _, idx=id: self.add_new_card(idx))
+
+            column_layout.addWidget(column_name_button)
+            column_layout.addWidget(column_area)
+            column_layout.addWidget(column_add_card_button)
+
+            self.columns.append([column_layout, id])
+            self.columns_scroll_layout.addLayout(column_layout)
+
+    def load_cards(self, column_scroll_layout, id):
+        for column in AppInterface.UserInterface.get_cards_by_column_id(id):
+            id = column["card_id"]
+            card_name = column['card_title']
+            card_status = column['card_status']
+
+            card_button = QPushButton(card_name)
+            card_button.clicked.connect(lambda _, idx=id: self.open_card(idx))
+            card_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+            if card_status:
+                if card_status == 0:
+                    card_button.setStyleSheet(UIConst.card_button_red_style)
+                if card_status == 1:
+                    card_button.setStyleSheet(UIConst.card_button_green_style)
+            else:
+                card_button.setStyleSheet(UIConst.card_button_none_style)
+            card_button.setFixedSize(195, 40)
+
+            column_scroll_layout.addWidget(card_button)
+
+    def open_card(self, id):
+        print(AppInterface.UserInterface.get_card_by_card_id(id))
+
+    def add_new_desk(self):
+        dialog = UIDialog("Введите имя доски", self.theme)
+        result = dialog.exec()
+
+        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
+            name = dialog.get_new_name()
+
+            try:
+                AppInterface.UserInterface.create_desk(name)
+            except Exception:
+                pass
+
+        self.load_desks(self.active_desk_id)
 
     def add_new_column(self, id):
         dialog = UIDialog("Введите имя столбца", self.theme)
@@ -343,12 +400,36 @@ class UIMain(QMainWindow):
 
         self.open_desk(self.active_desk_id)
 
-    def delete_desk(self):
-        try:
-            AppInterface.UserInterface.del_desk(self.active_desk_id)
-            self.load_desks()
-        except Exception:
-            pass
+    def add_new_card(self, id):
+        dialog = UIDialog("Введите имя карточки", self.theme)
+        result = dialog.exec()
+
+        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
+            name = dialog.get_new_name()
+
+            try:
+                AppInterface.UserInterface.add_card_to_column(name, id)
+            except Exception:
+                pass
+
+        self.open_desk(self.active_desk_id)
+
+    def rename_column(self, id):
+        dialog = UIDialog("Введите новое имя столбца", self.theme)
+        result = dialog.exec()
+
+        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
+            new_name = dialog.get_new_name()
+
+            for column in self.columns:
+                if column[1] == id:
+                    column[0].itemAt(0).widget().setText(new_name)
+                    break
+
+            try:
+                AppInterface.UserInterface.change_column_name(id, new_name)
+            except Exception:
+                pass
 
     def rename_desk(self, id):
 
@@ -362,10 +443,19 @@ class UIMain(QMainWindow):
                 if desk[1] == id:
                     desk[0].setText(new_name)
                     break
+            try:
+                self.desk_name_button.setText(new_name)
+                AppInterface.UserInterface.change_desk_name(self.active_desk_id, new_name)
+                self.load_desks(self.active_desk_id)
+            except Exception:
+                pass
 
-            self.desk_name_button.setText(new_name)
-            AppInterface.UserInterface.change_desk_name(self.active_desk_id, new_name)
-            self.load_desks(self.active_desk_id)
+    def delete_desk(self):
+        try:
+            AppInterface.UserInterface.del_desk(self.active_desk_id)
+            self.load_desks()
+        except Exception:
+            pass
 
     def pin_toggle(self):
         self.pinned = not self.pinned

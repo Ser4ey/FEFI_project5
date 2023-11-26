@@ -834,7 +834,7 @@
          <x>9</x>
          <y>130</y>
          <width>231</width>
-         <height>521</height>
+         <height>561</height>
         </rect>
        </property>
        <property name="layoutDirection">
@@ -913,6 +913,9 @@ QScrollArea QWidget {
        <property name="verticalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOn</enum>
        </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+       </property>
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
@@ -925,7 +928,7 @@ QScrollArea QWidget {
           <x>0</x>
           <y>0</y>
           <width>216</width>
-          <height>521</height>
+          <height>561</height>
          </rect>
         </property>
        </widget>
@@ -934,9 +937,9 @@ QScrollArea QWidget {
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>660</y>
+         <y>700</y>
          <width>190</width>
-         <height>60</height>
+         <height>31</height>
         </rect>
        </property>
        <property name="cursor">
@@ -956,10 +959,10 @@ QScrollArea QWidget {
      <widget class="QPushButton" name="desknameButton">
       <property name="geometry">
        <rect>
-        <x>530</x>
+        <x>515</x>
         <y>0</y>
-        <width>200</width>
-        <height>51</height>
+        <width>241</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="cursor">
@@ -979,9 +982,9 @@ QScrollArea QWidget {
       <property name="geometry">
        <rect>
         <x>260</x>
-        <y>130</y>
+        <y>77</y>
         <width>751</width>
-        <height>608</height>
+        <height>661</height>
        </rect>
       </property>
       <property name="layoutDirection">
@@ -1050,6 +1053,61 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
     background: none;
 }
 
+QScrollBar:vertical {
+    background: transparent;
+    width: 15px;
+    margin: 15px 3px 15px 3px;
+    border: 1px transparent #2A2929;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: rgba(196, 205, 255, 0.555);
+    min-height: 5px;
+    border-radius: 4px;
+}
+
+QScrollBar::sub-line:vertical {
+    margin: 3px 0px 3px 0px;
+    border-image: url(:/qss_icons/rc/up_arrow_disabled.png);
+    height: 10px;
+    width: 10px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-line:vertical {
+    margin: 3px 0px 3px 0px;
+    border-image: url(:/qss_icons/rc/down_arrow_disabled.png);
+    height: 10px;
+    width: 10px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical:hover, QScrollBar::sub-line:vertical:on {
+    border-image: url(:/qss_icons/rc/up_arrow.png);
+    height: 10px;
+    width: 10px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on {
+    border-image: url(:/qss_icons/rc/down_arrow.png);
+    height: 10px;
+    width: 10px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    background: none;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
 
 QScrollArea QWidget {
     background-color: transparent;
@@ -1063,7 +1121,10 @@ QScrollArea QWidget {
        <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
       <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOn</enum>
+       <enum>Qt::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustIgnored</enum>
       </property>
       <property name="widgetResizable">
        <bool>true</bool>
@@ -1077,7 +1138,7 @@ QScrollArea QWidget {
          <x>0</x>
          <y>0</y>
          <width>749</width>
-         <height>591</height>
+         <height>659</height>
         </rect>
        </property>
       </widget>
@@ -1086,7 +1147,7 @@ QScrollArea QWidget {
       <property name="geometry">
        <rect>
         <x>260</x>
-        <y>90</y>
+        <y>30</y>
         <width>101</width>
         <height>41</height>
        </rect>
@@ -1107,20 +1168,26 @@ QScrollArea QWidget {
      <widget class="QPushButton" name="deletedeskButton">
       <property name="geometry">
        <rect>
-        <x>260</x>
-        <y>0</y>
+        <x>560</x>
+        <y>40</y>
         <width>151</width>
-        <height>23</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="cursor">
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background: transparent;
+color: #9A5757;
+text-align: center;
+font-family: Comfortaa;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;</string>
+      </property>
       <property name="text">
        <string>Удалить доску</string>
-      </property>
-      <property name="class" stdset="0">
-       <string>redButton</string>
       </property>
      </widget>
     </widget>
