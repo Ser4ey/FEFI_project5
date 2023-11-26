@@ -1,7 +1,7 @@
 from PyQt6.QtCore import QSize, QCoreApplication
 from PyQt6.QtGui import QIcon, QCursor, QPixmap
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QStackedWidget, QLineEdit, QLabel, QWidget, \
-    QVBoxLayout, QScrollArea, QDialog
+    QVBoxLayout, QScrollArea, QDialog, QHBoxLayout
 
 from UI.uieffects import *
 from UI.uiconstants import UIConst
@@ -18,6 +18,7 @@ class UIMain(QMainWindow):
         self.setFixedSize(1024, 768)
         blur_background(self)
         self.desks_buttons = []
+        self.columns = []
         self.active_desk_id = 0
         setup_ui_form(self, "ui_form")
         self.add_menu()
@@ -68,12 +69,12 @@ class UIMain(QMainWindow):
         self.ok_button2 = self.findChild(QPushButton, 'okButton_2')
         self.ok_button2.clicked.connect(self.change_pass_confirm)
 
-        self.scroll_area = self.findChild(QScrollArea, "desksArea")
-        self.scroll_content = QWidget()
-        self.scroll_layout = QVBoxLayout(self.scroll_content)
+        self.desks_scroll_area = self.findChild(QScrollArea, "desksArea")
+        self.desks_scroll_content = QWidget()
+        self.desks_scroll_layout = QVBoxLayout(self.desks_scroll_content)
 
-        self.scroll_area.setWidgetResizable(True)
-        self.scroll_area.setWidget(self.scroll_content)
+        self.desks_scroll_area.setWidgetResizable(True)
+        self.desks_scroll_area.setWidget(self.desks_scroll_content)
 
         self.new_desk_button = self.findChild(QPushButton, 'newdeskButton')
         self.new_desk_button.clicked.connect(self.add_new_desk)
@@ -83,6 +84,16 @@ class UIMain(QMainWindow):
 
         self.desk_name_button.clicked.connect(self.rename_desk)
         self.delete_desk_button.clicked.connect(self.delete_desk)
+
+        self.new_column_button = self.findChild(QPushButton, 'addcolomnButton')
+        self.new_column_button.clicked.connect(lambda: self.add_new_column(self.active_desk_id))
+
+        self.columns_scroll_area = self.findChild(QScrollArea, "columnsArea")
+        self.columns_scroll_content = QWidget()
+        self.columns_scroll_layout = QHBoxLayout(self.columns_scroll_content)
+
+        self.columns_scroll_area.setWidgetResizable(True)
+        self.columns_scroll_area.setWidget(self.columns_scroll_content)
 
     def set_pass(self):
         self.stacked_widget.setCurrentIndex(UIConst.set_pass_page)
@@ -208,39 +219,19 @@ class UIMain(QMainWindow):
         self.desks_buttons = []
         desks = AppInterface.UserInterface.get_desks()
 
-        for i in reversed(range(self.scroll_layout.count())):
-            widgetToRemove = self.scroll_layout.itemAt(i).widget()
-            self.scroll_layout.removeWidget(widgetToRemove)
+        for i in reversed(range(self.desks_scroll_layout.count())):
+            widgetToRemove = self.desks_scroll_layout.itemAt(i).widget()
+            self.desks_scroll_layout.removeWidget(widgetToRemove)
             widgetToRemove.setParent(None)
 
         for desk_info in desks:
             id = desk_info["desk_id"]
             desk_name = desk_info['desk_name']
 
-            style = """
-                QPushButton {
-                    border-radius: 10px;
-                    border: 1px solid #727CB0;
-                    background: #363847;
-                    color: #C4CDFF;
-                    text-align: center;
-                    font-family: Comfortaa;
-                    font-size: 24px;
-                    font-style: normal;
-                    font-weight: 500;
-                    line-height: 24px;
-                }
-
-                QPushButton:hover {
-                    background: #3d436e;
-                    color: #C4CDFF;
-                }
-            """
-
             desk_button = QPushButton(desk_name)
             desk_button.clicked.connect(lambda _, idx=id: self.open_desk(idx))
             desk_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-            desk_button.setStyleSheet(style)
+            desk_button.setStyleSheet(UIConst.desk_button_style)
             desk_button.setFixedSize(190, 60)
 
             if "сигма" in desk_name.lower() or "sigma" in desk_name.lower():
@@ -258,7 +249,7 @@ class UIMain(QMainWindow):
             if active_id == 0:
                 self.desks_buttons[0][0].click()
 
-            self.scroll_layout.addWidget(desk_button)
+            self.desks_scroll_layout.addWidget(desk_button)
 
     def add_new_desk(self):
         dialog = UIDialog("Введите имя доски", self.theme)
@@ -275,7 +266,6 @@ class UIMain(QMainWindow):
         self.load_desks(self.active_desk_id)
 
     def open_desk(self, id):
-        print(id)
         style_not_active = """
                 QPushButton {
                     border-radius: 10px;
@@ -318,6 +308,40 @@ class UIMain(QMainWindow):
                 self.desk_name_button.setText(desk_button.text())
             else:
                 desk_button.setStyleSheet(style_not_active)
+
+        self.load_columns(self.active_desk_id)
+
+    def load_columns(self, id):
+        self.columns = []
+        for i in reversed(range(self.columns_scroll_layout.count())):
+            widgetToRemove = self.columns_scroll_layout.itemAt(i).widget()
+            self.columns_scroll_layout.removeWidget(widgetToRemove)
+            widgetToRemove.setParent(None)
+
+        for column in AppInterface.UserInterface.get_columns_by_desk_id(id):
+            id = column["column_id"]
+            column_name = column['column_name']
+
+            column_area = QScrollArea()
+            column_area.setFixedSize(231, 521)
+            column_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+            column_area.setStyleSheet(UIConst.column_scroll_area_style)
+            self.columns.append([column_area, id])
+            self.columns_scroll_layout.addWidget(column_area)
+
+    def add_new_column(self, id):
+        dialog = UIDialog("Введите имя столбца", self.theme)
+        result = dialog.exec()
+
+        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
+            name = dialog.get_new_name()
+
+            try:
+                AppInterface.UserInterface.add_column_to_desk(id, name)
+            except Exception:
+                pass
+
+        self.open_desk(self.active_desk_id)
 
     def delete_desk(self):
         try:
