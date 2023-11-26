@@ -13,7 +13,7 @@ class UIConst:
     column_scroll_area_style = """
             QScrollArea {
             border-radius: 10px;
-            background-color: #FFFFFF;
+            background-color: #363847;
         }
         
         QScrollBar:vertical {
