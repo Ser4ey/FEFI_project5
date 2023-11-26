@@ -193,7 +193,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="new_user_page">
      <widget class="QWidget" name="plane" native="true">
@@ -975,13 +975,13 @@ QScrollArea QWidget {
        <string>regularButton</string>
       </property>
      </widget>
-     <widget class="QScrollArea" name="desksArea_2">
+     <widget class="QScrollArea" name="columnsArea">
       <property name="geometry">
        <rect>
         <x>260</x>
         <y>130</y>
         <width>751</width>
-        <height>601</height>
+        <height>608</height>
        </rect>
       </property>
       <property name="layoutDirection">
@@ -990,7 +990,8 @@ QScrollArea QWidget {
       <property name="styleSheet">
        <string notr="true">QScrollArea {
     border-radius: 10px;
-    background-color: #1f2338;
+	border: 1px solid rgba(114, 124, 176, 0.5);
+	background: #242946;
 }
 
 QScrollBar:horizontal {
@@ -1075,26 +1076,10 @@ QScrollArea QWidget {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>751</width>
-         <height>586</height>
+         <width>749</width>
+         <height>591</height>
         </rect>
        </property>
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>70</x>
-          <y>200</y>
-          <width>661</width>
-          <height>111</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>БУДЕТ СДЕЛАНО</string>
-        </property>
-        <property name="class" stdset="0">
-         <string>title</string>
-        </property>
-       </widget>
       </widget>
      </widget>
      <widget class="QPushButton" name="addcolomnButton">
