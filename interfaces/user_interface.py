@@ -9,7 +9,6 @@ class UserInterface:
         self.ColumnsAPI = ColumnsAPI()
         self.CardsAPI = CardsAPI()
 
-
     def get_desks(self) -> list:
         all_desks = self.DeskAPI.get_desks()
         all_desk_id = [desk[0] for desk in all_desks]
@@ -21,7 +20,6 @@ class UserInterface:
 
             zxc.append(desk_dict)
         return zxc
-
 
     def get_desk_by_desk_id(self, desk_id: int) -> dict | None:
         if type(desk_id) != int:
@@ -35,7 +33,6 @@ class UserInterface:
         if len(desk) == 0:
             return None
 
-
     def create_desk(self, desk_name: str) -> bool:
         if type(desk_name) != str:
             raise UserInterfaceExceptions.InvalidDeskNameType()
@@ -47,7 +44,6 @@ class UserInterface:
 
         return True
 
-
     def del_desk(self, desk_id: int) -> bool:
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
@@ -58,7 +54,6 @@ class UserInterface:
         zxc = self.DeskAPI.del_desk_by_id(desk_id)
 
         return zxc
-
 
     def change_desk_name(self, desk_id: int, desk_name: str) -> bool:
         if type(desk_id) != int:
@@ -77,7 +72,6 @@ class UserInterface:
 
         return zxc
 
-
     def get_columns_by_desk_id(self, desk_id: int) -> list:
         if type(desk_id) != int:
             raise UserInterfaceExceptions.InvalidDeskIdType()
@@ -93,11 +87,11 @@ class UserInterface:
 
         zxc = []
         for i in range(len(all_columns)):
-            desk_dict = {"column_id": all_columns_id[i], "desk_id": all_desk_id[i], "column_name": all_columns_name[i], "sequence_number": all_sequence_number[i]}
+            desk_dict = {"column_id": all_columns_id[i], "desk_id": all_desk_id[i], "column_name": all_columns_name[i],
+                         "sequence_number": all_sequence_number[i]}
             zxc.append(desk_dict)
 
         return zxc
-
 
     def get_column_by_column_id(self, column_id: int) -> dict | None:
         if type(column_id) != int:
@@ -111,7 +105,6 @@ class UserInterface:
 
         if len(zxc) == 0:
             return None
-
 
     def change_column_name(self, column_id: int, column_name: str) -> bool:
         if type(column_id) != int:
@@ -129,7 +122,6 @@ class UserInterface:
         self.ColumnsAPI.rename_column(column_id, column_name)
         return True
 
-
     def del_column(self, column_id: int) -> bool:
         if type(column_id) != int:
             print("!")
@@ -142,7 +134,6 @@ class UserInterface:
         self.ColumnsAPI.del_column(column_id)
 
         return True
-
 
     def add_column_to_desk(self, desk_id: int, column_name: str) -> bool:
         if type(desk_id) != int:
@@ -159,7 +150,6 @@ class UserInterface:
 
         self.ColumnsAPI.add_column(desk_id, column_name)
         return True
-
 
     def change_column_position_in_desk(self, desk_id: int, column_id: int, new_sequence_number: int) -> bool:
         if type(desk_id) != int:
@@ -189,7 +179,6 @@ class UserInterface:
 
         return True
 
-
     def get_cards_by_column_id(self, column_id: int) -> list:
         if type(column_id) != int:
             raise UserInterfaceExceptions.InvalidColumnIdType()
@@ -207,11 +196,12 @@ class UserInterface:
 
         zxc = []
         for i in range(len(all_cards)):
-            card_dict = {"card_id": all_card_id[i], "column_id": all_column_id[i], "card_title": all_card_title[i], "card_text": all_card_text[i], "card_status": all_card_status[i], "sequence_number": all_sequence_number[i]}
+            card_dict = {"card_id": all_card_id[i], "column_id": all_column_id[i], "card_title": all_card_title[i],
+                         "card_text": all_card_text[i], "card_status": all_card_status[i],
+                         "sequence_number": all_sequence_number[i]}
             zxc.append(card_dict)
 
         return zxc
-
 
     def add_card_to_column(self, card_title: str, column_id: int) -> bool:
         if type(column_id) != int:
@@ -230,7 +220,6 @@ class UserInterface:
 
         return True
 
-
     def get_card_by_card_id(self, card_id: int) -> dict | None:
         if type(card_id) != int:
             print("!")
@@ -239,12 +228,12 @@ class UserInterface:
         card = self.CardsAPI.get_card_by_card_id(card_id)
         zxc = {}
         if card:
-            zxc = {"card_id": card[0], "column_id": card[1], "card_title": card[2], "card_text": card[3], "card_status": card[4], "sequence_number": card[5]}
+            zxc = {"card_id": card[0], "column_id": card[1], "card_title": card[2], "card_text": card[3],
+                   "card_status": card[4], "sequence_number": card[5]}
             return zxc
 
         if len(zxc) == 0:
             return None
-
 
     def change_card_info(self, card_id, card_title: str = None, card_text: str = None, card_status: int = None) -> bool:
         if type(card_id) != int:
@@ -273,7 +262,6 @@ class UserInterface:
 
         return True
 
-
     def move_card(self, card_id: int, column_id: int, new_sequence_number: int) -> bool:
         if type(card_id) != int:
             raise UserInterfaceExceptions.InvalidCardIdType()
@@ -296,26 +284,27 @@ class UserInterface:
         if new_sequence_number < 1:
             new_sequence_number = 1
         elif new_sequence_number > count_cards:
-            new_sequence_number = count_cards+1
-
+            new_sequence_number = count_cards + 1
 
         if card[1] == column_id:  # Если пермешение внутри этой же колонки
             self.CardsAPI.change_card_sequence_number(card_id, new_sequence_number)
 
         else:  # Если перемещение в другую колонку
-            self.CardsAPI.change_card_info(card_id, column_id=column_id, sequence_number=count_cards+1)  #  Меняем column_id на новый; sequence_number становится равным количеству карт в этой колонки+1
+            self.CardsAPI.change_card_info(card_id, column_id=column_id,
+                                           sequence_number=count_cards + 1)  # Меняем column_id на новый; sequence_number становится равным количеству карт в этой колонки+1
 
-            last_max_sequence_number = len(self.CardsAPI.get_cards_by_column_id(card[1]))  # Получаем максимальный sequence_number в старой колонки и перезаписываем sequence_number
+            last_max_sequence_number = len(self.CardsAPI.get_cards_by_column_id(
+                card[1]))  # Получаем максимальный sequence_number в старой колонки и перезаписываем sequence_number
 
             last_cards = self.CardsAPI.get_cards_by_column_id(card[1])  # Список всех карт старой колонки
 
             for i in range(last_max_sequence_number):  # Перезаписываем sequence_number в старой колонки
-                self.CardsAPI.change_card_info(last_cards[i][0], sequence_number=i+1)
+                self.CardsAPI.change_card_info(last_cards[i][0], sequence_number=i + 1)
 
-            self.CardsAPI.change_card_sequence_number(card_id, new_sequence_number)  # Меняем порядок карт в новой колонки на правильный
+            self.CardsAPI.change_card_sequence_number(card_id,
+                                                      new_sequence_number)  # Меняем порядок карт в новой колонки на правильный
 
         return True
-
 
     def del_card(self, card_id: int) -> bool:
         if type(card_id) != int:
@@ -327,4 +316,3 @@ class UserInterface:
         self.CardsAPI.del_card(card_id)
 
         return True
-
