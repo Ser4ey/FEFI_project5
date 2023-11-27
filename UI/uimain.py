@@ -170,6 +170,7 @@ class UIMain(QMainWindow):
 
     def skip_pass(self):
         self.stacked_widget.setCurrentIndex(UIConst.desks_page)
+        self.load_desks()
 
     def change_pass(self):
         self.stacked_widget.setCurrentIndex(UIConst.change_pass_page)
