@@ -193,7 +193,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="new_user_page">
      <widget class="QWidget" name="plane" native="true">
@@ -815,9 +815,9 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
-         <width>231</width>
-         <height>111</height>
+         <y>0</y>
+         <width>221</width>
+         <height>121</height>
         </rect>
        </property>
        <property name="text">
@@ -955,13 +955,35 @@ QScrollArea QWidget {
         <string>hintButton</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="logoutButton">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>0</y>
+         <width>81</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>&lt; назад</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>hintButton</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QPushButton" name="desknameButton">
       <property name="geometry">
        <rect>
-        <x>515</x>
+        <x>365</x>
         <y>0</y>
-        <width>241</width>
+        <width>541</width>
         <height>41</height>
        </rect>
       </property>
@@ -1121,7 +1143,7 @@ QScrollArea QWidget {
        <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
       <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAsNeeded</enum>
+       <enum>Qt::ScrollBarAlwaysOn</enum>
       </property>
       <property name="sizeAdjustPolicy">
        <enum>QAbstractScrollArea::AdjustIgnored</enum>
@@ -1138,7 +1160,7 @@ QScrollArea QWidget {
          <x>0</x>
          <y>0</y>
          <width>749</width>
-         <height>659</height>
+         <height>644</height>
         </rect>
        </property>
       </widget>
@@ -1147,9 +1169,9 @@ QScrollArea QWidget {
       <property name="geometry">
        <rect>
         <x>260</x>
-        <y>30</y>
+        <y>40</y>
         <width>101</width>
-        <height>41</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="cursor">
@@ -1168,9 +1190,9 @@ QScrollArea QWidget {
      <widget class="QPushButton" name="deletedeskButton">
       <property name="geometry">
        <rect>
-        <x>560</x>
-        <y>40</y>
-        <width>151</width>
+        <x>910</x>
+        <y>5</y>
+        <width>31</width>
         <height>31</height>
        </rect>
       </property>
@@ -1182,36 +1204,371 @@ QScrollArea QWidget {
 color: #9A5757;
 text-align: center;
 font-family: Comfortaa;
-font-size: 14px;
+font-size: 18px;
 font-style: normal;
 font-weight: 400;</string>
       </property>
       <property name="text">
-       <string>Удалить доску</string>
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>icons/delete_icon_hover.png</normaloff>
+        <activeoff>icons/delete_icon_hover.png</activeoff>icons/delete_icon_hover.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
       </property>
      </widget>
     </widget>
     <widget class="QWidget" name="card_page">
-     <widget class="QLabel" name="headerText_6">
+     <widget class="QWidget" name="desksPlane_2" native="true">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>320</y>
-        <width>455</width>
-        <height>40</height>
+        <x>0</x>
+        <y>0</y>
+        <width>250</width>
+        <height>738</height>
        </rect>
+      </property>
+      <property name="class" stdset="0">
+       <string>plane</string>
+      </property>
+      <widget class="QLabel" name="columnLabel">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>0</y>
+         <width>221</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Мои
+доски</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>title</string>
+       </property>
+      </widget>
+      <widget class="QScrollArea" name="cardsArea">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>130</y>
+         <width>231</width>
+         <height>561</height>
+        </rect>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QScrollArea {
+    border-radius: 10px;
+    background-color: #1f2338;
+}
+
+QScrollBar:vertical {
+    background: transparent;
+    width: 15px;
+    margin: 15px 3px 15px 3px;
+    border: 1px transparent #2A2929;
+    border-radius: 4px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: rgba(196, 205, 255, 0.555);
+    min-height: 5px;
+    border-radius: 4px;
+}
+
+QScrollBar::sub-line:vertical {
+    margin: 3px 0px 3px 0px;
+    border-image: url(:/qss_icons/rc/up_arrow_disabled.png);
+    height: 10px;
+    width: 10px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-line:vertical {
+    margin: 3px 0px 3px 0px;
+    border-image: url(:/qss_icons/rc/down_arrow_disabled.png);
+    height: 10px;
+    width: 10px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical:hover, QScrollBar::sub-line:vertical:on {
+    border-image: url(:/qss_icons/rc/up_arrow.png);
+    height: 10px;
+    width: 10px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on {
+    border-image: url(:/qss_icons/rc/down_arrow.png);
+    height: 10px;
+    width: 10px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    background: none;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+QScrollArea QWidget {
+    background-color: transparent;
+}
+</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOn</enum>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+       </property>
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignHCenter|Qt::AlignTop</set>
+       </property>
+       <widget class="QWidget" name="scrollAreaWidgetContents_3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>216</width>
+          <height>561</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QPushButton" name="newcardButton2">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>700</y>
+         <width>190</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>+ Новая карточка</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>hintButton</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="closecardButton">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>0</y>
+         <width>81</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="text">
+        <string>&lt; назад</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>hintButton</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="cardnameButton">
+      <property name="geometry">
+       <rect>
+        <x>365</x>
+        <y>0</y>
+        <width>541</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
       </property>
       <property name="text">
-       <string>Окно карточки</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <string>Имя карточки</string>
       </property>
       <property name="class" stdset="0">
-       <string>smallheaderText</string>
+       <string>regularButton</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="desksPlane_3" native="true">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>77</y>
+        <width>751</width>
+        <height>661</height>
+       </rect>
+      </property>
+      <property name="class" stdset="0">
+       <string>plane</string>
+      </property>
+      <widget class="QPushButton" name="newcardButton2_2">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>700</y>
+         <width>190</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>+ Новая карточка</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>hintButton</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="cardText">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>30</y>
+         <width>681</width>
+         <height>521</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-size: 18px;
+line-height: 100px;</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>textInput</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="columnLabel_2">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>580</y>
+         <width>111</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Статус:</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>hintLabel</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="cardstatusBox">
+       <property name="geometry">
+        <rect>
+         <x>34</x>
+         <y>610</y>
+         <width>651</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Без статуса</string>
+       </property>
+       <property name="tristate">
+        <bool>true</bool>
+       </property>
+       <property name="class" stdset="0">
+        <string>checkbox</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="savecardButton">
+       <property name="geometry">
+        <rect>
+         <x>589</x>
+         <y>602</y>
+         <width>121</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Сохранить</string>
+       </property>
+       <property name="class" stdset="0">
+        <string>whiteButton</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QPushButton" name="deletecardButton">
+      <property name="geometry">
+       <rect>
+        <x>910</x>
+        <y>5</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: transparent;
+color: #9A5757;
+text-align: center;
+font-family: Comfortaa;
+font-size: 18px;
+font-style: normal;
+font-weight: 400;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>icons/delete_icon_hover.png</normaloff>
+        <activeoff>icons/delete_icon_hover.png</activeoff>icons/delete_icon_hover.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
       </property>
      </widget>
     </widget>

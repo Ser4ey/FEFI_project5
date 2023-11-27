@@ -10,6 +10,40 @@ class UIConst:
     fonts_path = "data/ui/fonts"
     styles_path = "data/ui/styles"
 
+    desk_not_active_style = """
+                        QPushButton {
+                            border-radius: 10px;
+                            border: 1px solid #727CB0;
+                            background: #363847;
+                            color: #C4CDFF;
+                            text-align: center;
+                            font-family: Comfortaa;
+                            font-size: 24px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 24px;
+                        }
+            
+                        QPushButton:hover {
+                            background: #3d436e;
+                            color: #C4CDFF;
+                    }
+                    """
+    desk_active_style = """
+                        QPushButton {
+                            border-radius: 10px;
+                            border: 1px solid #727CB0;
+                            background: #727CB0;
+                            color: #C4CDFF;
+                            text-align: center;
+                            font-family: Comfortaa;
+                            font-size: 24px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 24px;
+                    }
+                    """
+
     column_scroll_area_style = """
                         QScrollArea {
                             background-color: #1f2338;
@@ -25,7 +59,16 @@ class UIConst:
                         font-family: Comfortaa;
                         font-size: 20px;
                     """
-    column_button_style = """
+    column_delete_button_style = """
+                        background: transparent;
+                        color: #9A5757;
+                        text-align: center;
+                        font-family: Comfortaa;
+                        font-size: 15px;
+                        font-style: normal;
+                        font-weight: 400;
+                        """
+    column_add_card_button_style = """
                         QPushButton {
                             color: rgba(196, 205, 255, 0.46);
                             text-align: center;
