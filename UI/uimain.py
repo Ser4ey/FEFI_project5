@@ -112,6 +112,7 @@ class UIMain(QMainWindow):
         self.cards_scroll_area.setWidget(self.cards_scroll_content)
 
         self.card_text_edit = self.findChild(QTextEdit, "cardText")
+        self.card_text_edit.textChanged.connect(self.save_card_info)
 
         self.card_name_button = self.findChild(QPushButton, 'cardnameButton')
         self.delete_card_button = self.findChild(QPushButton, 'deletecardButton')
@@ -124,7 +125,6 @@ class UIMain(QMainWindow):
         self.delete_card_button.clicked.connect(self.delete_card)
         self.close_card_button.clicked.connect(self.close_card)
         self.add_new_card_button.clicked.connect(self.add_new_card_from_cards)
-        self.save_card_button.clicked.connect(self.save_card_info)
         self.card_status_box.stateChanged.connect(self.change_card_status)
 
     def set_pass(self):
@@ -395,8 +395,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите имя карточки", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
-            name = dialog.get_new_name()
+        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+            name = dialog.get_new_name().strip()
 
             try:
                 AppInterface.UserInterface.add_card_to_column(name, id)
@@ -409,8 +409,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите имя карточки", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
-            name = dialog.get_new_name()
+        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+            name = dialog.get_new_name().strip()
 
             try:
                 AppInterface.UserInterface.add_card_to_column(name, self.active_column_id)
@@ -500,6 +500,23 @@ class UIMain(QMainWindow):
             self.card_status_box.setText("Без статуса")
             self.card_name_button.setStyleSheet(UIConst.card_button_none_style)
 
+        for xcard_button, xcard_id in self.card_buttons:
+            xcard_status = AppInterface.UserInterface.get_card_by_card_id(xcard_id)["card_status"]
+            if xcard_id == self.active_card_id:
+                if xcard_status == 1:
+                    xcard_button.setStyleSheet(UIConst.card_button_red_active_style)
+                elif xcard_status == 2:
+                    xcard_button.setStyleSheet(UIConst.card_button_green_active_style)
+                else:
+                    xcard_button.setStyleSheet(UIConst.card_button_none_active_style)
+            else:
+                if xcard_status == 1:
+                    xcard_button.setStyleSheet(UIConst.card_button_red_style)
+                elif xcard_status == 2:
+                    xcard_button.setStyleSheet(UIConst.card_button_green_style)
+                else:
+                    xcard_button.setStyleSheet(UIConst.card_button_none_style)
+
         self.card_text_edit.setText(card_text)
         self.card_name_button.setText(card_name)
 
@@ -507,8 +524,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите новое имя карточки", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
-            new_name = dialog.get_new_name()
+        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+            new_name = dialog.get_new_name().strip()
 
             for cards in self.card_buttons:
                 if cards[1] == self.active_card_id:
@@ -537,7 +554,8 @@ class UIMain(QMainWindow):
 
     def save_card_info(self):
         try:
-            AppInterface.UserInterface.change_card_info(self.active_card_id, card_text=self.card_text_edit.toPlainText())
+            AppInterface.UserInterface.change_card_info(self.active_card_id,
+                                                        card_text=self.card_text_edit.toPlainText())
         except Exception:
             pass
 
@@ -548,25 +566,24 @@ class UIMain(QMainWindow):
                 self.card_status_box.setText("Не выполнено")
                 self.card_name_button.setStyleSheet(UIConst.card_button_red_style)
                 AppInterface.UserInterface.change_card_info(self.active_card_id, card_status=1)
-                for card_button, idx in self.card_buttons:
-                    if idx == self.active_card_id:
-                        card_button.setStyleSheet(UIConst.card_button_red_style)
+                for xcard_button, xcard_id in self.card_buttons:
+                    if xcard_id == self.active_card_id:
+                            xcard_button.setStyleSheet(UIConst.card_button_red_active_style)
 
             elif state == Qt.CheckState.Checked:
                 self.card_status_box.setText("Выполнено")
                 self.card_name_button.setStyleSheet(UIConst.card_button_green_style)
                 AppInterface.UserInterface.change_card_info(self.active_card_id, card_status=2)
-                for card_button, idx in self.card_buttons:
-                    if idx == self.active_card_id:
-                        card_button.setStyleSheet(UIConst.card_button_green_style)
-
+                for xcard_button, xcard_id in self.card_buttons:
+                    if xcard_id == self.active_card_id:
+                            xcard_button.setStyleSheet(UIConst.card_button_green_active_style)
             else:
                 self.card_status_box.setText("Без статуса")
                 self.card_name_button.setStyleSheet(UIConst.card_button_none_style)
                 AppInterface.UserInterface.change_card_info(self.active_card_id, card_status=0)
-                for card_button, idx in self.card_buttons:
-                    if idx == self.active_card_id:
-                        card_button.setStyleSheet(UIConst.card_button_none_style)
+                for xcard_button, xcard_id in self.card_buttons:
+                    if xcard_id == self.active_card_id:
+                            xcard_button.setStyleSheet(UIConst.card_button_none_active_style)
         except Exception:
             pass
 
@@ -574,8 +591,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите имя доски", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
-            name = dialog.get_new_name()
+        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+            name = dialog.get_new_name().strip()
 
             try:
                 AppInterface.UserInterface.create_desk(name)
@@ -588,8 +605,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите имя столбца", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
-            name = dialog.get_new_name()
+        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+            name = dialog.get_new_name().strip()
 
             try:
                 AppInterface.UserInterface.add_column_to_desk(self.active_desk_id, name)
@@ -610,8 +627,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите новое имя столбца", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
-            new_name = dialog.get_new_name()
+        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+            new_name = dialog.get_new_name().strip()
 
             for column in self.columns:
                 if column[1] == id:
@@ -628,8 +645,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите новое имя доски", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and dialog.get_new_name() != "":
-            new_name = dialog.get_new_name()
+        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+            new_name = dialog.get_new_name().strip()
 
             for desk in self.desks_buttons:
                 if desk[1] == id:
