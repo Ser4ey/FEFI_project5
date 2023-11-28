@@ -10,6 +10,92 @@ class UIConst:
     fonts_path = "data/ui/fonts"
     styles_path = "data/ui/styles"
 
+    column_scroll_area_style = """
+            QScrollArea {
+            border-radius: 10px;
+            background-color: #FFFFFF;
+        }
+        
+        QScrollBar:vertical {
+            background: transparent;
+            width: 15px;
+            margin: 15px 3px 15px 3px;
+            border: 1px transparent #2A2929;
+            border-radius: 4px;
+        }
+        
+        QScrollBar::handle:vertical {
+            background-color: rgba(196, 205, 255, 0.555);
+            min-height: 5px;
+            border-radius: 4px;
+        }
+        
+        QScrollBar::sub-line:vertical {
+            margin: 3px 0px 3px 0px;
+            border-image: url(:/qss_icons/rc/up_arrow_disabled.png);
+            height: 10px;
+            width: 10px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
+        }
+        
+        QScrollBar::add-line:vertical {
+            margin: 3px 0px 3px 0px;
+            border-image: url(:/qss_icons/rc/down_arrow_disabled.png);
+            height: 10px;
+            width: 10px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
+        }
+        
+        QScrollBar::sub-line:vertical:hover, QScrollBar::sub-line:vertical:on {
+            border-image: url(:/qss_icons/rc/up_arrow.png);
+            height: 10px;
+            width: 10px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
+        }
+        
+        QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on {
+            border-image: url(:/qss_icons/rc/down_arrow.png);
+            height: 10px;
+            width: 10px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
+        }
+        
+        QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+            background: none;
+        }
+        
+        QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+            background: none;
+        }
+        
+        QScrollArea QWidget {
+            background-color: transparent;
+        }
+
+        """
+    desk_button_style = """
+            QPushButton {
+                border-radius: 10px;
+                border: 1px solid #727CB0;
+                background: #363847;
+                color: #C4CDFF;
+                text-align: center;
+                font-family: Comfortaa;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 24px;
+            }
+
+            QPushButton:hover {
+                background: #3d436e;
+                color: #C4CDFF;
+            }
+        """
     desk_not_active_style = """
                         QPushButton {
                             border-radius: 10px;
@@ -43,7 +129,6 @@ class UIConst:
                             line-height: 24px;
                     }
                     """
-
     column_scroll_area_style = """
                         QScrollArea {
                             background-color: #1f2338;
@@ -121,11 +206,25 @@ class UIConst:
                             color: #C4CDFF;
                         }
                     """
+    card_button_none_active_style = """
+                       QPushButton {
+                            border-radius: 10px;
+                            border: 2px solid #c4cdff;
+                            background: #7a85bf;
+                            color: #FFFFFF;
+                            text-align: center;
+                            font-family: Comfortaa;
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 24px;
+                       }
+                    """
     card_button_green_style = """
                         QPushButton {
                             border-radius: 10px;
                             border: 1px solid #4CAF50;
-                            background: #2E7D32;
+                            background: #1e5821;
                             color: #C4CDFF;
                             text-align: center;
                             font-family: Comfortaa;
@@ -136,15 +235,29 @@ class UIConst:
                         }
                         
                         QPushButton:hover {
-                            background: #43A047;
+                            background: #2d7530;
                             color: #C4CDFF;
+                        }
+                    """
+    card_button_green_active_style = """
+                        QPushButton {
+                            border-radius: 10px;
+                            border: 2px solid #87ff8d;
+                            background: #56c75c;
+                            color: #FFFFFF;
+                            text-align: center;
+                            font-family: Comfortaa;
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 24px;
                         }
                     """
     card_button_red_style = """
                         QPushButton {
                             border-radius: 10px;
-                            border: 1px solid #E53935;
-                            background: #D32F2F;
+                            border: 1px solid #af4c4c;
+                            background: #581e1e;
                             color: #C4CDFF;
                             text-align: center;
                             font-family: Comfortaa;
@@ -155,7 +268,21 @@ class UIConst:
                         }
                         
                         QPushButton:hover {
-                            background: #FF5252;
+                            background: #752d2d;
                             color: #C4CDFF;
+                        }
+                    """
+    card_button_red_active_style = """
+                        QPushButton {
+                            border-radius: 10px;
+                            border: 2px solid #ff8787;
+                            background: #c75656;
+                            color: #FFFFFF;
+                            text-align: center;
+                            font-family: Comfortaa;
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 24px;
                         }
                     """
