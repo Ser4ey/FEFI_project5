@@ -273,8 +273,19 @@ class UIMain(QMainWindow):
             desk_button.setStyleSheet(UIConst.desk_button_style)
             desk_button.setFixedSize(190, 60)
 
-            if "сигм" in desk_name.lower() or "sigm" in desk_name.lower():
+            if ("сигм" in desk_name.lower() or "sigm" in desk_name.lower())\
+                    and ("снег" in desk_name.lower() or "нг" in desk_name.lower() or "новый год" in desk_name.lower() or "snow" in desk_name.lower()):
+                image = QPixmap(f"{UIConst.icons_path}/sigmasnow.png")
+                desk_button.setIcon(QIcon(image))
+                desk_button.setIconSize(QSize(60, 60))
+
+            elif "сигм" in desk_name.lower() or "sigm" in desk_name.lower():
                 image = QPixmap(f"{UIConst.icons_path}/sigma.png")
+                desk_button.setIcon(QIcon(image))
+                desk_button.setIconSize(QSize(60, 60))
+
+            elif "снег" in desk_name.lower() or "нг" in desk_name.lower() or "новый год" in desk_name.lower() or "snow" in desk_name.lower():
+                image = QPixmap(f"{UIConst.icons_path}/snow.png")
                 desk_button.setIcon(QIcon(image))
                 desk_button.setIconSize(QSize(60, 60))
 
