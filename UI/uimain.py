@@ -1,13 +1,16 @@
 from PyQt6.QtCore import QSize, QCoreApplication
 from PyQt6.QtGui import QIcon, QCursor, QPixmap
-from PyQt6.QtWidgets import QMainWindow, QPushButton, QStackedWidget, QLineEdit, QLabel, QWidget, \
-    QVBoxLayout, QScrollArea, QDialog, QHBoxLayout, QLayout, QTextEdit, QCheckBox
+from PyQt6.QtWidgets import QMainWindow, QPushButton, QStackedWidget, \
+    QLineEdit, QLabel, QWidget, \
+    QVBoxLayout, QScrollArea, QDialog, QHBoxLayout, QTextEdit, QCheckBox
 
-from UI.uieffects import *
 from UI.uiconstants import UIConst
 from UI.uidialog import UIDialog
+from UI.uieffects import *
 from interfaces import AppInterface
 from interfaces.exceptions import AuthInterfaceExceptions
+
+column_scroll_area_style = UIConst.dark_column_scroll_area_style
 
 
 class UIMain(QMainWindow):
@@ -61,7 +64,8 @@ class UIMain(QMainWindow):
         self.ok_button = self.findChild(QPushButton, 'okButton')
         self.ok_button.clicked.connect(self.set_pass_confirm)
 
-        self.changepass_button = self.findChild(QPushButton, 'changePassButton')
+        self.changepass_button = self.findChild(QPushButton,
+                                                'changePassButton')
         self.changepass_button.clicked.connect(self.change_pass)
 
         self.login_button = self.findChild(QPushButton, 'loginButton')
@@ -87,7 +91,8 @@ class UIMain(QMainWindow):
         self.new_desk_button.clicked.connect(self.add_new_desk)
 
         self.desk_name_button = self.findChild(QPushButton, 'desknameButton')
-        self.delete_desk_button = self.findChild(QPushButton, 'deletedeskButton')
+        self.delete_desk_button = self.findChild(QPushButton,
+                                                 'deletedeskButton')
 
         self.desk_name_button.clicked.connect(self.rename_desk)
         self.delete_desk_button.clicked.connect(self.delete_desk)
@@ -115,9 +120,11 @@ class UIMain(QMainWindow):
         self.card_text_edit.textChanged.connect(self.save_card_info)
 
         self.card_name_button = self.findChild(QPushButton, 'cardnameButton')
-        self.delete_card_button = self.findChild(QPushButton, 'deletecardButton')
+        self.delete_card_button = self.findChild(QPushButton,
+                                                 'deletecardButton')
         self.close_card_button = self.findChild(QPushButton, 'closecardButton')
-        self.add_new_card_button = self.findChild(QPushButton, 'newcardButton2')
+        self.add_new_card_button = self.findChild(QPushButton,
+                                                  'newcardButton2')
         self.save_card_button = self.findChild(QPushButton, 'savecardButton')
         self.card_status_box = self.findChild(QCheckBox, 'cardstatusBox')
 
@@ -137,7 +144,8 @@ class UIMain(QMainWindow):
 
         try:
             if pass_input.text() == pass_input_valid.text() and len(
-                    pass_input.text()) > 1 and AppInterface.AuthInterface.set_user_password(pass_input.text()):
+                    pass_input.text()) > 1 and AppInterface.AuthInterface.set_user_password(
+                pass_input.text()):
                 self.stacked_widget.setCurrentIndex(UIConst.auth_page)
                 warning_str.setText("")
                 pass_input.clear()
@@ -187,8 +195,9 @@ class UIMain(QMainWindow):
 
         try:
             if new_pass_input.text() == new_pass_input_valid.text() and len(
-                    new_pass_input.text()) > 1 and AppInterface.AuthInterface.change_user_password(pass_input.text(),
-                                                                                                   new_pass_input.text()):
+                    new_pass_input.text()) > 1 and AppInterface.AuthInterface.change_user_password(
+                pass_input.text(),
+                new_pass_input.text()):
                 self.stacked_widget.setCurrentIndex(UIConst.auth_page)
                 warning_str.setText("")
                 pass_input.clear()
@@ -273,8 +282,20 @@ class UIMain(QMainWindow):
             desk_button.setStyleSheet(UIConst.desk_button_style)
             desk_button.setFixedSize(190, 60)
 
-            if "сигм" in desk_name.lower() or "sigm" in desk_name.lower():
+            if ("сигм" in desk_name.lower() or "sigm" in desk_name.lower()) \
+                    and (
+                    "снег" in desk_name.lower() or "нг" in desk_name.lower() or "новый год" in desk_name.lower() or "snow" in desk_name.lower()):
+                image = QPixmap(f"{UIConst.icons_path}/sigmasnow.png")
+                desk_button.setIcon(QIcon(image))
+                desk_button.setIconSize(QSize(60, 60))
+
+            elif "сигм" in desk_name.lower() or "sigm" in desk_name.lower():
                 image = QPixmap(f"{UIConst.icons_path}/sigma.png")
+                desk_button.setIcon(QIcon(image))
+                desk_button.setIconSize(QSize(60, 60))
+
+            elif "снег" in desk_name.lower() or "нг" in desk_name.lower() or "новый год" in desk_name.lower() or "snow" in desk_name.lower():
+                image = QPixmap(f"{UIConst.icons_path}/snow.png")
                 desk_button.setIcon(QIcon(image))
                 desk_button.setIconSize(QSize(60, 60))
 
@@ -337,20 +358,26 @@ class UIMain(QMainWindow):
             column_layout = QVBoxLayout()
             column_name_button = QPushButton(column_name)
             column_name_button.setFixedSize(231, 55)
-            column_name_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+            column_name_button.setCursor(
+                QCursor(Qt.CursorShape.PointingHandCursor))
             column_name_button.setStyleSheet(UIConst.column_name_button_style)
-            column_name_button.clicked.connect(lambda _, idx=id: self.rename_column(idx))
+            column_name_button.clicked.connect(
+                lambda _, idx=id: self.rename_column(idx))
 
             column_delete_button = QPushButton("удалить")
             column_delete_button.setFixedSize(231, 19)
-            column_delete_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-            column_delete_button.setStyleSheet(UIConst.column_delete_button_style)
-            column_delete_button.clicked.connect(lambda _, idx=id: self.delete_column(idx))
+            column_delete_button.setCursor(
+                QCursor(Qt.CursorShape.PointingHandCursor))
+            column_delete_button.setStyleSheet(
+                UIConst.column_delete_button_style)
+            column_delete_button.clicked.connect(
+                lambda _, idx=id: self.delete_column(idx))
 
             column_area = QScrollArea()
             column_area.setFixedSize(231, 500)
-            column_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
-            column_area.setStyleSheet(UIConst.column_scroll_area_style)
+            column_area.setVerticalScrollBarPolicy(
+                Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+            column_area.setStyleSheet(column_scroll_area_style)
             column_scroll_content = QWidget()
             column_scroll_layout = QVBoxLayout(column_scroll_content)
             column_area.setWidgetResizable(True)
@@ -358,9 +385,12 @@ class UIMain(QMainWindow):
             self.load_cards(column_scroll_layout, id)
 
             column_add_card_button = QPushButton("+ карточка")
-            column_add_card_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
-            column_add_card_button.setStyleSheet(UIConst.column_add_card_button_style)
-            column_add_card_button.clicked.connect(lambda _, idx=id: self.add_new_card_from_desk(idx))
+            column_add_card_button.setCursor(
+                QCursor(Qt.CursorShape.PointingHandCursor))
+            column_add_card_button.setStyleSheet(
+                UIConst.column_add_card_button_style)
+            column_add_card_button.clicked.connect(
+                lambda _, idx=id: self.add_new_card_from_desk(idx))
 
             column_layout.addWidget(column_name_button)
             column_layout.addWidget(column_delete_button)
@@ -378,7 +408,9 @@ class UIMain(QMainWindow):
 
             card_button = QPushButton(card_name)
             card_button.clicked.connect(
-                lambda _, columnid=id, cardid=card_id: self.open_card_from_desk(columnid, cardid))
+                lambda _, columnid=id,
+                       cardid=card_id: self.open_card_from_desk(columnid,
+                                                                cardid))
             card_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             if card_status == 1:
                 card_button.setStyleSheet(UIConst.card_button_red_style)
@@ -395,7 +427,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите имя карточки", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+        if result == QDialog.DialogCode.Accepted and "".join(
+                dialog.get_new_name().split()) != "":
             name = dialog.get_new_name().strip()
 
             try:
@@ -409,11 +442,13 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите имя карточки", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+        if result == QDialog.DialogCode.Accepted and "".join(
+                dialog.get_new_name().split()) != "":
             name = dialog.get_new_name().strip()
 
             try:
-                AppInterface.UserInterface.add_card_to_column(name, self.active_column_id)
+                AppInterface.UserInterface.add_card_to_column(name,
+                                                              self.active_column_id)
             except Exception:
                 pass
 
@@ -423,7 +458,8 @@ class UIMain(QMainWindow):
         if cardid is not None:
             self.active_column_id = columnid
             self.stacked_widget.setCurrentIndex(UIConst.card_page)
-            column_info = AppInterface.UserInterface.get_column_by_column_id(columnid)
+            column_info = AppInterface.UserInterface.get_column_by_column_id(
+                columnid)
             cards = AppInterface.UserInterface.get_cards_by_column_id(columnid)
             if cardid == 0:
                 self.active_card_id = cards[0]["card_id"]
@@ -431,17 +467,21 @@ class UIMain(QMainWindow):
                 self.active_card_id = cardid
             self.column_label.setText(column_info["column_name"])
 
-            card_info = AppInterface.UserInterface.get_card_by_card_id(self.active_card_id)
+            card_info = AppInterface.UserInterface.get_card_by_card_id(
+                self.active_card_id)
             card_name = card_info["card_title"]
             card_text = card_info["card_text"]
             card_status = card_info["card_status"]
 
             if card_status == 1:
-                self.card_name_button.setStyleSheet(UIConst.card_button_red_style)
+                self.card_name_button.setStyleSheet(
+                    UIConst.card_button_red_style)
             elif card_status == 2:
-                self.card_name_button.setStyleSheet(UIConst.card_button_green_style)
+                self.card_name_button.setStyleSheet(
+                    UIConst.card_button_green_style)
             else:
-                self.card_name_button.setStyleSheet(UIConst.card_button_none_style)
+                self.card_name_button.setStyleSheet(
+                    UIConst.card_button_none_style)
 
             self.card_text_edit.setText(card_text)
             self.card_name_button.setText(card_name)
@@ -459,8 +499,11 @@ class UIMain(QMainWindow):
 
                 card_button = QPushButton(xcard_name)
                 card_button.clicked.connect(
-                    lambda _, columnidx=columnid, cardidx=xcard_id: self.open_card_from_cards(cardidx))
-                card_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+                    lambda _, columnidx=columnid,
+                           cardidx=xcard_id: self.open_card_from_cards(
+                        cardidx))
+                card_button.setCursor(
+                    QCursor(Qt.CursorShape.PointingHandCursor))
                 card_button.setFixedSize(190, 60)
 
                 if xcard_status == 1:
@@ -494,21 +537,27 @@ class UIMain(QMainWindow):
         elif card_status == 2:
             self.card_status_box.setCheckState(Qt.CheckState.Checked)
             self.card_status_box.setText("Выполнено")
-            self.card_name_button.setStyleSheet(UIConst.card_button_green_style)
+            self.card_name_button.setStyleSheet(
+                UIConst.card_button_green_style)
         else:
             self.card_status_box.setCheckState(Qt.CheckState.Unchecked)
             self.card_status_box.setText("Без статуса")
             self.card_name_button.setStyleSheet(UIConst.card_button_none_style)
 
         for xcard_button, xcard_id in self.card_buttons:
-            xcard_status = AppInterface.UserInterface.get_card_by_card_id(xcard_id)["card_status"]
+            xcard_status = \
+            AppInterface.UserInterface.get_card_by_card_id(xcard_id)[
+                "card_status"]
             if xcard_id == self.active_card_id:
                 if xcard_status == 1:
-                    xcard_button.setStyleSheet(UIConst.card_button_red_active_style)
+                    xcard_button.setStyleSheet(
+                        UIConst.card_button_red_active_style)
                 elif xcard_status == 2:
-                    xcard_button.setStyleSheet(UIConst.card_button_green_active_style)
+                    xcard_button.setStyleSheet(
+                        UIConst.card_button_green_active_style)
                 else:
-                    xcard_button.setStyleSheet(UIConst.card_button_none_active_style)
+                    xcard_button.setStyleSheet(
+                        UIConst.card_button_none_active_style)
             else:
                 if xcard_status == 1:
                     xcard_button.setStyleSheet(UIConst.card_button_red_style)
@@ -524,7 +573,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите новое имя карточки", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+        if result == QDialog.DialogCode.Accepted and "".join(
+                dialog.get_new_name().split()) != "":
             new_name = dialog.get_new_name().strip()
 
             for cards in self.card_buttons:
@@ -533,7 +583,8 @@ class UIMain(QMainWindow):
                     break
 
             try:
-                AppInterface.UserInterface.change_card_info(self.active_card_id, card_title=new_name)
+                AppInterface.UserInterface.change_card_info(
+                    self.active_card_id, card_title=new_name)
                 self.open_card_from_cards(self.active_card_id)
             except Exception:
                 pass
@@ -543,7 +594,8 @@ class UIMain(QMainWindow):
             AppInterface.UserInterface.del_card(self.active_card_id)
         except Exception:
             pass
-        if AppInterface.UserInterface.get_cards_by_column_id(self.active_column_id):
+        if AppInterface.UserInterface.get_cards_by_column_id(
+                self.active_column_id):
             self.open_card_from_desk(self.active_column_id, 0)
         else:
             self.open_card_from_desk(self.active_column_id, None)
@@ -564,26 +616,35 @@ class UIMain(QMainWindow):
             state = self.card_status_box.checkState()
             if state == Qt.CheckState.PartiallyChecked:
                 self.card_status_box.setText("Не выполнено")
-                self.card_name_button.setStyleSheet(UIConst.card_button_red_style)
-                AppInterface.UserInterface.change_card_info(self.active_card_id, card_status=1)
+                self.card_name_button.setStyleSheet(
+                    UIConst.card_button_red_style)
+                AppInterface.UserInterface.change_card_info(
+                    self.active_card_id, card_status=1)
                 for xcard_button, xcard_id in self.card_buttons:
                     if xcard_id == self.active_card_id:
-                            xcard_button.setStyleSheet(UIConst.card_button_red_active_style)
+                        xcard_button.setStyleSheet(
+                            UIConst.card_button_red_active_style)
 
             elif state == Qt.CheckState.Checked:
                 self.card_status_box.setText("Выполнено")
-                self.card_name_button.setStyleSheet(UIConst.card_button_green_style)
-                AppInterface.UserInterface.change_card_info(self.active_card_id, card_status=2)
+                self.card_name_button.setStyleSheet(
+                    UIConst.card_button_green_style)
+                AppInterface.UserInterface.change_card_info(
+                    self.active_card_id, card_status=2)
                 for xcard_button, xcard_id in self.card_buttons:
                     if xcard_id == self.active_card_id:
-                            xcard_button.setStyleSheet(UIConst.card_button_green_active_style)
+                        xcard_button.setStyleSheet(
+                            UIConst.card_button_green_active_style)
             else:
                 self.card_status_box.setText("Без статуса")
-                self.card_name_button.setStyleSheet(UIConst.card_button_none_style)
-                AppInterface.UserInterface.change_card_info(self.active_card_id, card_status=0)
+                self.card_name_button.setStyleSheet(
+                    UIConst.card_button_none_style)
+                AppInterface.UserInterface.change_card_info(
+                    self.active_card_id, card_status=0)
                 for xcard_button, xcard_id in self.card_buttons:
                     if xcard_id == self.active_card_id:
-                            xcard_button.setStyleSheet(UIConst.card_button_none_active_style)
+                        xcard_button.setStyleSheet(
+                            UIConst.card_button_none_active_style)
         except Exception:
             pass
 
@@ -591,7 +652,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите имя доски", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+        if result == QDialog.DialogCode.Accepted and "".join(
+                dialog.get_new_name().split()) != "":
             name = dialog.get_new_name().strip()
 
             try:
@@ -605,11 +667,13 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите имя столбца", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+        if result == QDialog.DialogCode.Accepted and "".join(
+                dialog.get_new_name().split()) != "":
             name = dialog.get_new_name().strip()
 
             try:
-                AppInterface.UserInterface.add_column_to_desk(self.active_desk_id, name)
+                AppInterface.UserInterface.add_column_to_desk(
+                    self.active_desk_id, name)
             except Exception:
                 pass
 
@@ -627,7 +691,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите новое имя столбца", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+        if result == QDialog.DialogCode.Accepted and "".join(
+                dialog.get_new_name().split()) != "":
             new_name = dialog.get_new_name().strip()
 
             for column in self.columns:
@@ -645,7 +710,8 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите новое имя доски", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
+        if result == QDialog.DialogCode.Accepted and "".join(
+                dialog.get_new_name().split()) != "":
             new_name = dialog.get_new_name().strip()
 
             for desk in self.desks_buttons:
@@ -654,7 +720,8 @@ class UIMain(QMainWindow):
                     break
             try:
                 self.desk_name_button.setText(new_name)
-                AppInterface.UserInterface.change_desk_name(self.active_desk_id, new_name)
+                AppInterface.UserInterface.change_desk_name(
+                    self.active_desk_id, new_name)
                 self.load_desks()
             except Exception:
                 pass
@@ -673,14 +740,23 @@ class UIMain(QMainWindow):
         self.pinned = not self.pinned
         self.setWindowFlag(Qt.WindowType.WindowStaysOnTopHint, self.pinned)
         self.pin_button.setIcon(
-            QIcon(f"{UIConst.icons_path}/pin_icon_active.png" if self.pinned else f"{UIConst.icons_path}/pin_icon.png"))
+            QIcon(
+                f"{UIConst.icons_path}/pin_icon_active.png" if self.pinned else f"{UIConst.icons_path}/pin_icon.png"))
         self.show()
 
     def theme_toggle(self):
-        self.theme = 'light_theme' if self.theme == 'dark_theme' else 'dark_theme'
+        global column_scroll_area_style
+        if self.theme == 'dark_theme':
+            self.theme = 'light_theme'
+            column_scroll_area_style = UIConst.light_column_scroll_area_style
+        else:
+            self.theme = 'dark_theme'
+            column_scroll_area_style = UIConst.dark_column_scroll_area_style
         with open(f"{UIConst.styles_path}/{self.theme}.css") as style:
             self.setStyleSheet(style.read())
-            self.theme_button.setIcon(QIcon(f"{UIConst.icons_path}/{self.theme}.png"))
+            self.theme_button.setIcon(
+                QIcon(f"{UIConst.icons_path}/{self.theme}.png"))
+
         self.show()
 
     def exit_app(self):
