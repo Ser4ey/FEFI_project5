@@ -594,7 +594,7 @@ class UIMain(QMainWindow):
         if result == QDialog.DialogCode.Accepted and dialog.get_new_column() != self.active_column_id:
             try:
                 AppInterface.UserInterface.move_card(self.active_card_id, dialog.get_new_column(), 0)
-                self.close_card()
+                self.open_card_from_desk(dialog.get_new_column(), self.active_card_id)
             except Exception:
                 pass
 
