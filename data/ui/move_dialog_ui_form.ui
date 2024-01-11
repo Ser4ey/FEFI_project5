@@ -13,40 +13,6 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLineEdit" name="nameInput">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>110</y>
-     <width>301</width>
-     <height>30</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>IBeamCursor</cursorShape>
-   </property>
-   <property name="contextMenuPolicy">
-    <enum>Qt::ActionsContextMenu</enum>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-   </property>
-   <property name="placeholderText">
-    <string>Имя</string>
-   </property>
-   <property name="cursorMoveStyle">
-    <enum>Qt::LogicalMoveStyle</enum>
-   </property>
-   <property name="clearButtonEnabled">
-    <bool>true</bool>
-   </property>
-   <property name="class" stdset="0">
-    <string>textInput</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="headerText">
    <property name="geometry">
     <rect>
@@ -105,6 +71,19 @@
    </property>
    <property name="class" stdset="0">
     <string>redButton</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="columnBox">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>110</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="class" stdset="0">
+    <string>combobox</string>
    </property>
   </widget>
  </widget>

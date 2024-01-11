@@ -840,73 +840,6 @@
        <property name="layoutDirection">
         <enum>Qt::RightToLeft</enum>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QScrollArea {
-    border-radius: 10px;
-    background-color: #1f2338;
-}
-
-QScrollBar:vertical {
-    background: transparent;
-    width: 15px;
-    margin: 15px 3px 15px 3px;
-    border: 1px transparent #2A2929;
-    border-radius: 4px;
-}
-
-QScrollBar::handle:vertical {
-    background-color: rgba(196, 205, 255, 0.555);
-    min-height: 5px;
-    border-radius: 4px;
-}
-
-QScrollBar::sub-line:vertical {
-    margin: 3px 0px 3px 0px;
-    border-image: url(:/qss_icons/rc/up_arrow_disabled.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: top;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-line:vertical {
-    margin: 3px 0px 3px 0px;
-    border-image: url(:/qss_icons/rc/down_arrow_disabled.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: bottom;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::sub-line:vertical:hover, QScrollBar::sub-line:vertical:on {
-    border-image: url(:/qss_icons/rc/up_arrow.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: top;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on {
-    border-image: url(:/qss_icons/rc/down_arrow.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: bottom;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-    background: none;
-}
-
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-    background: none;
-}
-
-QScrollArea QWidget {
-    background-color: transparent;
-}
-</string>
-       </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
@@ -922,12 +855,15 @@ QScrollArea QWidget {
        <property name="alignment">
         <set>Qt::AlignHCenter|Qt::AlignTop</set>
        </property>
+       <property name="class" stdset="0">
+        <string/>
+       </property>
        <widget class="QWidget" name="scrollAreaWidgetContents">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>216</width>
+          <width>214</width>
           <height>561</height>
          </rect>
         </property>
@@ -1012,130 +948,6 @@ QScrollArea QWidget {
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
       </property>
-      <property name="styleSheet">
-       <string notr="true">QScrollArea {
-    border-radius: 10px;
-	border: 1px solid rgba(114, 124, 176, 0.5);
-	background: #242946;
-}
-
-QScrollBar:horizontal {
-    background: transparent;
-    height: 15px;
-    margin: 3px 15px 3px 15px;
-    border: 1px transparent #2A2929;
-    border-radius: 4px;
-}
-
-QScrollBar::handle:horizontal {
-    background-color: rgba(196, 205, 255, 0.555);
-    min-width: 5px;
-    border-radius: 4px;
-}
-
-QScrollBar::sub-line:horizontal {
-    margin: 0px 3px 0px 3px;
-    border-image: url(:/qss_icons/rc/left_arrow_disabled.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: left;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-line:horizontal {
-    margin: 0px 3px 0px 3px;
-    border-image: url(:/qss_icons/rc/right_arrow_disabled.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: right;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::sub-line:horizontal:hover, QScrollBar::sub-line:horizontal:on {
-    border-image: url(:/qss_icons/rc/left_arrow.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: left;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-line:horizontal:hover, QScrollBar::add-line:horizontal:on {
-    border-image: url(:/qss_icons/rc/right_arrow.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: right;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::left-arrow:horizontal, QScrollBar::right-arrow:horizontal {
-    background: none;
-}
-
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
-    background: none;
-}
-
-QScrollBar:vertical {
-    background: transparent;
-    width: 15px;
-    margin: 15px 3px 15px 3px;
-    border: 1px transparent #2A2929;
-    border-radius: 4px;
-}
-
-QScrollBar::handle:vertical {
-    background-color: rgba(196, 205, 255, 0.555);
-    min-height: 5px;
-    border-radius: 4px;
-}
-
-QScrollBar::sub-line:vertical {
-    margin: 3px 0px 3px 0px;
-    border-image: url(:/qss_icons/rc/up_arrow_disabled.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: top;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-line:vertical {
-    margin: 3px 0px 3px 0px;
-    border-image: url(:/qss_icons/rc/down_arrow_disabled.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: bottom;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::sub-line:vertical:hover, QScrollBar::sub-line:vertical:on {
-    border-image: url(:/qss_icons/rc/up_arrow.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: top;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on {
-    border-image: url(:/qss_icons/rc/down_arrow.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: bottom;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-    background: none;
-}
-
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-    background: none;
-}
-
-QScrollArea QWidget {
-    background-color: transparent;
-}
-</string>
-      </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
@@ -1159,7 +971,7 @@ QScrollArea QWidget {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>749</width>
+         <width>751</width>
          <height>644</height>
         </rect>
        </property>
@@ -1266,73 +1078,6 @@ font-weight: 400;</string>
        <property name="layoutDirection">
         <enum>Qt::RightToLeft</enum>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QScrollArea {
-    border-radius: 10px;
-    background-color: #1f2338;
-}
-
-QScrollBar:vertical {
-    background: transparent;
-    width: 15px;
-    margin: 15px 3px 15px 3px;
-    border: 1px transparent #2A2929;
-    border-radius: 4px;
-}
-
-QScrollBar::handle:vertical {
-    background-color: rgba(196, 205, 255, 0.555);
-    min-height: 5px;
-    border-radius: 4px;
-}
-
-QScrollBar::sub-line:vertical {
-    margin: 3px 0px 3px 0px;
-    border-image: url(:/qss_icons/rc/up_arrow_disabled.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: top;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-line:vertical {
-    margin: 3px 0px 3px 0px;
-    border-image: url(:/qss_icons/rc/down_arrow_disabled.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: bottom;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::sub-line:vertical:hover, QScrollBar::sub-line:vertical:on {
-    border-image: url(:/qss_icons/rc/up_arrow.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: top;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on {
-    border-image: url(:/qss_icons/rc/down_arrow.png);
-    height: 10px;
-    width: 10px;
-    subcontrol-position: bottom;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
-    background: none;
-}
-
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-    background: none;
-}
-
-QScrollArea QWidget {
-    background-color: transparent;
-}
-</string>
-       </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
@@ -1353,7 +1098,7 @@ QScrollArea QWidget {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>216</width>
+          <width>214</width>
           <height>561</height>
          </rect>
         </property>
@@ -1409,7 +1154,7 @@ QScrollArea QWidget {
        <rect>
         <x>365</x>
         <y>0</y>
-        <width>541</width>
+        <width>501</width>
         <height>41</height>
        </rect>
       </property>
@@ -1550,6 +1295,42 @@ font-weight: 400;</string>
       </property>
       <property name="class" stdset="0">
        <string>checkbox</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="movecardButton">
+      <property name="geometry">
+       <rect>
+        <x>875</x>
+        <y>5</y>
+        <width>31</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: transparent;
+color: #9A5757;
+text-align: center;
+font-family: Comfortaa;
+font-size: 18px;
+font-style: normal;
+font-weight: 400;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>icons/move_icon.png</normaloff>
+        <activeoff>icons/move_icon.png</activeoff>icons/move_icon.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
       </property>
      </widget>
     </widget>
