@@ -10,15 +10,17 @@ class UIDialog(QDialog):
         self.theme = theme
         setup_ui_form(self, "dialog_ui_form")
         blur_background(self)
+        self._init_widgets(text)
 
-        label = self.findChild(QLabel, "headerText")
-        label.setText(text)
+    def _init_widgets(self, text):
+        self.label = self.findChild(QLabel, "headerText")
+        self.label.setText(text)
 
-        accept_button = self.findChild(QPushButton, "okButton")
-        accept_button.clicked.connect(self.accept)
+        self.accept_button = self.findChild(QPushButton, "okButton")
+        self.accept_button.clicked.connect(self.accept)
 
-        cancel_button = self.findChild(QPushButton, "cancelButton")
-        cancel_button.clicked.connect(lambda: self.hide())
+        self.cancel_button = self.findChild(QPushButton, "cancelButton")
+        self.cancel_button.clicked.connect(lambda: self.hide())
 
         self.new_name_input = self.findChild(QLineEdit, "nameInput")
 
@@ -35,9 +37,11 @@ class UIDialog(QDialog):
 
     def mouseMoveEvent(self, event):
         try:
+
             if not self.old_pos:
                 return
             delta = event.pos() - self.old_pos
             self.move(self.pos() + delta)
+
         except Exception:
             pass

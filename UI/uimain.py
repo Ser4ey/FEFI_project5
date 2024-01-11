@@ -4,9 +4,9 @@ from PyQt6.QtWidgets import QMainWindow, QPushButton, QStackedWidget, \
     QLineEdit, QLabel, QWidget, \
     QVBoxLayout, QScrollArea, QDialog, QHBoxLayout, QTextEdit, QCheckBox
 
-from UI.uiconstants import UIConst
 from UI.uidialog import UIDialog
 from UI.uieffects import *
+from UI.uimovedialog import UIMoveDialog
 from interfaces import AppInterface
 from interfaces.exceptions import AuthInterfaceExceptions
 
@@ -120,16 +120,16 @@ class UIMain(QMainWindow):
         self.card_text_edit.textChanged.connect(self.save_card_info)
 
         self.card_name_button = self.findChild(QPushButton, 'cardnameButton')
-        self.delete_card_button = self.findChild(QPushButton,
-                                                 'deletecardButton')
+        self.move_card_button = self.findChild(QPushButton, 'movecardButton')
+        self.delete_card_button = self.findChild(QPushButton, 'deletecardButton')
         self.close_card_button = self.findChild(QPushButton, 'closecardButton')
-        self.add_new_card_button = self.findChild(QPushButton,
-                                                  'newcardButton2')
+        self.add_new_card_button = self.findChild(QPushButton, 'newcardButton2')
         self.save_card_button = self.findChild(QPushButton, 'savecardButton')
         self.card_status_box = self.findChild(QCheckBox, 'cardstatusBox')
 
         self.card_name_button.clicked.connect(self.rename_card)
         self.delete_card_button.clicked.connect(self.delete_card)
+        self.move_card_button.clicked.connect(self.move_card)
         self.close_card_button.clicked.connect(self.close_card)
         self.add_new_card_button.clicked.connect(self.add_new_card_from_cards)
         self.card_status_box.stateChanged.connect(self.change_card_status)
@@ -372,7 +372,7 @@ class UIMain(QMainWindow):
                 UIConst.column_delete_button_style)
             column_delete_button.clicked.connect(
                 lambda _, idx=id: self.delete_column(idx))
-
+            print()
             column_area = QScrollArea()
             column_area.setFixedSize(231, 500)
             column_area.setVerticalScrollBarPolicy(
@@ -573,8 +573,7 @@ class UIMain(QMainWindow):
         dialog = UIDialog("Введите новое имя карточки", self.theme)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and "".join(
-                dialog.get_new_name().split()) != "":
+        if result == QDialog.DialogCode.Accepted and "".join(dialog.get_new_name().split()) != "":
             new_name = dialog.get_new_name().strip()
 
             for cards in self.card_buttons:
@@ -583,9 +582,19 @@ class UIMain(QMainWindow):
                     break
 
             try:
-                AppInterface.UserInterface.change_card_info(
-                    self.active_card_id, card_title=new_name)
+                AppInterface.UserInterface.change_card_info(self.active_card_id, card_title=new_name)
                 self.open_card_from_cards(self.active_card_id)
+            except Exception:
+                pass
+
+    def move_card(self):
+        dialog = UIMoveDialog("Выберите столбец", self.theme, desk_id=self.active_desk_id, column_id=self.active_column_id)
+        result = dialog.exec()
+
+        if result == QDialog.DialogCode.Accepted and dialog.get_new_column() != self.active_column_id:
+            try:
+                AppInterface.UserInterface.move_card(self.active_card_id, dialog.get_new_column(), 0)
+                self.close_card()
             except Exception:
                 pass
 
