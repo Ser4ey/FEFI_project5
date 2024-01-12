@@ -1,5 +1,5 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QPushButton, QLabel, QDialog, QComboBox
+from PyQt6.QtWidgets import QPushButton, QLabel, QDialog, QComboBox, QSpinBox
 
 from UI.uieffects import blur_background, setup_ui_form
 from interfaces import AppInterface
@@ -27,6 +27,8 @@ class UIMoveDialog(QDialog):
         self.column_label = self.findChild(QLabel, "columnLabel")
         self.column_box = self.findChild(QComboBox, "columnBox")
 
+        self.position_box = self.findChild(QSpinBox, "positionBox")
+
         current_column = [column['column_name'] for column in self.columns if column['column_id'] == column_id][0]
         column_names = [column['column_name'] for column in self.columns]
         self.column_box.addItems(column_names)
@@ -37,6 +39,9 @@ class UIMoveDialog(QDialog):
         new_column_id = [column['column_id'] for column in self.columns
                          if column['column_name'] == new_column_name][0]
         return new_column_id
+
+    def get_new_position(self):
+        return self.position_box.value()
 
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:

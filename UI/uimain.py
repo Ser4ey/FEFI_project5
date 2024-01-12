@@ -2,7 +2,7 @@ from PyQt6.QtCore import QSize, QCoreApplication
 from PyQt6.QtGui import QIcon, QCursor, QPixmap
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QStackedWidget, \
     QLineEdit, QLabel, QWidget, \
-    QVBoxLayout, QScrollArea, QDialog, QHBoxLayout, QTextEdit, QCheckBox
+    QVBoxLayout, QScrollArea, QDialog, QHBoxLayout, QTextEdit, QCheckBox, QSpinBox
 
 from UI.uidialog import UIDialog
 from UI.uieffects import *
@@ -372,7 +372,6 @@ class UIMain(QMainWindow):
                 UIConst.column_delete_button_style)
             column_delete_button.clicked.connect(
                 lambda _, idx=id: self.delete_column(idx))
-            print()
             column_area = QScrollArea()
             column_area.setFixedSize(231, 500)
             column_area.setVerticalScrollBarPolicy(
@@ -401,7 +400,8 @@ class UIMain(QMainWindow):
             self.columns_scroll_layout.addLayout(column_layout)
 
     def load_cards(self, column_scroll_layout, id):
-        for column in AppInterface.UserInterface.get_cards_by_column_id(id):
+        cards = sorted(AppInterface.UserInterface.get_cards_by_column_id(id), key=lambda x: x['sequence_number'])
+        for column in cards:
             card_id = column["card_id"]
             card_name = column['card_title']
             card_status = column['card_status']
@@ -461,6 +461,8 @@ class UIMain(QMainWindow):
             column_info = AppInterface.UserInterface.get_column_by_column_id(
                 columnid)
             cards = AppInterface.UserInterface.get_cards_by_column_id(columnid)
+            cards = sorted(cards, key=lambda x: x['sequence_number'])
+
             if cardid == 0:
                 self.active_card_id = cards[0]["card_id"]
             else:
@@ -588,12 +590,17 @@ class UIMain(QMainWindow):
                 pass
 
     def move_card(self):
-        dialog = UIMoveDialog("Выберите столбец", self.theme, desk_id=self.active_desk_id, column_id=self.active_column_id)
+        dialog = UIMoveDialog("Выберите столбец и позицию", self.theme, desk_id=self.active_desk_id, column_id=self.active_column_id)
+        current_position = AppInterface.UserInterface.get_card_by_card_id(self.active_card_id)['sequence_number']
+        max_positions = len(AppInterface.UserInterface.get_cards_by_column_id(self.active_column_id))
+        dialog.position_box.setValue(current_position)
+        dialog.position_box.setMaximum(max_positions)
         result = dialog.exec()
 
-        if result == QDialog.DialogCode.Accepted and dialog.get_new_column() != self.active_column_id:
+        if result == QDialog.DialogCode.Accepted:
             try:
-                AppInterface.UserInterface.move_card(self.active_card_id, dialog.get_new_column(), 0)
+                print(dialog.get_new_position())
+                AppInterface.UserInterface.move_card(self.active_card_id, dialog.get_new_column(), dialog.get_new_position())
                 self.open_card_from_desk(dialog.get_new_column(), self.active_card_id)
             except Exception:
                 pass
