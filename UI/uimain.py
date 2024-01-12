@@ -352,7 +352,7 @@ class UIMain(QMainWindow):
 
         clear_layout(self.columns_scroll_layout)
 
-        columns_sorted = sorted(AppInterface.UserInterface.get_columns_by_desk_id(id), key=lambda x: x['sequence_number'])
+        columns_sorted = sorted(AppInterface.UserInterface.get_columns_by_desk_id(id), key=lambda x: x['sequence_number'], reverse=True)
 
         for column in columns_sorted:
             id = column["column_id"]
