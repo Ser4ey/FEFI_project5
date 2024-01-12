@@ -7,6 +7,7 @@ from PyQt6.QtWidgets import QMainWindow, QPushButton, QStackedWidget, \
 from UI.uidialog import UIDialog
 from UI.uieffects import *
 from UI.uimovedialog import UIMoveDialog
+from UI.uiposdialog import UIPosDialog
 from interfaces import AppInterface
 from interfaces.exceptions import AuthInterfaceExceptions
 
@@ -351,18 +352,28 @@ class UIMain(QMainWindow):
 
         clear_layout(self.columns_scroll_layout)
 
-        for column in AppInterface.UserInterface.get_columns_by_desk_id(id):
+        columns_sorted = sorted(AppInterface.UserInterface.get_columns_by_desk_id(id), key=lambda x: x['sequence_number'])
+
+        for column in columns_sorted:
             id = column["column_id"]
             column_name = column['column_name']
 
             column_layout = QVBoxLayout()
+            column_parameters_layout = QHBoxLayout()
             column_name_button = QPushButton(column_name)
-            column_name_button.setFixedSize(231, 55)
-            column_name_button.setCursor(
-                QCursor(Qt.CursorShape.PointingHandCursor))
+            column_name_button.setFixedSize(176, 55)
+            column_name_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
             column_name_button.setStyleSheet(UIConst.column_name_button_style)
-            column_name_button.clicked.connect(
-                lambda _, idx=id: self.rename_column(idx))
+            column_name_button.clicked.connect(lambda _, idx=id: self.rename_column(idx))
+
+            column_move_button = QPushButton()
+            column_move_button.setIcon(QIcon(f"{UIConst.icons_path}/move_icon.png"))
+            column_move_button.setFixedSize(35, 35)
+            column_move_button.setIconSize(QSize(35, 35))
+            column_move_button.clicked.connect(lambda _, idx=id: self.move_column(idx))
+
+            column_parameters_layout.addWidget(column_move_button)
+            column_parameters_layout.addWidget(column_name_button)
 
             column_delete_button = QPushButton("удалить")
             column_delete_button.setFixedSize(231, 19)
@@ -391,7 +402,7 @@ class UIMain(QMainWindow):
             column_add_card_button.clicked.connect(
                 lambda _, idx=id: self.add_new_card_from_desk(idx))
 
-            column_layout.addWidget(column_name_button)
+            column_layout.addLayout(column_parameters_layout)
             column_layout.addWidget(column_delete_button)
             column_layout.addWidget(column_area)
             column_layout.addWidget(column_add_card_button)
@@ -548,8 +559,8 @@ class UIMain(QMainWindow):
 
         for xcard_button, xcard_id in self.card_buttons:
             xcard_status = \
-            AppInterface.UserInterface.get_card_by_card_id(xcard_id)[
-                "card_status"]
+                AppInterface.UserInterface.get_card_by_card_id(xcard_id)[
+                    "card_status"]
             if xcard_id == self.active_card_id:
                 if xcard_status == 1:
                     xcard_button.setStyleSheet(
@@ -590,7 +601,8 @@ class UIMain(QMainWindow):
                 pass
 
     def move_card(self):
-        dialog = UIMoveDialog("Выберите столбец и позицию", self.theme, desk_id=self.active_desk_id, column_id=self.active_column_id)
+        dialog = UIMoveDialog("Выберите столбец и позицию", self.theme, desk_id=self.active_desk_id,
+                              column_id=self.active_column_id)
         current_position = AppInterface.UserInterface.get_card_by_card_id(self.active_card_id)['sequence_number']
         max_positions = len(AppInterface.UserInterface.get_cards_by_column_id(self.active_column_id))
         dialog.position_box.setValue(current_position)
@@ -599,8 +611,8 @@ class UIMain(QMainWindow):
 
         if result == QDialog.DialogCode.Accepted:
             try:
-                print(dialog.get_new_position())
-                AppInterface.UserInterface.move_card(self.active_card_id, dialog.get_new_column(), dialog.get_new_position())
+                AppInterface.UserInterface.move_card(self.active_card_id, dialog.get_new_column(),
+                                                     dialog.get_new_position())
                 self.open_card_from_desk(dialog.get_new_column(), self.active_card_id)
             except Exception:
                 pass
@@ -702,6 +714,21 @@ class UIMain(QMainWindow):
             pass
 
         self.open_desk(self.active_desk_id)
+
+    def move_column(self, id):
+        dialog = UIPosDialog("Выберите позицию", self.theme, desk_id=self.active_desk_id)
+        current_position = AppInterface.UserInterface.get_column_by_column_id(id)['sequence_number']
+        max_positions = len(AppInterface.UserInterface.get_columns_by_desk_id(self.active_desk_id))
+        dialog.position_box.setValue(current_position)
+        dialog.position_box.setMaximum(max_positions)
+        result = dialog.exec()
+
+        if result == QDialog.DialogCode.Accepted:
+            try:
+                AppInterface.UserInterface.change_column_position_in_desk(self.active_desk_id, id, dialog.get_new_position())
+                self.open_desk(self.active_desk_id)
+            except Exception:
+                pass
 
     def rename_column(self, id):
         dialog = UIDialog("Введите новое имя столбца", self.theme)
