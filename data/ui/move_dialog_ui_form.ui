@@ -76,11 +76,30 @@
   <widget class="QComboBox" name="columnBox">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>90</x>
      <y>110</y>
      <width>201</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="class" stdset="0">
+    <string>combobox</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="positionBox">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>110</y>
+     <width>61</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>1000</number>
    </property>
    <property name="class" stdset="0">
     <string>combobox</string>
